@@ -9,7 +9,7 @@ export abstract class RequestParser {
   abstract schema: ZodSchema;
 
   /**
-   * Update the state of our game with the content of this message
+   * Perform the request
    */
   abstract apply(request: BaseRequest, player: Player): void;
 }

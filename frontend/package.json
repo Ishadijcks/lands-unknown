@@ -13,6 +13,10 @@
     "lint": "prettier --plugin-search-dir . --check . && eslint .",
     "format": "prettier --plugin-search-dir . --write ."
   },
+  "dependencies": {
+    "strongly-typed-events": "^3.0.9",
+    "zod": "^3.21.4"
+  },
   "devDependencies": {
     "@playwright/test": "^1.28.1",
     "@sveltejs/adapter-auto": "^2.0.0",

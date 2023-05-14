@@ -26,11 +26,13 @@ export class SocketServer {
     wss.on("connection", (ws: PlayerSocket) => {
       // TODO(@Isha): Get user from database
       ws.player = new Player("Isha");
+      ws.player.socket = ws;
 
       ws.onmessage = (ev) => {
-        // TODO(@Isha): Add message parsers here
         const request = JSON.parse(ev.data) as BaseRequest;
         this.handleIncomingRequest(request, ws.player);
+
+        ws.player.synchronizeMoney();
       };
     });
 
