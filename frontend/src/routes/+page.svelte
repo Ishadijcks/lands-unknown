@@ -1,13 +1,13 @@
 <script>
   import { SocketClient } from "$lib/SocketClient.ts";
-  import { RequestHrid } from "common/connection/requests/RequestHrid";
+  import { RequestType } from "common/connection/requests/RequestType";
 
   const server = new SocketClient();
 
   const send = () => {
     server.sendExampleRequest({
-      type: RequestHrid.Example,
-      amount: 4
+      type: RequestType.Example,
+      amount: 4,
     });
   };
 </script>

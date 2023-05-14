@@ -1,3 +1,3 @@
-export enum RequestHrid {
+export enum RequestType {
   Example = "request/example",
 }
