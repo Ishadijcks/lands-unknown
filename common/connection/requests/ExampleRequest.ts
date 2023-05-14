@@ -1,8 +1,9 @@
 import { z } from "zod";
-import { RequestHrid } from "./RequestHrid";
+import { RequestType } from "common/connection/requests/RequestType";
+import { BaseRequestSchema } from "common/connection/requests/BaseRequest";
 
-export const ExampleRequestSchema = z.object({
-  type: z.literal(RequestHrid.Example),
+export const ExampleRequestSchema = BaseRequestSchema.extend({
+  type: z.literal(RequestType.Example),
   amount: z.number().min(3).max(4),
 });
 
