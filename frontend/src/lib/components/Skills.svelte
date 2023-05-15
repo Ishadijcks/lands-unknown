@@ -12,7 +12,7 @@
   };
 </script>
 
-<div class="logo-cloud grid-cols-3 gap-0.5 w-48">
+<div class="logo-cloud grid-cols-3 gap-0.5">
   {#each skillList as skill}
     <SkillDisplay
       detail={skill}

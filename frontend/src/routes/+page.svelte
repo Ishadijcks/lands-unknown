@@ -4,6 +4,8 @@
   import { LuClient } from "$lib/luclient/LuClient.ts";
   import Skills from "$lib/components/Skills.svelte";
 
+  import { AppShell } from "@skeletonlabs/skeleton";
+
   const socket = new SocketClient();
   let luClient = new LuClient(gameData, socket);
 
@@ -13,7 +15,27 @@
   });
 </script>
 
-<div style="display: flex; flex-direction: column">
-  <span>This is good game</span>
-  <Skills skills={luClient.skills} />
-</div>
+<AppShell>
+  <svelte:fragment slot="header">
+    <div class="card p-4 m-2 h-48">Action Queue goes here</div>
+  </svelte:fragment>
+  <svelte:fragment slot="sidebarLeft">
+    <ul class="list mx-2 h-full space-y-2">
+      <li class="card p-4">
+        <Skills skills={luClient.skills} />
+      </li>
+      <li class="card p-4">
+        <span class="h-48">Scret goes here</span>
+      </li>
+    </ul>
+  </svelte:fragment>
+  <svelte:fragment slot="sidebarRight">
+    <ul class="list">
+      <li class="card mx-2 p-4 h-64">Inventory goes here</li>
+    </ul>
+  </svelte:fragment>
+  <div class="card h-full p-4">World Map goes here</div>
+  <svelte:fragment slot="pageFooter">
+    <div class="card h-48 mt-2 mb-2 p-4">Chat goes here</div>
+  </svelte:fragment>
+</AppShell>

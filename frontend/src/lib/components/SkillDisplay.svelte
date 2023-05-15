@@ -10,7 +10,7 @@
 </script>
 
 <div class="flex flex-col" title={detail.name}>
-  <div class="flex flex-row items-center justify-between w-16 h-min p-2">
+  <div class="flex flex-row items-center justify-between h-min p-2">
     <Icon icon={detail.icon} />
     <span>{level}</span>
   </div>
