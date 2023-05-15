@@ -1,20 +1,22 @@
 import express from "express";
 import * as http from "http";
-import * as WebSocket from "ws";
 import type { AddressInfo } from "ws";
-import { PlayerSocket } from "backend/src/connection/PlayerSocket";
-import { Player } from "backend/src/connection/Player";
+import * as WebSocket from "ws";
+import { CharacterSocket } from "backend/src/connection/CharacterSocket";
 import { RequestType } from "common/connection/requests/RequestType";
 import { RequestParser } from "backend/src/connection/RequestParser";
-import { ExampleRequestParser } from "backend/src/connection/requests/ExampleRequestParser";
 import { BaseRequest } from "common/connection/requests/BaseRequest";
+import { Character } from "backend/src/character/Character";
+import { Game } from "common/Game";
+import { SkillHrid } from "common/player/skills/SkillHrid";
 
 export class SocketServer {
-  private _requestParsers: Record<RequestType, RequestParser> = {
-    [RequestType.Example]: new ExampleRequestParser(),
-  };
+  private _game: Game;
+  private _requestParsers: Record<RequestType, RequestParser> = {};
 
-  constructor(port: number | string) {
+  constructor(game: Game, port: number | string) {
+    this._game = game;
+
     const app = express();
 
     // initialize a simple http server
@@ -23,16 +25,20 @@ export class SocketServer {
     // initialize the WebSocket server instance
     const wss = new WebSocket.Server({ server });
 
-    wss.on("connection", (ws: PlayerSocket) => {
+    wss.on("connection", (ws: CharacterSocket) => {
       // TODO(@Isha): Get user from database
-      ws.player = new Player("Isha");
-      ws.player.socket = ws;
+      const character = new Character("Isha", game);
+      character.inject();
+      ws.character = character;
+      ws.character.socket = ws;
+
+      setInterval(() => {
+        ws.character.skills.gainExp(SkillHrid.Woodcutting, 10);
+      }, 1000);
 
       ws.onmessage = (ev) => {
         const request = JSON.parse(ev.data) as BaseRequest;
-        this.handleIncomingRequest(request, ws.player);
-
-        ws.player.synchronizeMoney();
+        this.handleIncomingRequest(request, ws.character);
       };
     });
 
@@ -42,11 +48,11 @@ export class SocketServer {
     });
   }
 
-  public handleIncomingRequest(request: BaseRequest, player: Player): void {
+  public handleIncomingRequest(request: BaseRequest, character: Character): void {
     // Find the parser which can handle this request
     const parser = this._requestParsers[request.type];
     if (!parser) {
-      console.warn(`[${player.name}] Unrecognized messageType`, request);
+      console.warn(`[${character.name}] Unrecognized messageType`, request);
       return;
     }
 
@@ -54,13 +60,13 @@ export class SocketServer {
     const result = parser.schema.safeParse(request);
     if (!result.success) {
       const error = (result as any).error;
-      console.warn(`[${player.name}] Invalid request`, error.issues, request);
+      console.warn(`[${character.name}] Invalid request`, error.issues, request);
       return;
     }
 
     // Perform the request
     const data = (result as any).data;
-    parser.apply(data, player);
-    console.debug(`[${player.name}] Request`, JSON.stringify(data));
+    parser.apply(data, character);
+    console.debug(`[${character.name}] Request`, JSON.stringify(data));
   }
 }

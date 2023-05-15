@@ -1,3 +1,1 @@
-export enum RequestType {
-  Example = "request/example",
-}
+export enum RequestType {}

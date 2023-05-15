@@ -1,3 +1,4 @@
 export enum MessageType {
-  UpdateMoney = "update_money",
+  // InitCharacter = "init_character",
+  SkillsUpdated = "skills_updated",
 }

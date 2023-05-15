@@ -1,18 +1,23 @@
 import type { SocketClient } from "$lib/luclient/core/connection/SocketClient";
 import type { MessageParser } from "$lib/luclient/core/connection/MessageParser";
-import { UpdateMoneyMessageParser } from "$lib/luclient/core/connection/messages/UpdateMoneyMessageParser";
+import { SkillsUpdatedMessageParser } from "$lib/luclient/core/connection/messages/SkillsUpdatedMessageParser";
 import type { BaseMessage } from "common/connection/messages/BaseMessage";
 import { MessageType } from "common/connection/messages/MessageType";
+import { ClientSkills } from "$lib/luclient/core/skills/ClientSkills";
+import type { GameData } from "common/content/GameData";
 
 export class LuClient {
   socket: SocketClient;
 
   messageParsers: Record<MessageType, MessageParser> = {
-    [MessageType.UpdateMoney]: new UpdateMoneyMessageParser(),
+    [MessageType.SkillsUpdated]: new SkillsUpdatedMessageParser(),
   };
-  money: number = 0;
 
-  constructor(socket: SocketClient) {
+  skills: ClientSkills;
+
+  constructor(gameData: GameData, socket: SocketClient) {
+    this.skills = new ClientSkills(gameData.skillDetailMap, gameData.skillExpLevels);
+
     this.socket = socket;
 
     this.socket.onMessage.subscribe((message) => {
