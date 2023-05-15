@@ -1,26 +1,19 @@
-<script>
+<script lang="ts">
   import { SocketClient } from "$lib/luclient/core/connection/SocketClient.ts";
-  import { RequestType } from "common/connection/requests/RequestType";
+  import { gameData } from "common/content/GameData";
   import { LuClient } from "$lib/luclient/LuClient.ts";
+  import Skills from "$lib/components/Skills.svelte";
 
   const socket = new SocketClient();
-  let luClient = new LuClient(socket);
+  let luClient = new LuClient(gameData, socket);
 
   // TODO(@Isha): Fix properly with stores?
   luClient.socket.onMessage.subscribe(() => {
     luClient = luClient;
   });
-
-  const send = () => {
-    luClient.socket.sendExampleRequest({
-      type: RequestType.Example,
-      amount: 4,
-    });
-  };
 </script>
 
 <div style="display: flex; flex-direction: column">
   <span>This is a good game</span>
-  <span>Money: {luClient.money}</span>
-  <button on:click={send}>Send</button>
+  <Skills skills={luClient.skills} />
 </div>
