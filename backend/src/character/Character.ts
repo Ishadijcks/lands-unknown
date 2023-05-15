@@ -5,7 +5,7 @@ import { CharacterFeature } from "backend/src/character/CharacterFeature";
 import { MessageType } from "common/connection/messages/MessageType";
 import { BaseMessage } from "common/connection/messages/BaseMessage";
 import { SkillsUpdatedMessage } from "common/connection/messages/SkillsUpdatedMessage";
-import { CharacterSkill } from "common/player/skills/CharacterSkill";
+import { CharacterSkill } from "common/game/skills/CharacterSkill";
 
 export class Character {
   id: string = "user/0";

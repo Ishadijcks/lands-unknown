@@ -1,6 +1,6 @@
 <script lang="ts">
   import { ClientSkills } from "$lib/luclient/core/skills/ClientSkills.ts";
-  import type { SkillHrid } from "common/player/skills/SkillHrid";
+  import type { SkillHrid } from "common/game/skills/SkillHrid";
   import SkillDisplay from "$lib/components/SkillDisplay.svelte";
 
   export let skills: ClientSkills;

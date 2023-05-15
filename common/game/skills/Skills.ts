@@ -1,5 +1,5 @@
-import type { SkillHrid } from "common/player/skills/SkillHrid";
-import type { SkillDetail } from "common/player/skills/SkillDetail";
+import type { SkillHrid } from "common/game/skills/SkillHrid";
+import type { SkillDetail } from "common/game/skills/SkillDetail";
 
 export class Skills {
   private readonly _detailMap: Record<SkillHrid, SkillDetail>;

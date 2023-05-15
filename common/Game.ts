@@ -1,4 +1,4 @@
-import { Skills } from "common/player/skills/Skills";
+import { Skills } from "common/game/skills/Skills";
 import { GameData } from "common/content/GameData";
 
 export class Game {
