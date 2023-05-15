@@ -32,10 +32,6 @@ export class SocketServer {
       ws.character = character;
       ws.character.socket = ws;
 
-      setInterval(() => {
-        ws.character.skills.gainExp(SkillHrid.Woodcutting, 10);
-      }, 1000);
-
       ws.onmessage = (ev) => {
         const request = JSON.parse(ev.data) as BaseRequest;
         this.handleIncomingRequest(request, ws.character);
