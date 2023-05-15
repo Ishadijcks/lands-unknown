@@ -34,7 +34,7 @@ export class ClientSkills extends Skills {
       this._characterSkills[detail.hrid] = {
         skillHrid: detail.hrid,
         experience: 0,
-        level: 0,
+        level: 1,
       };
     });
   }

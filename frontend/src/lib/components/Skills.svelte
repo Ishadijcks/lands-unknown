@@ -1,6 +1,7 @@
 <script lang="ts">
   import { ClientSkills } from "$lib/luclient/core/skills/ClientSkills.ts";
   import type { SkillHrid } from "common/player/skills/SkillHrid";
+  import SkillDisplay from "$lib/components/SkillDisplay.svelte";
 
   export let skills: ClientSkills;
 
@@ -11,13 +12,13 @@
   };
 </script>
 
-<div class="flex flex-col">
+<div class="logo-cloud grid-cols-3 gap-0.5">
   {#each skillList as skill}
-    <div class="flex flex-row">
-      <span>{skill.name}</span>
-      <span>{characterSkill(skill.hrid).level}</span>
-      <span>{characterSkill(skill.hrid).experience}</span>
-      <span>{(skills.getProgressPercentage(skill.hrid) * 100).toFixed(2)}%</span>
-    </div>
+    <SkillDisplay
+      detail={skill}
+      percentage={skills.getProgressPercentage(skill.hrid)}
+      level={characterSkill(skill.hrid).level}
+      xp={characterSkill(skill.hrid).experience}
+    />
   {/each}
 </div>
