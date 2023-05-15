@@ -1,5 +1,5 @@
 import { ActivityHrid } from "common/game/activities/ActivityHrid";
-import { ActivityDetail } from "common/game/activities/ActivityDetail";
+import type { ActivityDetail } from "common/game/activities/ActivityDetail";
 import { ActionHrid } from "common/game/actions/ActionHrid";
 
 export const activityDetailMap: Record<ActivityHrid, ActivityDetail> = {

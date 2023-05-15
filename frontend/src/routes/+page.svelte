@@ -5,6 +5,9 @@
   import Skills from "$lib/components/Skills.svelte";
 
   import { AppShell } from "@skeletonlabs/skeleton";
+  import ActivityQueueDisplay from "$lib/components/ActivityQueueDisplay.svelte";
+  import { ActivityHrid } from "common/game/activities/ActivityHrid";
+  import { RequestType } from "common/connection/requests/RequestType";
 
   const socket = new SocketClient();
   let luClient = new LuClient(gameData, socket);
@@ -13,11 +16,31 @@
   luClient.socket.onMessage.subscribe(() => {
     luClient = luClient;
   });
+
+  const sendActivity = (hrid: ActivityHrid) => {
+    luClient.socket.sendScheduleActivityRequest({
+      type: RequestType.ScheduleActivity,
+      repetitions: 5,
+      activityHrid: hrid,
+    });
+  };
+
+  const sendForest = () => {
+    sendActivity(ActivityHrid.ExploreForest);
+  };
+
+  const sendFish = () => {
+    sendActivity(ActivityHrid.Fish);
+  };
 </script>
 
 <AppShell>
   <svelte:fragment slot="header">
-    <div class="card p-4 m-2 h-48">Action Queue goes here</div>
+    <div class="card p-4 m-2">
+      <button class="btn variant-filled" on:click={sendForest}>Forest</button>
+      <button class="btn variant-filled" on:click={sendFish}>Fish</button>
+      <ActivityQueueDisplay activityQueue={luClient.activityQueue} />
+    </div>
   </svelte:fragment>
   <svelte:fragment slot="sidebarLeft">
     <ul class="list mx-2 h-full space-y-2">
@@ -25,7 +48,7 @@
         <Skills skills={luClient.skills} />
       </li>
       <li class="card p-4">
-        <span class="h-48">Scret goes here</span>
+        <span class="h-48">Secret goes here</span>
       </li>
     </ul>
   </svelte:fragment>

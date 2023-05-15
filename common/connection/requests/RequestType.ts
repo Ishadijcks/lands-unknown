@@ -1,1 +1,3 @@
-export enum RequestType {}
+export enum RequestType {
+  ScheduleActivity = "/request/activity/schedule",
+}

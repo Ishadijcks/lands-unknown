@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { ActionHrid } from "common/game/activities/ActionHrid";
 import { ItemAmountSchema } from "common/game/items/ItemAmount";
 import { ExperienceGainSchema } from "common/game/skills/ExperienceGain";
+import { ActionHrid } from "common/game/actions/ActionHrid";
 
 const ActionDetailSchema = z.object({
   hrid: z.nativeEnum(ActionHrid),

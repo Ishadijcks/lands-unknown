@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { ActivityHrid } from "common/game/activities/ActivityHrid";
-import { ActionHrid } from "common/game/activities/ActionHrid";
+import { ActionHrid } from "common/game/actions/ActionHrid";
 
 const ActivityDetailSchema = z.object({
   hrid: z.nativeEnum(ActivityHrid),

@@ -1,5 +1,6 @@
 import { SimpleEventDispatcher } from "strongly-typed-events";
 import type { BaseMessage } from "common/connection/messages/BaseMessage";
+import type { ScheduleActivityRequest } from "common/connection/requests/ScheduleActivityRequest";
 
 export class SocketClient {
   private _socket;
@@ -17,5 +18,10 @@ export class SocketClient {
       const data = JSON.parse(e.data);
       this._onMessage.dispatch(data);
     };
+  }
+
+  public sendScheduleActivityRequest(request: ScheduleActivityRequest) {
+    const data = JSON.stringify(request);
+    this._socket.send(data);
   }
 }

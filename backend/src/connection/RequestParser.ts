@@ -1,7 +1,7 @@
-import { RequestType } from "common/connection/requests/RequestType";
-import { Player } from "backend/src/connection/Player";
-import { BaseRequest } from "common/connection/requests/BaseRequest";
 import { ZodSchema } from "zod";
+import { RequestType } from "common/connection/requests/RequestType";
+import { BaseRequest } from "common/connection/requests/BaseRequest";
+import { Character } from "backend/src/character/Character";
 
 export abstract class RequestParser {
   abstract type: RequestType;
@@ -11,5 +11,5 @@ export abstract class RequestParser {
   /**
    * Perform the request
    */
-  abstract apply(request: BaseRequest, player: Player): void;
+  abstract apply(request: BaseRequest, character: Character): void;
 }

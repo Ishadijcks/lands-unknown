@@ -1,0 +1,71 @@
+import { CharacterFeature } from "backend/src/character/CharacterFeature";
+import { ActivityHrid } from "common/game/activities/ActivityHrid";
+import { Action } from "common/game/actions/Action";
+import { Activity } from "common/game/activities/Activity";
+import { ScheduledActivity } from "common/game/activities/ScheduledActivity";
+
+export class CharacterActivityQueue extends CharacterFeature {
+  private _queue: ScheduledActivity[] = [];
+
+  private _currentAction: Action | null = null;
+  private _currentActivity: Activity | null = null;
+
+  constructor() {
+    super("activity-queue");
+  }
+
+  public update(delta: number) {
+    // TODO(@Isha): Clean this if mess up
+    if (!this._currentAction && !this._currentActivity && this._queue.length === 0) {
+      return;
+    }
+
+    if (this._currentAction) {
+      // If we have an action, perform it
+      this._currentAction.perform(delta);
+
+      // If it's finished, clear it and we're done
+      if (!this._currentAction.isFinished) {
+        this._character.sendActivityQueueUpdated(this._queue, this._currentAction, this._currentActivity);
+        return;
+      }
+      console.log("Yay action completed");
+      this._currentAction = null;
+      if (this._currentActivity.isFinished) {
+        this._currentActivity = null;
+      }
+    }
+
+    // If we have no activity, try to grab the next one from the queue
+    if (!this._currentActivity) {
+      if (this._queue.length === 0) {
+        this._character.sendActivityQueueUpdated(this._queue, this._currentAction, this._currentActivity);
+        return;
+      }
+      const scheduledActivity = this._queue.shift();
+      const nextActivityDetail = this._game.activityQueue.activityDetailMap[scheduledActivity.hrid];
+      this._currentActivity = new Activity(nextActivityDetail, scheduledActivity.repetitions);
+    }
+
+    const nextActionHrid = this._currentActivity.getNext();
+    const action = this._game.activityQueue.actionDetailMap[nextActionHrid];
+    this._currentAction = new Action(action);
+
+    this._character.sendActivityQueueUpdated(this._queue, this._currentAction, this._currentActivity);
+  }
+
+  scheduleActivity(hrid: ActivityHrid, repetitions: number = 1) {
+    if (!this._currentActivity) {
+      this._currentActivity = new Activity(this._game.activityQueue.activityDetailMap[hrid], repetitions);
+    } else {
+      this._queue.push({ hrid, repetitions });
+    }
+
+    this._character.sendActivityQueueUpdated(this._queue, this._currentAction, this._currentActivity);
+  }
+
+  // TODO(@Isha): Implement
+  load(data: any): void {}
+
+  save(): any {}
+}

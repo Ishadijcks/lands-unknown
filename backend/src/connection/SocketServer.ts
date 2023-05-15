@@ -8,10 +8,13 @@ import { RequestParser } from "backend/src/connection/RequestParser";
 import { BaseRequest } from "common/connection/requests/BaseRequest";
 import { Character } from "backend/src/character/Character";
 import { Game } from "common/Game";
+import { ScheduleActivityRequestParser } from "backend/src/connection/requests/ScheduleActivityRequestParser";
 
 export class SocketServer {
   private _game: Game;
-  private _requestParsers: Record<RequestType, RequestParser> = {};
+  private _requestParsers: Record<RequestType, RequestParser> = {
+    [RequestType.ScheduleActivity]: new ScheduleActivityRequestParser(),
+  };
 
   constructor(game: Game, port: number | string) {
     this._game = game;
@@ -37,9 +40,7 @@ export class SocketServer {
       };
 
       setInterval(() => {
-        const skill = Math.floor(Math.random() * 3);
-
-        character.skills.gainExp(game.skills.skillList[skill].hrid, 10);
+        ws.character.update(0.1);
       }, 100);
     });
 
