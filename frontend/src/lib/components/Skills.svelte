@@ -4,11 +4,11 @@
 
   export let skills: ClientSkills;
 
-  $: skillList = skills.skillList
+  $: skillList = skills.skillList;
 
-  const characterSkill = (hrid: SkillHrid)  => {
+  const characterSkill = (hrid: SkillHrid) => {
     return skills.characterSkills[hrid];
-  }
+  };
 </script>
 
 <div class="flex flex-col">

@@ -17,7 +17,7 @@ export class CharacterSkills extends CharacterFeature {
       this._skills[skillDetail.hrid] = {
         level: 1,
         skillHrid: skillDetail.hrid,
-        experience: 0
+        experience: 0,
       };
     });
   }

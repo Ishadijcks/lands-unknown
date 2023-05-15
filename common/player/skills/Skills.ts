@@ -19,8 +19,10 @@ export class Skills {
   }
 
   public getLevelForExp(exp: number) {
-    return this._levelExperienceTable.findIndex((value) => {
-      return value > exp;
-    }) - 1;
+    return (
+      this._levelExperienceTable.findIndex((value) => {
+        return value > exp;
+      }) - 1
+    );
   }
 }

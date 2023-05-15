@@ -15,5 +15,5 @@
 
 <div style="display: flex; flex-direction: column">
   <span>This is a good game</span>
-  <Skills skills="{luClient.skills}" ></Skills>
+  <Skills skills={luClient.skills} />
 </div>
