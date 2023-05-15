@@ -17,7 +17,7 @@ export class CharacterSkills extends CharacterFeature {
       this._skills[skillDetail.hrid] = {
         level: 1,
         skillHrid: skillDetail.hrid,
-        experience: 0,
+        experience: 0
       };
     });
   }
@@ -26,14 +26,12 @@ export class CharacterSkills extends CharacterFeature {
     const oldLevel = this._skills[skill].level;
     this._skills[skill].experience += amount;
 
-    this._character.sendSkillsUpdated([this._skills[skill]]);
-
     const newLevel = this._game.skills.getLevelForExp(this._skills[skill].experience);
     if (oldLevel != newLevel) {
-      // TODO(@Isha): Dispatch events
       this._skills[skill].level = newLevel;
-      console.log("Level up!");
+      console.log("Level up!", newLevel);
     }
+    this._character.sendSkillsUpdated([this._skills[skill]]);
   }
 
   load(data: CharacterSkill[]): void {

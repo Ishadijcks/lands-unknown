@@ -1,5 +1,6 @@
 export const skillExpLevels = [
   0,
+  0,
   83,
   174,
   276,

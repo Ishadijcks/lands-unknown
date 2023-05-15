@@ -34,7 +34,7 @@ export class ClientSkills extends Skills {
       this._characterSkills[detail.hrid] = {
         skillHrid: detail.hrid,
         experience: 0,
-        level: 0,
+        level: 0
       };
     });
   }
@@ -51,16 +51,20 @@ export class ClientSkills extends Skills {
       if (xpChanged !== 0) {
         this._onXpGained.dispatch({
           ...this._characterSkills[info.skillHrid],
-          delta: xpChanged,
+          delta: xpChanged
         });
       }
       if (lvlChanged !== 0) {
         this._onLvlGained.dispatch({
           ...this._characterSkills[info.skillHrid],
-          delta: lvlChanged,
+          delta: lvlChanged
         });
       }
     });
+  }
+
+  public get characterSkills() {
+    return this._characterSkills;
   }
 
   public getXpLeft(skill: SkillHrid): number {
@@ -72,6 +76,9 @@ export class ClientSkills extends Skills {
   public getProgressPercentage(skill: SkillHrid): number {
     const currentLevel = this._characterSkills[skill].level;
     const currentXp = this._characterSkills[skill].experience;
+    if (currentXp === 0) {
+      return 0;
+    }
     const previousXp = this.levelExperienceTable[currentLevel];
     const targetXp = this.levelExperienceTable[currentLevel + 1];
     const currentLevelXp = targetXp - previousXp;
