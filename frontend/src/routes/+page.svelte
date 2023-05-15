@@ -14,6 +14,6 @@
 </script>
 
 <div style="display: flex; flex-direction: column">
-  <span>This is a good game</span>
+  <span>This is good game</span>
   <Skills skills={luClient.skills} />
 </div>

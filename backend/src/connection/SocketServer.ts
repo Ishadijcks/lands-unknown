@@ -8,7 +8,6 @@ import { RequestParser } from "backend/src/connection/RequestParser";
 import { BaseRequest } from "common/connection/requests/BaseRequest";
 import { Character } from "backend/src/character/Character";
 import { Game } from "common/Game";
-import { SkillHrid } from "common/player/skills/SkillHrid";
 
 export class SocketServer {
   private _game: Game;
@@ -36,6 +35,12 @@ export class SocketServer {
         const request = JSON.parse(ev.data) as BaseRequest;
         this.handleIncomingRequest(request, ws.character);
       };
+
+      setInterval(() => {
+        const skill = Math.floor(Math.random() * 3);
+
+        character.skills.gainExp(game.skills.skillList[skill].hrid, 10);
+      }, 100);
     });
 
     // start our server

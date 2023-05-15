@@ -1,7 +1,16 @@
 /*place global styles here */
-html, body { @apply h-full; }
+html,
+body {
+  @apply h-full;
+}
 @font-face {
-	font-family: 'Abril Fatface';
-	src: url('/fonts/AbrilFatface.ttf');
-	font-display: swap;
+  font-family: "Abril Fatface";
+  src: url("/fonts/AbrilFatface.ttf");
+  font-display: swap;
+}
+
+.pixelated {
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;
 }

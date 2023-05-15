@@ -4,6 +4,7 @@ import { z } from "zod";
 const SkillDetailSchema = z.object({
   hrid: z.nativeEnum(SkillHrid),
   name: z.string(),
+  icon: z.string(),
   sortIndex: z.number().min(0).int(),
 });
 
