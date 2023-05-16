@@ -20,7 +20,7 @@
   const sendActivity = (hrid: ActivityHrid) => {
     luClient.socket.sendScheduleActivityRequest({
       type: RequestType.ScheduleActivity,
-      repetitions: 5,
+      repetitions: 3,
       activityHrid: hrid,
     });
   };
@@ -37,8 +37,6 @@
 <AppShell>
   <svelte:fragment slot="header">
     <div class="card p-4 m-2">
-      <button class="btn variant-filled" on:click={sendForest}>Forest</button>
-      <button class="btn variant-filled" on:click={sendFish}>Fish</button>
       <ActivityQueueDisplay activityQueue={luClient.activityQueue} />
     </div>
   </svelte:fragment>
@@ -57,7 +55,12 @@
       <li class="card mx-2 p-4 h-64">Inventory goes here</li>
     </ul>
   </svelte:fragment>
-  <div class="card h-full p-4">World Map goes here</div>
+  <div class="card h-full p-4">
+    World Map goes here
+    <button class="btn variant-filled-success" on:click={sendForest}>Forest</button>
+    <button class="btn variant-filled-surface" on:click={sendFish}>Fish</button>
+  </div>
+
   <svelte:fragment slot="pageFooter">
     <div class="card h-48 mt-2 mb-2 p-4">Chat goes here</div>
   </svelte:fragment>

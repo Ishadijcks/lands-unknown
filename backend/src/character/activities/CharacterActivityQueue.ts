@@ -29,7 +29,10 @@ export class CharacterActivityQueue extends CharacterFeature {
         this._character.sendActivityQueueUpdated(this._queue, this._currentAction, this._currentActivity);
         return;
       }
-      console.log("Yay action completed");
+
+      this._currentAction.detail.experienceRewards.forEach((reward) => {
+        this._character.skills.gainExp(reward.skillHrid, reward.value);
+      });
       this._currentAction = null;
       if (this._currentActivity.isFinished) {
         this._currentActivity = null;
