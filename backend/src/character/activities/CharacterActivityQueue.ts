@@ -26,7 +26,7 @@ export class CharacterActivityQueue extends CharacterFeature {
 
       // If it's finished, clear it and we're done
       if (!this._currentAction.isFinished) {
-        this._character.sendActivityQueueUpdated(this._queue, this._currentAction, this._currentActivity);
+        this.sendActivityQueueMessage();
         return;
       }
 
@@ -42,7 +42,7 @@ export class CharacterActivityQueue extends CharacterFeature {
     // If we have no activity, try to grab the next one from the queue
     if (!this._currentActivity) {
       if (this._queue.length === 0) {
-        this._character.sendActivityQueueUpdated(this._queue, this._currentAction, this._currentActivity);
+        this.sendActivityQueueMessage();
         return;
       }
       const scheduledActivity = this._queue.shift();
@@ -54,6 +54,10 @@ export class CharacterActivityQueue extends CharacterFeature {
     const action = this._game.activityQueue.actionDetailMap[nextActionHrid];
     this._currentAction = new Action(action);
 
+    this.sendActivityQueueMessage();
+  }
+
+  private sendActivityQueueMessage(): void {
     this._character.sendActivityQueueUpdated(this._queue, this._currentAction, this._currentActivity);
   }
 
@@ -64,7 +68,7 @@ export class CharacterActivityQueue extends CharacterFeature {
       this._queue.push({ hrid, repetitions });
     }
 
-    this._character.sendActivityQueueUpdated(this._queue, this._currentAction, this._currentActivity);
+    this.sendActivityQueueMessage();
   }
 
   // TODO(@Isha): Implement

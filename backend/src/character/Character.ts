@@ -11,11 +11,12 @@ import { CharacterActivityQueue } from "backend/src/character/activities/Charact
 import { Action } from "common/game/actions/Action";
 import { Activity } from "common/game/activities/Activity";
 import { ScheduledActivity } from "common/game/activities/ScheduledActivity";
+import { CharacterSocket } from "backend/src/connection/CharacterSocket";
 
 export class Character {
   id: string = "user/0";
   name: string;
-  socket: WebSocket;
+  socket: CharacterSocket;
 
   skills: CharacterSkills = new CharacterSkills();
   activityQueue: CharacterActivityQueue = new CharacterActivityQueue();
