@@ -1,7 +1,7 @@
 <script lang="ts">
   import { ProgressBar } from "@skeletonlabs/skeleton";
   import Icon from "$lib/components/atoms/Icon.svelte";
-  import type { SkillDetail } from "common/player/skills/SkillDetail";
+  import type { SkillDetail } from "common/game/skills/SkillDetail";
 
   export let detail: SkillDetail;
   export let level: number;

@@ -1,4 +1,4 @@
-import { SkillHrid } from "common/player/skills/SkillHrid";
+import { SkillHrid } from "common/game/skills/SkillHrid";
 import { z } from "zod";
 
 const SkillDetailSchema = z.object({

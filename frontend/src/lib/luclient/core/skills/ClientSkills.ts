@@ -1,8 +1,8 @@
-import type { SkillHrid } from "common/player/skills/SkillHrid";
-import type { CharacterSkill } from "common/player/skills/CharacterSkill";
+import type { SkillHrid } from "common/game/skills/SkillHrid";
+import type { CharacterSkill } from "common/game/skills/CharacterSkill";
 import { SimpleEventDispatcher } from "strongly-typed-events";
-import type { SkillDetail } from "common/player/skills/SkillDetail";
-import { Skills } from "common/player/skills/Skills";
+import type { SkillDetail } from "common/game/skills/SkillDetail";
+import { Skills } from "common/game/skills/Skills";
 
 export interface XpGained extends CharacterSkill {
   delta: number;

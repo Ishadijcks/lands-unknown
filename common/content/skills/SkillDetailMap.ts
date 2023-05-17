@@ -1,5 +1,5 @@
-import { SkillHrid } from "common/player/skills/SkillHrid";
-import type { SkillDetail } from "common/player/skills/SkillDetail";
+import { SkillHrid } from "common/game/skills/SkillHrid";
+import type { SkillDetail } from "common/game/skills/SkillDetail";
 
 export const skillDetailMap: Record<SkillHrid, SkillDetail> = {
   [SkillHrid.Mining]: {

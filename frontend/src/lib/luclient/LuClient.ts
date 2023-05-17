@@ -5,18 +5,23 @@ import type { BaseMessage } from "common/connection/messages/BaseMessage";
 import { MessageType } from "common/connection/messages/MessageType";
 import { ClientSkills } from "$lib/luclient/core/skills/ClientSkills";
 import type { GameData } from "common/content/GameData";
+import { ActivityQueueUpdatedMessageParser } from "$lib/luclient/core/connection/messages/ActivityQueueUpdatedMessageParser";
+import { ClientActivityQueue } from "$lib/luclient/core/activities/ClientActivityQueue";
 
 export class LuClient {
   socket: SocketClient;
 
   messageParsers: Record<MessageType, MessageParser> = {
     [MessageType.SkillsUpdated]: new SkillsUpdatedMessageParser(),
+    [MessageType.ActivityQueueUpdated]: new ActivityQueueUpdatedMessageParser(),
   };
 
   skills: ClientSkills;
+  activityQueue: ClientActivityQueue;
 
   constructor(gameData: GameData, socket: SocketClient) {
     this.skills = new ClientSkills(gameData.skillDetailMap, gameData.skillExpLevels);
+    this.activityQueue = new ClientActivityQueue(gameData.actionDetailMap, gameData.activityDetailMap);
 
     this.socket = socket;
 

@@ -1,5 +1,5 @@
-import { SkillHrid } from "common/player/skills/SkillHrid";
-import { CharacterSkill } from "common/player/skills/CharacterSkill";
+import { SkillHrid } from "common/game/skills/SkillHrid";
+import { CharacterSkill } from "common/game/skills/CharacterSkill";
 import { CharacterFeature } from "backend/src/character/CharacterFeature";
 import { Character } from "backend/src/character/Character";
 import { Game } from "common/Game";
