@@ -4,7 +4,7 @@ import { ItemDetail } from "common/game/items/ItemDetail";
 export const itemDetailMap: Record<ItemHrid, ItemDetail> = {
   [ItemHrid.Fish]: {
     name: "Fish",
-    icon: "fish-regular",
+    icon: "fish",
     hrid: ItemHrid.Fish,
     description: "Splish splash",
   },
@@ -16,7 +16,7 @@ export const itemDetailMap: Record<ItemHrid, ItemDetail> = {
   },
   [ItemHrid.Leaf]: {
     name: "Leaf",
-    icon: "leaf-green",
+    icon: "leaf-regular",
     hrid: ItemHrid.Leaf,
     description: "Fresh from the tree",
   },
