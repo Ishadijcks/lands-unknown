@@ -52,9 +52,9 @@
     </ul>
   </svelte:fragment>
   <svelte:fragment slot="sidebarRight">
-      <div class="card mx-2 p-4">
-        <InventoryDisplay inventory="{luClient.inventory}"/>
-      </div>
+    <div class="card mx-2 p-4">
+      <InventoryDisplay inventory={luClient.inventory} />
+    </div>
   </svelte:fragment>
   <div class="card h-full p-4">
     World Map goes here

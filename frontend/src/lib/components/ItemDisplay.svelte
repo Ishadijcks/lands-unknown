@@ -3,11 +3,13 @@
   import type { ItemDetail } from "common/game/items/ItemDetail";
 
   export let item: ItemDetail;
-  export let amount = 0
-
+  export let amount = 0;
 </script>
 
-<div class="relative variant-filled-surface border w-12 h-12 flex flex-row items-center justify-center" title="{item.name}">
-  <Icon icon="{item.icon}"></Icon>
+<div
+  class="relative variant-filled-surface border w-12 h-12 flex flex-row items-center justify-center"
+  title={item.name}
+>
+  <Icon icon={item.icon} />
   <span class="absolute right-0 bottom-0">{amount}</span>
 </div>

@@ -13,11 +13,7 @@
 <div class="flex flex-col items-center w-52">
   <div class="logo-cloud grid-cols-4 gap-1">
     {#each inventory.characterItems as characterItem}
-      <ItemDisplay
-        item="{itemDetail(characterItem.itemHrid)}"
-        amount="{characterItem.amount}"
-      />
-
+      <ItemDisplay item={itemDetail(characterItem.itemHrid)} amount={characterItem.amount} />
     {/each}
   </div>
 </div>
