@@ -1,25 +1,29 @@
-import { CharacterSkills } from "backend/src/character/CharacterSkills";
-import { CharacterFeatures } from "backend/src/character/CharacterFeatures";
+import { CharacterSkills } from "backend/character/CharacterSkills";
+import { CharacterFeatures } from "backend/character/CharacterFeatures";
 import { Game } from "common/Game";
-import { CharacterFeature } from "backend/src/character/CharacterFeature";
+import { CharacterFeature } from "backend/character/CharacterFeature";
 import { MessageType } from "common/connection/messages/MessageType";
 import { BaseMessage } from "common/connection/messages/BaseMessage";
 import { SkillsUpdatedMessage } from "common/connection/messages/SkillsUpdatedMessage";
 import { CharacterSkill } from "common/game/skills/CharacterSkill";
 import { ActivityQueueUpdatedMessage } from "common/connection/messages/ActivityQueueUpdatedMessage";
-import { CharacterActivityQueue } from "backend/src/character/activities/CharacterActivityQueue";
+import { CharacterActivityQueue } from "backend/character/activities/CharacterActivityQueue";
 import { Action } from "common/game/actions/Action";
 import { Activity } from "common/game/activities/Activity";
 import { ScheduledActivity } from "common/game/activities/ScheduledActivity";
-import { CharacterSocket } from "backend/src/connection/CharacterSocket";
+import { CharacterSocket } from "backend/connection/CharacterSocket";
+import { CharacterItem } from "common/game/items/CharacterItem";
+import { InventoryUpdatedMessage } from "common/connection/messages/InventoryUpdatedMessage";
+import { CharacterInventory } from "backend/character/inventory/CharacterInventory";
 
 export class Character {
   id: string = "user/0";
   name: string;
-  socket: CharacterSocket;
+  socket!: CharacterSocket;
 
   skills: CharacterSkills = new CharacterSkills();
   activityQueue: CharacterActivityQueue = new CharacterActivityQueue();
+  inventory: CharacterInventory = new CharacterInventory();
 
   private readonly _features: CharacterFeatures;
   private readonly _game: Game;
@@ -31,6 +35,7 @@ export class Character {
     this._features = {
       skills: this.skills,
       activityQueue: this.activityQueue,
+      inventory: this.inventory,
     };
   }
 
@@ -66,7 +71,11 @@ export class Character {
   }
 
   // Send update messages to the client
-  public sendActivityQueueUpdated(queue: ScheduledActivity[], currentAction: Action, currentActivity: Activity) {
+  public sendActivityQueueUpdated(
+    queue: ScheduledActivity[],
+    currentAction: Action | null,
+    currentActivity: Activity | null
+  ) {
     const message: ActivityQueueUpdatedMessage = {
       type: MessageType.ActivityQueueUpdated,
       queue,
@@ -98,5 +107,13 @@ export class Character {
 
   private _send(data: BaseMessage) {
     this.socket.send(JSON.stringify(data));
+  }
+
+  public sendInventoryUpdated(items: CharacterItem[]): void {
+    const message: InventoryUpdatedMessage = {
+      type: MessageType.InventoryUpdated,
+      items: items,
+    };
+    this._send(message);
   }
 }

@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "description": "The backend for Lands Unknown, an incremental multiplayer",
   "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/ws": "^8.5.4",
     "tsx": "^3.12.7"
   },
   "dependencies": {

@@ -1,4 +1,4 @@
-import { SocketServer } from "backend/src/connection/SocketServer";
+import { SocketServer } from "backend/connection/SocketServer";
 import { Game } from "common/Game";
 import { gameData } from "common/content/GameData";
 

@@ -1,14 +1,14 @@
 import express from "express";
 import * as http from "http";
 import type { AddressInfo } from "ws";
-import * as WebSocket from "ws";
-import { CharacterSocket } from "backend/src/connection/CharacterSocket";
+import { CharacterSocket } from "backend/connection/CharacterSocket";
 import { RequestType } from "common/connection/requests/RequestType";
-import { RequestParser } from "backend/src/connection/RequestParser";
+import { RequestParser } from "backend/connection/RequestParser";
 import { BaseRequest } from "common/connection/requests/BaseRequest";
-import { Character } from "backend/src/character/Character";
+import { Character } from "backend/character/Character";
 import { Game } from "common/Game";
-import { ScheduleActivityRequestParser } from "backend/src/connection/requests/ScheduleActivityRequestParser";
+import { ScheduleActivityRequestParser } from "backend/connection/requests/ScheduleActivityRequestParser";
+import { WebSocket } from "ws";
 
 export class SocketServer {
   private _game: Game;
@@ -35,7 +35,7 @@ export class SocketServer {
       ws.character.socket = ws;
 
       ws.onmessage = (ev) => {
-        const request = JSON.parse(ev.data) as BaseRequest;
+        const request = JSON.parse(ev.data.toString()) as BaseRequest;
         this.handleIncomingRequest(request, ws.character);
       };
 

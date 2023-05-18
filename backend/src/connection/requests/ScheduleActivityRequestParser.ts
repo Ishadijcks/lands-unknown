@@ -1,6 +1,6 @@
-import { RequestParser } from "backend/src/connection/RequestParser";
+import { RequestParser } from "backend/connection/RequestParser";
 import { RequestType } from "common/connection/requests/RequestType";
-import { Character } from "backend/src/character/Character";
+import { Character } from "backend/character/Character";
 import {
   ScheduleActivityRequest,
   ScheduleActivityRequestSchema,
