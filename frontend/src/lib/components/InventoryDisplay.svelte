@@ -11,7 +11,7 @@
 </script>
 
 <div class="flex flex-col items-center w-52">
-  <div class="logo-cloud grid-cols-4 gap-0.5">
+  <div class="logo-cloud grid-cols-4 gap-1">
     {#each inventory.characterItems as characterItem}
       <ItemDisplay
         item="{itemDetail(characterItem.itemHrid)}"
