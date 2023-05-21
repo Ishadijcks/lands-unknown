@@ -1,5 +1,5 @@
 import { Game } from "common/Game";
-import { Character } from "backend/src/character/Character";
+import { Character } from "backend/character/Character";
 
 /**
  * The base class for information that is stored on the character.

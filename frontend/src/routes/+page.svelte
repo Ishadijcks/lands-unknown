@@ -8,6 +8,7 @@
   import ActivityQueueDisplay from "$lib/components/ActivityQueueDisplay.svelte";
   import { ActivityHrid } from "common/game/activities/ActivityHrid";
   import { RequestType } from "common/connection/requests/RequestType";
+  import InventoryDisplay from "$lib/components/InventoryDisplay.svelte";
 
   const socket = new SocketClient();
   let luClient = new LuClient(gameData, socket);
@@ -51,9 +52,9 @@
     </ul>
   </svelte:fragment>
   <svelte:fragment slot="sidebarRight">
-    <ul class="list">
-      <li class="card mx-2 p-4 h-64">Inventory goes here</li>
-    </ul>
+    <div class="card mx-2 p-4">
+      <InventoryDisplay inventory={luClient.inventory} />
+    </div>
   </svelte:fragment>
   <div class="card h-full p-4">
     World Map goes here

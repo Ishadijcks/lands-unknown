@@ -1,8 +1,9 @@
-import { CharacterFeature } from "backend/src/character/CharacterFeature";
+import { CharacterFeature } from "backend/character/CharacterFeature";
 import { ActivityHrid } from "common/game/activities/ActivityHrid";
 import { Action } from "common/game/actions/Action";
 import { Activity } from "common/game/activities/Activity";
 import { ScheduledActivity } from "common/game/activities/ScheduledActivity";
+import { ActionDetail } from "common/game/actions/ActionDetail";
 
 export class CharacterActivityQueue extends CharacterFeature {
   private _queue: ScheduledActivity[] = [];
@@ -30,11 +31,10 @@ export class CharacterActivityQueue extends CharacterFeature {
         return;
       }
 
-      this._currentAction.detail.experienceRewards.forEach((reward) => {
-        this._character.skills.gainExp(reward.skillHrid, reward.value);
-      });
+      this.completeAction(this._currentAction.detail);
+
       this._currentAction = null;
-      if (this._currentActivity.isFinished) {
+      if (this._currentActivity?.isFinished) {
         this._currentActivity = null;
       }
     }
@@ -46,6 +46,10 @@ export class CharacterActivityQueue extends CharacterFeature {
         return;
       }
       const scheduledActivity = this._queue.shift();
+      if (!scheduledActivity) {
+        console.warn("Unshifted undefined scheduledActivity", this._queue, scheduledActivity);
+        return;
+      }
       const nextActivityDetail = this._game.activityQueue.activityDetailMap[scheduledActivity.hrid];
       this._currentActivity = new Activity(nextActivityDetail, scheduledActivity.repetitions);
     }
@@ -55,6 +59,17 @@ export class CharacterActivityQueue extends CharacterFeature {
     this._currentAction = new Action(action);
 
     this.sendActivityQueueMessage();
+  }
+
+  private completeAction(detail: ActionDetail) {
+    // Gain rewards
+    detail.experienceRewards.forEach((reward) => {
+      this._character.skills.gainExp(reward.skillHrid, reward.value);
+    });
+
+    if (detail.outputItems != undefined) {
+      this._character.inventory.gainItemAmounts(detail.outputItems);
+    }
   }
 
   private sendActivityQueueMessage(): void {

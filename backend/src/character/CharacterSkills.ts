@@ -1,7 +1,7 @@
 import { SkillHrid } from "common/game/skills/SkillHrid";
 import { CharacterSkill } from "common/game/skills/CharacterSkill";
-import { CharacterFeature } from "backend/src/character/CharacterFeature";
-import { Character } from "backend/src/character/Character";
+import { CharacterFeature } from "backend/character/CharacterFeature";
+import { Character } from "backend/character/Character";
 import { Game } from "common/Game";
 
 export class CharacterSkills extends CharacterFeature {
