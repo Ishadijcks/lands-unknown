@@ -1,4 +1,4 @@
-import { CharacterSkills } from "backend/character/CharacterSkills";
+import { CharacterSkills } from "backend/character/skills/CharacterSkills";
 import { CharacterFeatures } from "backend/character/CharacterFeatures";
 import { Game } from "common/Game";
 import { CharacterFeature } from "backend/character/CharacterFeature";
@@ -15,10 +15,11 @@ import { CharacterSocket } from "backend/connection/CharacterSocket";
 import { CharacterItem } from "common/game/items/CharacterItem";
 import { InventoryUpdatedMessage } from "common/connection/messages/InventoryUpdatedMessage";
 import { CharacterInventory } from "backend/character/inventory/CharacterInventory";
+import { CharacterSaveData } from "backend/character/CharacterSaveData";
 
 export class Character {
-  id: string = "user/0";
-  name: string;
+  userId: string;
+  userName: string;
   socket!: CharacterSocket;
 
   skills: CharacterSkills = new CharacterSkills();
@@ -28,8 +29,9 @@ export class Character {
   private readonly _features: CharacterFeatures;
   private readonly _game: Game;
 
-  constructor(name: string, game: Game) {
-    this.name = name;
+  constructor(userId: string, userName: string, game: Game) {
+    this.userId = userId;
+    this.userName = userName;
     this._game = game;
 
     this._features = {
@@ -37,6 +39,8 @@ export class Character {
       activityQueue: this.activityQueue,
       inventory: this.inventory,
     };
+
+    this.inject();
   }
 
   public update(delta: number): void {
@@ -52,18 +56,19 @@ export class Character {
     });
   }
 
-  public save(): Record<string, any> {
-    const data: Record<string, any> = {};
-    this.featureList.forEach((feature) => {
-      data[feature.saveKey] = feature.save();
-    });
-    return data;
+  public save(): CharacterSaveData {
+    return {
+      userId: this.userId,
+      userName: this.userName,
+      skills: this.skills.save(),
+      inventory: this.inventory.save(),
+    };
   }
 
-  public load(data: Record<string, any>): void {
-    this.featureList.forEach((feature) => {
-      feature.load(data[feature.saveKey]);
-    });
+  public load(data: CharacterSaveData): void {
+    this.userId = data.userId;
+    this.skills.load(data.skills);
+    this.inventory.load(data.inventory);
   }
 
   private get featureList(): CharacterFeature[] {

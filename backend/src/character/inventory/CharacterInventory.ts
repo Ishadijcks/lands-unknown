@@ -2,6 +2,7 @@ import { CharacterFeature } from "backend/character/CharacterFeature";
 import { ItemHrid } from "common/game/items/ItemHrid";
 import { CharacterItem } from "common/game/items/CharacterItem";
 import { ItemAmount } from "common/game/items/ItemAmount";
+import { CharacterInventorySaveData } from "backend/character/inventory/CharacterInventorySaveData";
 
 export class CharacterInventory extends CharacterFeature {
   private _inventory: { [Key in ItemHrid]?: CharacterItem } = {};
@@ -27,8 +28,15 @@ export class CharacterInventory extends CharacterFeature {
     });
   }
 
-  // TODO(@Isha): Implement
-  load(data: any): void {}
+  load(data: CharacterInventorySaveData): void {
+    data?.items?.forEach((item) => {
+      this._inventory[item.itemHrid] = item;
+    });
+  }
 
-  save(): any {}
+  save(): CharacterInventorySaveData {
+    return {
+      items: Object.values(this._inventory),
+    };
+  }
 }

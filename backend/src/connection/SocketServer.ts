@@ -9,15 +9,20 @@ import { Character } from "backend/character/Character";
 import { Game } from "common/Game";
 import { ScheduleActivityRequestParser } from "backend/connection/requests/ScheduleActivityRequestParser";
 import { WebSocket } from "ws";
+import { DatabaseManager } from "backend/persistance/DatabaseManager";
+import { PrismaSupabaseClient } from "backend/persistance/PrismaSupabaseClient";
 
 export class SocketServer {
   private _game: Game;
+  private _databaseManager: DatabaseManager;
+
   private _requestParsers: Record<RequestType, RequestParser> = {
     [RequestType.ScheduleActivity]: new ScheduleActivityRequestParser(),
   };
 
   constructor(game: Game, port: number | string) {
     this._game = game;
+    this._databaseManager = new DatabaseManager(new PrismaSupabaseClient(), this._game);
 
     const app = express();
 
@@ -27,10 +32,13 @@ export class SocketServer {
     // initialize the WebSocket server instance
     const wss = new WebSocket.Server({ server });
 
-    wss.on("connection", (ws: CharacterSocket) => {
+    wss.on("connection", async (ws: CharacterSocket) => {
       // TODO(@Isha): Get user from database
-      const character = new Character("Isha", game);
-      character.inject();
+      const character = await this._databaseManager.findOrCreateCharacter("Isha", "user/0");
+      if (!character) {
+        console.warn("Could not find user");
+        return;
+      }
       ws.character = character;
       ws.character.socket = ws;
 
@@ -42,6 +50,9 @@ export class SocketServer {
       setInterval(() => {
         ws.character.update(0.1);
       }, 100);
+      setInterval(() => {
+        this._databaseManager.saveCharacter(ws.character);
+      }, 10000);
     });
 
     // start our server
@@ -54,7 +65,7 @@ export class SocketServer {
     // Find the parser which can handle this request
     const parser = this._requestParsers[request.type];
     if (!parser) {
-      console.warn(`[${character.name}] Unrecognized messageType`, request);
+      console.warn(`[${character.userName}] Unrecognized messageType`, request);
       return;
     }
 
@@ -62,13 +73,13 @@ export class SocketServer {
     const result = parser.schema.safeParse(request);
     if (!result.success) {
       const error = (result as any).error;
-      console.warn(`[${character.name}] Invalid request`, error.issues, request);
+      console.warn(`[${character.userName}] Invalid request`, error.issues, request);
       return;
     }
 
     // Perform the request
     const data = (result as any).data;
     parser.apply(data, character);
-    console.debug(`[${character.name}] Request`, JSON.stringify(data));
+    console.debug(`[${character.userName}] Request`, JSON.stringify(data));
   }
 }
