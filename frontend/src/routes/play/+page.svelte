@@ -9,20 +9,31 @@
   import { ActivityHrid } from "common/game/activities/ActivityHrid";
   import { RequestType } from "common/connection/requests/RequestType";
   import InventoryDisplay from "$lib/components/InventoryDisplay.svelte";
+  import { tokenStorage } from "$lib/TokenStorage";
+  import { goto } from "$app/navigation";
 
-  const socket = new SocketClient();
-  let luClient = new LuClient(gameData, socket);
-
-  // TODO(@Isha): Fix properly with stores?
-  luClient.socket.onMessage.subscribe(() => {
-    luClient = luClient;
+  tokenStorage.subscribe((token) => {
+    if (!token) {
+      goto("/");
+    }
   });
+
+  let luClient: LuClient;
+  if ($tokenStorage?.token) {
+    const socket = new SocketClient($tokenStorage.token);
+    luClient = new LuClient(gameData, socket);
+
+    // TODO(@Isha): Fix properly with stores?
+    luClient.socket.onMessage.subscribe(() => {
+      luClient = luClient;
+    });
+  }
 
   const sendActivity = (hrid: ActivityHrid) => {
     luClient.socket.sendScheduleActivityRequest({
       type: RequestType.ScheduleActivity,
       repetitions: 3,
-      activityHrid: hrid,
+      activityHrid: hrid
     });
   };
 

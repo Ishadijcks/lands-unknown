@@ -1,6 +1,8 @@
 import { DatabaseClient } from "backend/persistance/DatabaseClient";
 import { Character } from "backend/character/Character";
 import { Game } from "common/Game";
+import { SignUpInfo } from "backend/persistance/SignUp";
+import { LogInInfo } from "backend/persistance/LogIn";
 
 /**
  * Responsible for saving and loading character data
@@ -34,10 +36,17 @@ export class DatabaseManager {
     return character;
   }
 
-  createCharacter(userId: string, userName: string, email: string): Character {
-    const newCharacter = new Character(userId, userName, email, this._game);
-    this.saveCharacter(newCharacter);
-    return newCharacter;
+  public async loginCharacter(info: LogInInfo): Promise<Character | null> {
+    const userId = await this.client.loginCharacter(info);
+    if (!userId) {
+      return null;
+    }
+    return this.loadCharacter(userId);
+  }
+
+  public async createCharacter(info: SignUpInfo): Promise<Character> {
+    const userId = await this.client.createCharacter(info);
+    return new Character(userId, info.userName, info.email, this._game);
   }
 
   saveCharacter(character: Character): void {

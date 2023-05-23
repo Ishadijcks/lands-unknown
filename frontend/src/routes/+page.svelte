@@ -2,17 +2,19 @@
   import LoginDisplay from "$lib/components/login/LoginDisplay.svelte";
 </script>
 
-<div class="flex flex-row h-16 p-4">Lands Unknown</div>
+<div class="flex flex-row h-16 p-4" />
 
 <div class="flex flex-col items-center">
   <div class="flex flex-col w-2/3 space-y-24">
-    <div class="flex flex-row w-full justify-between">
-      <div class="flex flex-col">
+    <div class="flex flex-col w-full items-center space-y-12">
+      <div class="flex flex-col items-center space-y-2">
         <span class="h1">Lands Unknown</span>
         <span>Explore the world of Lands Unknown where every adventurer can leave their mark</span>
       </div>
 
-      <LoginDisplay />
+      <div class="flex flex-row">
+        <LoginDisplay />
+      </div>
     </div>
 
     <div class="flex flex-row card p-4">

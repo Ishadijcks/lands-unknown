@@ -11,8 +11,8 @@ export class SocketClient {
     return this._onMessage.asEvent();
   }
 
-  constructor() {
-    this._socket = new WebSocket("ws://localhost:8999");
+  constructor(token: string) {
+    this._socket = new WebSocket(`ws://localhost:8999/${token}`);
 
     this._socket.onmessage = (e) => {
       const data = JSON.parse(e.data);

@@ -12,6 +12,7 @@ import { WebSocket } from "ws";
 import { DatabaseManager } from "backend/persistance/DatabaseManager";
 import { PrismaSupabaseClient } from "backend/persistance/PrismaSupabaseClient";
 import { SignUpSchema } from "backend/persistance/SignUp";
+import { LogInSchema } from "backend/persistance/LogIn";
 
 export class SocketServer {
   private _game: Game;
@@ -28,16 +29,9 @@ export class SocketServer {
     const app = express();
 
     app.use(function (req, res, next) {
-      // Website you wish to allow to connect
       res.setHeader("Access-Control-Allow-Origin", "*");
-
-      // Request methods you wish to allow
       res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
-
-      // Request headers you wish to allow
       res.setHeader("Access-Control-Allow-Headers", "X-Requested-With,content-type");
-
-      // Pass to next layer of middleware
       next();
     });
     app.use(express.json());
@@ -60,15 +54,37 @@ export class SocketServer {
         return;
       }
 
-      const newChar = this._databaseManager.createCharacter("user/0", data.userName, data.email);
-
-      console.log("yaya", result.data, newChar);
-      // TODO(@Isha): Get token
-
-      const token = "";
+      const newChar = await this._databaseManager.createCharacter(data);
+      this._databaseManager.saveCharacter(newChar);
       res.send(
         JSON.stringify({
-          token,
+          success: true,
+          userName: newChar.userName,
+          token: newChar.userId,
+        })
+      );
+    });
+
+    app.post("/login", async (req, res) => {
+      const result = LogInSchema.safeParse(req.body);
+      if (!result.success) {
+        res.send(JSON.stringify(result));
+        return;
+      }
+      const data = result.data;
+      const character = await this._databaseManager.loginCharacter(data);
+
+      console.log(result.data, character);
+      if (!character) {
+        res.send(JSON.stringify({ success: false, error: { issues: [{ message: "Invalid login information" }] } }));
+        return;
+      }
+
+      res.send(
+        JSON.stringify({
+          success: true,
+          userName: character.userName,
+          token: character.userId,
         })
       );
     });
@@ -78,9 +94,14 @@ export class SocketServer {
     // initialize the WebSocket server instance
     const wss = new WebSocket.Server({ server });
 
-    wss.on("connection", async (ws: CharacterSocket) => {
+    wss.on("connection", async (ws: CharacterSocket, request: http.IncomingMessage) => {
       // TODO(@Isha): Get user from database
-      const character = await this._databaseManager.loadCharacter("user/0");
+      const token = request.url?.replace("/", "");
+      if (!token) {
+        ws.close();
+        return;
+      }
+      const character = await this._databaseManager.loadCharacter(token);
       if (!character) {
         console.warn("Could not find user");
         return;
