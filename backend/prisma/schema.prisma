@@ -13,5 +13,6 @@ datasource db {
 model Character {
   userId String @id @default(uuid())
   userName String @unique
+  email String @unique
   data Json
 }

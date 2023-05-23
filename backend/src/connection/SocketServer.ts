@@ -11,6 +11,7 @@ import { ScheduleActivityRequestParser } from "backend/connection/requests/Sched
 import { WebSocket } from "ws";
 import { DatabaseManager } from "backend/persistance/DatabaseManager";
 import { PrismaSupabaseClient } from "backend/persistance/PrismaSupabaseClient";
+import { SignUpSchema } from "backend/persistance/SignUp";
 
 export class SocketServer {
   private _game: Game;
@@ -26,6 +27,51 @@ export class SocketServer {
 
     const app = express();
 
+    app.use(function (req, res, next) {
+      // Website you wish to allow to connect
+      res.setHeader("Access-Control-Allow-Origin", "*");
+
+      // Request methods you wish to allow
+      res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
+
+      // Request headers you wish to allow
+      res.setHeader("Access-Control-Allow-Headers", "X-Requested-With,content-type");
+
+      // Pass to next layer of middleware
+      next();
+    });
+    app.use(express.json());
+
+    app.post("/signup", async (req, res) => {
+      const result = SignUpSchema.safeParse(req.body);
+      if (!result.success) {
+        res.send(JSON.stringify(result));
+        return;
+      }
+      const data = result.data;
+      const isUserNameTaken = await this._databaseManager.isUserNameTaken(data.userName);
+      if (isUserNameTaken) {
+        res.send(JSON.stringify({ success: false, error: { issues: [{ message: "Username is already taken" }] } }));
+        return;
+      }
+      const isEmailTaken = await this._databaseManager.isEmailTaken(data.email);
+      if (isEmailTaken) {
+        res.send(JSON.stringify({ success: false, error: { issues: [{ message: "Email is already taken" }] } }));
+        return;
+      }
+
+      const newChar = this._databaseManager.createCharacter("user/0", data.userName, data.email);
+
+      console.log("yaya", result.data, newChar);
+      // TODO(@Isha): Get token
+
+      const token = "";
+      res.send(
+        JSON.stringify({
+          token,
+        })
+      );
+    });
     // initialize a simple http server
     const server = http.createServer(app);
 
@@ -34,7 +80,7 @@ export class SocketServer {
 
     wss.on("connection", async (ws: CharacterSocket) => {
       // TODO(@Isha): Get user from database
-      const character = await this._databaseManager.findOrCreateCharacter("Isha", "user/0");
+      const character = await this._databaseManager.loadCharacter("user/0");
       if (!character) {
         console.warn("Could not find user");
         return;

@@ -20,6 +20,7 @@ import { CharacterSaveData } from "backend/character/CharacterSaveData";
 export class Character {
   userId: string;
   userName: string;
+  email: string;
   socket!: CharacterSocket;
 
   skills: CharacterSkills = new CharacterSkills();
@@ -29,9 +30,10 @@ export class Character {
   private readonly _features: CharacterFeatures;
   private readonly _game: Game;
 
-  constructor(userId: string, userName: string, game: Game) {
+  constructor(userId: string, userName: string, email: string, game: Game) {
     this.userId = userId;
     this.userName = userName;
+    this.email = email;
     this._game = game;
 
     this._features = {
@@ -60,6 +62,7 @@ export class Character {
     return {
       userId: this.userId,
       userName: this.userName,
+      email: this.email,
       skills: this.skills.save(),
       inventory: this.inventory.save(),
     };

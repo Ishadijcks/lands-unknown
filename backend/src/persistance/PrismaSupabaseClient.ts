@@ -20,6 +20,24 @@ export class PrismaSupabaseClient implements DatabaseClient {
     return character.data as unknown as CharacterSaveData;
   }
 
+  async isUserNameTaken(userName: string): Promise<boolean> {
+    const character = await this._prisma.character.findUnique({
+      where: {
+        userName: userName,
+      },
+    });
+    return character != null;
+  }
+
+  async isEmailTaken(email: string): Promise<boolean> {
+    const character = await this._prisma.character.findUnique({
+      where: {
+        email: email,
+      },
+    });
+    return character != null;
+  }
+
   async storeCharacter(character: Character): Promise<void> {
     const save = character.save();
     const result = await this._prisma.character.upsert({
@@ -29,6 +47,7 @@ export class PrismaSupabaseClient implements DatabaseClient {
       create: {
         userId: character.userId,
         userName: character.userName,
+        email: character.email,
         data: save as unknown as Prisma.JsonObject,
       },
       update: {

@@ -4,6 +4,7 @@ import { CharacterInventorySaveData } from "backend/character/inventory/Characte
 export interface CharacterSaveData {
   userId: string;
   userName: string;
+  email: string;
   skills: CharacterSkillsSaveData;
   inventory: CharacterInventorySaveData;
 }
