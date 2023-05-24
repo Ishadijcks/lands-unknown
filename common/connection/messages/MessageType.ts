@@ -3,4 +3,5 @@ export enum MessageType {
   ActivityQueueUpdated = "activity_queue_updated",
   SkillsUpdated = "skills_updated",
   InventoryUpdated = "inventory_updated",
+  ConnectionClosed = "connection_closed",
 }

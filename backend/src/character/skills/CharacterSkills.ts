@@ -30,7 +30,6 @@ export class CharacterSkills extends CharacterFeature {
     const newLevel = this._game.skills.getLevelForExp(this._skills[skill].experience);
     if (oldLevel != newLevel) {
       this._skills[skill].level = newLevel;
-      console.log("Level up!", newLevel);
     }
     this._character.sendSkillsUpdated([this._skills[skill]]);
   }

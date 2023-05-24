@@ -10,6 +10,7 @@ import { ClientActivityQueue } from "$lib/luclient/core/activities/ClientActivit
 import { InventoryUpdatedMessageParser } from "$lib/luclient/core/connection/messages/InventoryUpdatedMessageParser";
 import { ClientInventory } from "$lib/luclient/core/inventory/ClientInventory";
 import { InitCharacterMessageParser } from "$lib/luclient/core/connection/messages/InitCharacterMessageParser";
+import { IgnoreParser } from "$lib/luclient/core/connection/messages/IgnoreParser";
 
 export class LuClient {
   socket: SocketClient;
@@ -19,6 +20,7 @@ export class LuClient {
     [MessageType.SkillsUpdated]: new SkillsUpdatedMessageParser(),
     [MessageType.ActivityQueueUpdated]: new ActivityQueueUpdatedMessageParser(),
     [MessageType.InventoryUpdated]: new InventoryUpdatedMessageParser(),
+    [MessageType.ConnectionClosed]: new IgnoreParser(),
   };
 
   userName = "";

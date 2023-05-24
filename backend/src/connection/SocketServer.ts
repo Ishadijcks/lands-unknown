@@ -8,15 +8,21 @@ import { BaseRequest } from "common/connection/requests/BaseRequest";
 import { Character } from "backend/character/Character";
 import { Game } from "common/Game";
 import { ScheduleActivityRequestParser } from "backend/connection/requests/ScheduleActivityRequestParser";
-import { WebSocket } from "ws";
+import { Server, WebSocket } from "ws";
 import { DatabaseManager } from "backend/persistance/DatabaseManager";
 import { PrismaSupabaseClient } from "backend/persistance/PrismaSupabaseClient";
 import { SignUpSchema } from "backend/persistance/SignUp";
 import { LogInSchema } from "backend/persistance/LogIn";
+import { CharacterManager } from "backend/persistance/CharacterManager";
 
 export class SocketServer {
+  private readonly TICK_DURATION = 1;
+
   private _game: Game;
   private _databaseManager: DatabaseManager;
+  private _characterManager: CharacterManager;
+
+  private _wss: Server;
 
   private _requestParsers: Record<RequestType, RequestParser> = {
     [RequestType.ScheduleActivity]: new ScheduleActivityRequestParser(),
@@ -25,7 +31,7 @@ export class SocketServer {
   constructor(game: Game, port: number | string) {
     this._game = game;
     this._databaseManager = new DatabaseManager(new PrismaSupabaseClient(), this._game);
-
+    this._characterManager = new CharacterManager();
     const app = express();
 
     app.use(function (req, res, next) {
@@ -74,7 +80,6 @@ export class SocketServer {
       const data = result.data;
       const character = await this._databaseManager.loginCharacter(data);
 
-      console.log(result.data, character);
       if (!character) {
         res.send(JSON.stringify({ success: false, error: { issues: [{ message: "Invalid login information" }] } }));
         return;
@@ -92,9 +97,9 @@ export class SocketServer {
     const server = http.createServer(app);
 
     // initialize the WebSocket server instance
-    const wss = new WebSocket.Server({ server });
+    this._wss = new WebSocket.Server({ server });
 
-    wss.on("connection", async (ws: CharacterSocket, request: http.IncomingMessage) => {
+    this._wss.on("connection", async (ws: CharacterSocket, request: http.IncomingMessage) => {
       // TODO(@Isha): Get user from database
       const token = request.url?.replace("/", "");
       if (!token) {
@@ -106,6 +111,7 @@ export class SocketServer {
         console.warn("Could not find user");
         return;
       }
+      this._characterManager.addCharacter(character);
       ws.character = character;
       ws.character.socket = ws;
 
@@ -115,18 +121,52 @@ export class SocketServer {
       };
       ws.character.sendInitCharacter();
 
-      setInterval(() => {
-        ws.character.update(0.1);
-      }, 100);
-      setInterval(() => {
-        this._databaseManager.saveCharacter(ws.character);
-      }, 10000);
+      ws.on("error", console.error);
+
+      ws.on("close", (ws: CharacterSocket) => {
+        this._characterManager.removeCharacter(ws.character, "Logging out...");
+        console.log(ws, "is logging out");
+      });
     });
 
     // start our server
     server.listen(port, () => {
       console.log(`Server started on port ${(server.address() as AddressInfo).port} :)`);
     });
+    const interval = setInterval(() => {
+      this.tick();
+    }, this.TICK_DURATION * 1000);
+  }
+
+  private saveTicks = 0;
+
+  private tick() {
+    const start = Date.now();
+    process.stdout.write("tick took: ");
+
+    const characters = this._characterManager.onlineCharacters;
+    characters.forEach((character) => {
+      character.update(this.TICK_DURATION);
+    });
+
+    const end = Date.now();
+    console.log(
+      end - start,
+      "ms for",
+      characters.length,
+      "Characters /",
+      this._wss.clients.size,
+      "Sockets |",
+      characters.map((c) => c.userName).join(", ")
+    );
+
+    this.saveTicks++;
+    if (this.saveTicks > 300) {
+      characters.forEach((character) => {
+        this._databaseManager.saveCharacter(character);
+      });
+      this.saveTicks = 0;
+    }
   }
 
   public handleIncomingRequest(request: BaseRequest, character: Character): void {
@@ -149,5 +189,13 @@ export class SocketServer {
     const data = (result as any).data;
     parser.apply(data, character);
     console.debug(`[${character.userName}] Request`, JSON.stringify(data));
+  }
+
+  public async logOutAllPlayers() {
+    for await (const character of this._characterManager.onlineCharacters) {
+      console.log("Logging out", character.userName);
+      await this._databaseManager.saveCharacter(character);
+      this._characterManager.removeCharacter(character, "Server is shutting down");
+    }
   }
 }

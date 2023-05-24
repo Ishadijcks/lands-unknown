@@ -17,6 +17,7 @@ import { InventoryUpdatedMessage } from "common/connection/messages/InventoryUpd
 import { CharacterInventory } from "backend/character/inventory/CharacterInventory";
 import { CharacterSaveData } from "backend/character/CharacterSaveData";
 import { InitCharacterMessage } from "common/connection/messages/InitCharacterMessage";
+import { ConnectionClosedMessage } from "common/connection/messages/ConnectionClosedMessage";
 
 export class Character {
   userId: string;
@@ -132,6 +133,14 @@ export class Character {
       userName: this.userName,
       inventory: this.inventory.items,
       skills: this.skills.skills,
+    };
+    this._send(message);
+  }
+
+  public sendConnectionClosed(reason: string): void {
+    const message: ConnectionClosedMessage = {
+      type: MessageType.ConnectionClosed,
+      reason,
     };
     this._send(message);
   }

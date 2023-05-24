@@ -8,7 +8,7 @@ export interface DatabaseClient {
   loadCharacterData(id: string): Promise<CharacterSaveData | null>;
   createCharacter(info: SignUpInfo): Promise<string>;
   loginCharacter(info: LogInInfo): Promise<string | null>;
-  storeCharacter(character: Character): void;
+  storeCharacter(character: Character): Promise<void>;
   isUserNameTaken(userName: string): Promise<boolean>;
   isEmailTaken(email: string): Promise<boolean>;
 }

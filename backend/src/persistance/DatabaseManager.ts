@@ -49,7 +49,7 @@ export class DatabaseManager {
     return new Character(userId, info.userName, info.email, this._game);
   }
 
-  saveCharacter(character: Character): void {
-    this.client.storeCharacter(character);
+  async saveCharacter(character: Character): Promise<void> {
+    await this.client.storeCharacter(character);
   }
 }
