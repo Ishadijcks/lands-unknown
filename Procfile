@@ -1,2 +1,2 @@
 web: cd apps/frontend && npm run start
-worker: cd apps/backend && npm start
+worker: tsx apps/backend/src/index.ts
