@@ -9,6 +9,7 @@ export class SocketClient {
 
   private _onMessage = new SimpleEventDispatcher<BaseMessage>();
   private _onConnected = new SignalDispatcher();
+  private _onError = new SimpleEventDispatcher<string>();
   private _onDisconnected = new SimpleEventDispatcher<ConnectionClosedMessage>();
 
   public get onMessage() {
@@ -19,12 +20,20 @@ export class SocketClient {
     return this._onConnected.asEvent();
   }
 
+  public get onError() {
+    return this._onError.asEvent();
+  }
+
   public get onDisconnect() {
     return this._onDisconnected.asEvent();
   }
 
   constructor(token: string) {
     this._socket = new WebSocket(`ws://localhost:8999/${token}`);
+
+    this._socket.onerror = () => {
+      this._onError.dispatch(`Could not connect to server`);
+    };
 
     this._socket.onmessage = (e) => {
       const data = JSON.parse(e.data) as BaseMessage;

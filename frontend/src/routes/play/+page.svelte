@@ -8,6 +8,7 @@
   import { GameState, gameStateStore } from "$lib/GameState";
   import GameDisplay from "$lib/components/GameDisplay.svelte";
   import FullScreenMessage from "$lib/components/atoms/FullScreenMessage.svelte";
+  import RefreshButton from "$lib/components/atoms/RefreshButton.svelte";
 
   let closedReason: string | null = null;
 
@@ -26,6 +27,11 @@
       gameStateStore.set(GameState.DISCONNECTED);
       closedReason = message.reason;
     });
+
+    luClient.socket.onError.subscribe((message: string) => {
+      gameStateStore.set(GameState.DISCONNECTED);
+      closedReason = message;
+    });
     luClient.socket.onConnect.subscribe(() => {
       gameStateStore.set(GameState.PLAYING);
     });
@@ -37,14 +43,17 @@
   }
 </script>
 
-{#if $gameStateStore === GameState.DISCONNECTED}
-  <FullScreenMessage>
-    <span class="h2">{closedReason}</span>
-  </FullScreenMessage>
-{:else if $gameStateStore === GameState.PLAYING}
-  <GameDisplay {luClient} />
-{:else if $gameStateStore === GameState.CONNECTING}
+{#if $gameStateStore === GameState.CONNECTING}
   <FullScreenMessage>
     <span class="h2">Loading...</span>
   </FullScreenMessage>
+{:else if $gameStateStore === GameState.DISCONNECTED}
+  <FullScreenMessage>
+    <div class="flex flex-col space-y-4">
+      <span class="h2">{closedReason}</span>
+      <RefreshButton message="Refresh" />
+    </div>
+  </FullScreenMessage>
+{:else if $gameStateStore === GameState.PLAYING}
+  <GameDisplay {luClient} />
 {/if}
