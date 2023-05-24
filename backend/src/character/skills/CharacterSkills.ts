@@ -3,6 +3,7 @@ import { CharacterSkill } from "common/game/skills/CharacterSkill";
 import { CharacterFeature } from "backend/character/CharacterFeature";
 import { Character } from "backend/character/Character";
 import { Game } from "common/Game";
+import { CharacterSkillsSaveData } from "backend/character/skills/CharacterSkillsSaveData";
 
 export class CharacterSkills extends CharacterFeature {
   private _skills: Record<SkillHrid, CharacterSkill> = {} as unknown as Record<SkillHrid, CharacterSkill>;
@@ -29,18 +30,23 @@ export class CharacterSkills extends CharacterFeature {
     const newLevel = this._game.skills.getLevelForExp(this._skills[skill].experience);
     if (oldLevel != newLevel) {
       this._skills[skill].level = newLevel;
-      console.log("Level up!", newLevel);
     }
     this._character.sendSkillsUpdated([this._skills[skill]]);
   }
 
-  load(data: CharacterSkill[]): void {
-    data.forEach((skill) => {
+  load(data: CharacterSkillsSaveData): void {
+    data?.skills?.forEach((skill) => {
       this._skills[skill.skillHrid] = skill;
     });
   }
 
-  save(): CharacterSkill[] {
+  save(): CharacterSkillsSaveData {
+    return {
+      skills: this.skills,
+    };
+  }
+
+  get skills(): CharacterSkill[] {
     return Object.values(this._skills);
   }
 }

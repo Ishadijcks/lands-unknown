@@ -1,4 +1,4 @@
-import type { CharacterSkills } from "backend/character/CharacterSkills";
+import type { CharacterSkills } from "backend/character/skills/CharacterSkills";
 import type { CharacterActivityQueue } from "backend/character/activities/CharacterActivityQueue";
 import type { CharacterInventory } from "backend/character/inventory/CharacterInventory";
 

@@ -1,22 +1,50 @@
-import { SimpleEventDispatcher } from "strongly-typed-events";
+import { SignalDispatcher, SimpleEventDispatcher } from "strongly-typed-events";
 import type { BaseMessage } from "common/connection/messages/BaseMessage";
 import type { ScheduleActivityRequest } from "common/connection/requests/ScheduleActivityRequest";
+import type { ConnectionClosedMessage } from "common/connection/messages/ConnectionClosedMessage";
+import { MessageType } from "common/connection/messages/MessageType";
 
 export class SocketClient {
   private _socket;
 
   private _onMessage = new SimpleEventDispatcher<BaseMessage>();
+  private _onConnected = new SignalDispatcher();
+  private _onError = new SimpleEventDispatcher<string>();
+  private _onDisconnected = new SimpleEventDispatcher<ConnectionClosedMessage>();
 
   public get onMessage() {
     return this._onMessage.asEvent();
   }
 
-  constructor() {
-    this._socket = new WebSocket("ws://localhost:8999");
+  public get onConnect() {
+    return this._onConnected.asEvent();
+  }
+
+  public get onError() {
+    return this._onError.asEvent();
+  }
+
+  public get onDisconnect() {
+    return this._onDisconnected.asEvent();
+  }
+
+  constructor(token: string) {
+    this._socket = new WebSocket(`ws://localhost:8999/${token}`);
+
+    this._socket.onerror = () => {
+      this._onError.dispatch(`Could not connect to server`);
+    };
 
     this._socket.onmessage = (e) => {
-      const data = JSON.parse(e.data);
+      const data = JSON.parse(e.data) as BaseMessage;
       this._onMessage.dispatch(data);
+
+      if (data.type === MessageType.ConnectionClosed) {
+        this._onDisconnected.dispatch(data as ConnectionClosedMessage);
+      }
+      if (data.type === MessageType.InitCharacter) {
+        this._onConnected.dispatch();
+      }
     };
   }
 

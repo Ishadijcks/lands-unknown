@@ -1,68 +1,54 @@
-<script lang="ts">
-  import { SocketClient } from "$lib/luclient/core/connection/SocketClient.ts";
-  import { gameData } from "common/content/GameData";
-  import { LuClient } from "$lib/luclient/LuClient.ts";
-  import Skills from "$lib/components/Skills.svelte";
-
-  import { AppShell } from "@skeletonlabs/skeleton";
-  import ActivityQueueDisplay from "$lib/components/ActivityQueueDisplay.svelte";
-  import { ActivityHrid } from "common/game/activities/ActivityHrid";
-  import { RequestType } from "common/connection/requests/RequestType";
-  import InventoryDisplay from "$lib/components/InventoryDisplay.svelte";
-
-  const socket = new SocketClient();
-  let luClient = new LuClient(gameData, socket);
-
-  // TODO(@Isha): Fix properly with stores?
-  luClient.socket.onMessage.subscribe(() => {
-    luClient = luClient;
-  });
-
-  const sendActivity = (hrid: ActivityHrid) => {
-    luClient.socket.sendScheduleActivityRequest({
-      type: RequestType.ScheduleActivity,
-      repetitions: 3,
-      activityHrid: hrid,
-    });
-  };
-
-  const sendForest = () => {
-    sendActivity(ActivityHrid.ExploreForest);
-  };
-
-  const sendFish = () => {
-    sendActivity(ActivityHrid.Fish);
-  };
+<script>
+  import LoginDisplay from "$lib/components/login/LoginDisplay.svelte";
 </script>
 
-<AppShell>
-  <svelte:fragment slot="header">
-    <div class="card p-4 m-2">
-      <ActivityQueueDisplay activityQueue={luClient.activityQueue} />
-    </div>
-  </svelte:fragment>
-  <svelte:fragment slot="sidebarLeft">
-    <ul class="list mx-2 h-full space-y-2">
-      <li class="card p-4">
-        <Skills skills={luClient.skills} />
-      </li>
-      <li class="card p-4">
-        <span class="h-48">Secret goes here</span>
-      </li>
-    </ul>
-  </svelte:fragment>
-  <svelte:fragment slot="sidebarRight">
-    <div class="card mx-2 p-4">
-      <InventoryDisplay inventory={luClient.inventory} />
-    </div>
-  </svelte:fragment>
-  <div class="card h-full p-4">
-    World Map goes here
-    <button class="btn variant-filled-success" on:click={sendForest}>Forest</button>
-    <button class="btn variant-filled-surface" on:click={sendFish}>Fish</button>
-  </div>
+<div class="flex flex-row h-16 p-4" />
 
-  <svelte:fragment slot="pageFooter">
-    <div class="card h-48 mt-2 mb-2 p-4">Chat goes here</div>
-  </svelte:fragment>
-</AppShell>
+<div class="flex flex-col items-center">
+  <div class="flex flex-col w-2/3 space-y-24">
+    <div class="flex flex-col w-full items-center space-y-12">
+      <div class="flex flex-col items-center space-y-2">
+        <span class="h1">Lands Unknown</span>
+        <span>Explore the world of Lands Unknown where every adventurer can leave their mark</span>
+      </div>
+
+      <div class="flex flex-row">
+        <LoginDisplay />
+      </div>
+    </div>
+
+    <div class="flex flex-row card p-4">
+      <span class="flex-grow text-center">IMG</span>
+      <div class="flex flex-col w-64">
+        <span class="h2">Over 10 skills to enjoy</span>
+        <span>Mining, Smithing, Woodcutting, Archeology, Divination and many more!</span>
+      </div>
+    </div>
+
+    <div class="flex flex-row card p-4">
+      <div class="flex flex-col w-64">
+        <span class="h2">Create your own gear for combat</span>
+        <span>gather resources and create your own equipment to rid the world of evil creatures!</span>
+      </div>
+      <span class="flex-grow text-center">IMG</span>
+    </div>
+
+    <div class="flex flex-row card p-4">
+      <span class="flex-grow text-center">IMG</span>
+      <div class="flex flex-col w-64">
+        <span class="h2">Immersive Quests</span>
+        <span>Uncover the mysteries of the world through story-based quests</span>
+      </div>
+    </div>
+
+    <div class="flex flex-row card p-4">
+      <div class="flex flex-col w-64">
+        <span class="h2">Join the Community</span>
+        <span
+          >Chat with your friends, compete for leaderboards and cooperate to uncover the mysteries of the Lands Unknown</span
+        >
+      </div>
+      <span class="flex-grow text-center">IMG</span>
+    </div>
+  </div>
+</div>
