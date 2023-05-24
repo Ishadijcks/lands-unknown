@@ -5,7 +5,6 @@
 
   export let detail: SkillDetail;
   export let level: number;
-  export let xp: number;
   export let percentage: number;
 </script>
 
