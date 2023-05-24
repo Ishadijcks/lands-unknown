@@ -9,16 +9,19 @@ import { ActivityQueueUpdatedMessageParser } from "$lib/luclient/core/connection
 import { ClientActivityQueue } from "$lib/luclient/core/activities/ClientActivityQueue";
 import { InventoryUpdatedMessageParser } from "$lib/luclient/core/connection/messages/InventoryUpdatedMessageParser";
 import { ClientInventory } from "$lib/luclient/core/inventory/ClientInventory";
+import { InitCharacterMessageParser } from "$lib/luclient/core/connection/messages/InitCharacterMessageParser";
 
 export class LuClient {
   socket: SocketClient;
 
   messageParsers: Record<MessageType, MessageParser> = {
+    [MessageType.InitCharacter]: new InitCharacterMessageParser(),
     [MessageType.SkillsUpdated]: new SkillsUpdatedMessageParser(),
     [MessageType.ActivityQueueUpdated]: new ActivityQueueUpdatedMessageParser(),
     [MessageType.InventoryUpdated]: new InventoryUpdatedMessageParser(),
   };
 
+  userName = "";
   skills: ClientSkills;
   activityQueue: ClientActivityQueue;
   inventory: ClientInventory;

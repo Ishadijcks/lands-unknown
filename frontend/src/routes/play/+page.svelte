@@ -33,7 +33,7 @@
     luClient.socket.sendScheduleActivityRequest({
       type: RequestType.ScheduleActivity,
       repetitions: 3,
-      activityHrid: hrid
+      activityHrid: hrid,
     });
   };
 

@@ -16,6 +16,7 @@ import { CharacterItem } from "common/game/items/CharacterItem";
 import { InventoryUpdatedMessage } from "common/connection/messages/InventoryUpdatedMessage";
 import { CharacterInventory } from "backend/character/inventory/CharacterInventory";
 import { CharacterSaveData } from "backend/character/CharacterSaveData";
+import { InitCharacterMessage } from "common/connection/messages/InitCharacterMessage";
 
 export class Character {
   userId: string;
@@ -121,6 +122,16 @@ export class Character {
     const message: InventoryUpdatedMessage = {
       type: MessageType.InventoryUpdated,
       items: items,
+    };
+    this._send(message);
+  }
+
+  public sendInitCharacter(): void {
+    const message: InitCharacterMessage = {
+      type: MessageType.InitCharacter,
+      userName: this.userName,
+      inventory: this.inventory.items,
+      skills: this.skills.skills,
     };
     this._send(message);
   }

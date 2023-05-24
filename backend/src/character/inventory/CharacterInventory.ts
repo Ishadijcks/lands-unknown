@@ -36,7 +36,11 @@ export class CharacterInventory extends CharacterFeature {
 
   save(): CharacterInventorySaveData {
     return {
-      items: Object.values(this._inventory),
+      items: this.items,
     };
+  }
+
+  get items(): CharacterItem[] {
+    return Object.values(this._inventory);
   }
 }

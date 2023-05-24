@@ -43,7 +43,11 @@ export class CharacterSkills extends CharacterFeature {
 
   save(): CharacterSkillsSaveData {
     return {
-      skills: Object.values(this._skills),
+      skills: this.skills,
     };
+  }
+
+  get skills(): CharacterSkill[] {
+    return Object.values(this._skills);
   }
 }

@@ -113,6 +113,7 @@ export class SocketServer {
         const request = JSON.parse(ev.data.toString()) as BaseRequest;
         this.handleIncomingRequest(request, ws.character);
       };
+      ws.character.sendInitCharacter();
 
       setInterval(() => {
         ws.character.update(0.1);
