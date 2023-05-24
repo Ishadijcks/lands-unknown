@@ -2,7 +2,10 @@
   "name": "lands-unknown-multiplayer",
   "version": "0.0.0",
   "private": true,
-  "workspaces": ["packages/*", "apps/*"],
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
   "scripts": {
     "dev": "dotenv -- turbo dev",
     "backend": "npm run dev -w apps/backend",
