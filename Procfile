@@ -1,2 +1,2 @@
-web: cd apps/frontend && npm run build
+web: cd apps/frontend && npm install && npm run build
 worker: cd apps/backend && npm start
