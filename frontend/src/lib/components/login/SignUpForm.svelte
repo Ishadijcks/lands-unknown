@@ -1,6 +1,6 @@
 <script lang="ts">
   import { ZodError } from "zod";
-  import { tokenStorage } from "$lib/tokenStorage";
+  import { tokenStorage } from "$lib/TokenStorage";
 
   let email = "";
   let userName = "";
