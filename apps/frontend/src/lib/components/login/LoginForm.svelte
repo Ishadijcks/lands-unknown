@@ -22,7 +22,7 @@
 
   const login = async () => {
     error = null;
-    await fetch(new URL(`https://${PUBLIC_SERVER_URL}/login`), {
+    await fetch(new URL(`${PUBLIC_SERVER_URL}/login`), {
       method: "POST",
       headers: {
         Accept: "application/json",
