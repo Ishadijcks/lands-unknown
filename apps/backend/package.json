@@ -16,7 +16,6 @@
     "ws": "^8.13.0",
     "zod": "^3.21.4",
     "tsx": "^3.12.7"
-
   },
   "scripts": {
     "dev": "tsx watch src/index.ts",
