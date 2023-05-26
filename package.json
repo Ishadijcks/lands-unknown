@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "dev": "dotenv -- turbo dev",
+    "start": "dotenv -- turbo start",
     "lint": "prettier --write .",
     "lint:check": "prettier --check .",
     "build": "dotenv -- turbo build"
