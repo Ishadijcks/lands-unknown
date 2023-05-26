@@ -8,12 +8,9 @@
   ],
   "scripts": {
     "dev": "dotenv -- turbo dev",
-    "backend": "npm run dev -w apps/backend",
-    "frontend": "npm run dev -w apps/frontend",
-    "start": "npm run start -w apps/backend",
     "lint": "prettier --write .",
     "lint:check": "prettier --check .",
-    "build": "npm run build -w apps/frontend"
+    "build": "dotenv -- turbo build"
   },
   "devDependencies": {
     "prettier": "^2.8.8",
