@@ -1,6 +1,7 @@
 <script lang="ts">
   import { ZodError } from "zod";
   import { tokenStorage } from "$lib/TokenStorage";
+  import { PUBLIC_SERVER_URL } from "$env/static/public";
 
   let email = "";
   let userName = "";
@@ -23,7 +24,7 @@
 
   const signup = async () => {
     error = null;
-    await fetch(new URL("http://localhost:8999/signup"), {
+    await fetch(new URL(`http://${PUBLIC_SERVER_URL}/signup`), {
       method: "POST",
       headers: {
         Accept: "application/json",

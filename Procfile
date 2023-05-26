@@ -1,2 +1,2 @@
-web: cd frontend && npm run build
-worker: cd backend && npm start
+web: cd apps/frontend && npm run start
+worker: cd apps/backend && prisma generate && npm run start

@@ -14,3 +14,5 @@ jobs:
       #        run: npm run test
       - name: Build
         run: npm run build
+        env:
+          PUBLIC_SERVER_URL: https://lands-unknown.herokuapp.com/
