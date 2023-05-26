@@ -4,7 +4,7 @@ import type { ScheduleActivityRequest } from "common/connection/requests/Schedul
 import type { ConnectionClosedMessage } from "common/connection/messages/ConnectionClosedMessage";
 import { MessageType } from "common/connection/messages/MessageType";
 
-import { PUBLIC_SERVER_URL } from "$env/static/public";
+import { PUBLIC_WEBSOCKET_URL } from "$env/static/public";
 
 export class SocketClient {
   private _socket;
@@ -31,7 +31,7 @@ export class SocketClient {
   }
 
   constructor(token: string) {
-    this._socket = new WebSocket(`ws://${PUBLIC_SERVER_URL}/${token}`);
+    this._socket = new WebSocket(`${PUBLIC_WEBSOCKET_URL}/${token}`);
 
     this._socket.onerror = () => {
       this._onError.dispatch(`Could not connect to server`);

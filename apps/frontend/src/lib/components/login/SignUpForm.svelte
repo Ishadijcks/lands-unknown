@@ -24,7 +24,7 @@
 
   const signup = async () => {
     error = null;
-    await fetch(new URL(`http://${PUBLIC_SERVER_URL}/signup`), {
+    await fetch(new URL(`${PUBLIC_SERVER_URL}/signup`), {
       method: "POST",
       headers: {
         Accept: "application/json",

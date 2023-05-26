@@ -4,7 +4,7 @@ import { gameData } from "common/content/GameData";
 import process from "process";
 
 const game = new Game(gameData);
-const server = new SocketServer(game, 8999);
+const server = new SocketServer(game, process.env.PORT ?? 8999);
 
 process.on("SIGINT", async function () {
   console.log("Shutting down...");

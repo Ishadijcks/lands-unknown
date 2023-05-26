@@ -2,22 +2,24 @@
   "name": "lands-unknown-multiplayer",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": "16.18.x"
+  },
   "workspaces": [
     "packages/*",
     "apps/*"
   ],
   "scripts": {
     "dev": "dotenv -- turbo dev",
-    "backend": "npm run dev -w apps/backend",
-    "frontend": "npm run dev -w apps/frontend",
-    "start": "npm run start -w apps/backend",
+    "start": "dotenv -- turbo start",
     "lint": "prettier --write .",
     "lint:check": "prettier --check .",
-    "build": "npm run build -w apps/frontend"
+    "build": "dotenv -- turbo build"
   },
   "devDependencies": {
+    "dotenv-cli": "^7.2.1",
     "prettier": "^2.8.8",
-    "dotenv-cli": "^7.2.1"
+    "turbo": "^1.9.9"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.22.0"

@@ -131,6 +131,7 @@ export class SocketServer {
 
     // start our server
     server.listen(port, () => {
+      console.log(server.address());
       console.log(`Server started on port ${(server.address() as AddressInfo).port} :)`);
     });
     const interval = setInterval(() => {
