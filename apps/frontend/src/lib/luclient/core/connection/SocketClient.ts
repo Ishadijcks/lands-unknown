@@ -31,7 +31,7 @@ export class SocketClient {
   }
 
   constructor(token: string) {
-    this._socket = new WebSocket(`ws://${PUBLIC_SERVER_URL}/${token}`);
+    this._socket = new WebSocket(`wss://${PUBLIC_SERVER_URL}/${token}`);
 
     this._socket.onerror = () => {
       this._onError.dispatch(`Could not connect to server`);
