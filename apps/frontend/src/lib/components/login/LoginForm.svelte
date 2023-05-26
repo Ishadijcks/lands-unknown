@@ -1,6 +1,7 @@
 <script lang="ts">
   import { ZodError } from "zod";
   import { tokenStorage } from "$lib/TokenStorage";
+  import { PUBLIC_SERVER_URL } from "$env/static/public";
 
   let email = "";
   let password = "";
@@ -21,7 +22,7 @@
 
   const login = async () => {
     error = null;
-    await fetch(new URL("http://localhost:8999/login"), {
+    await fetch(new URL(`http://${PUBLIC_SERVER_URL}/login`), {
       method: "POST",
       headers: {
         Accept: "application/json",
