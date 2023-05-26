@@ -20,7 +20,6 @@
     "dotenv-cli": "^7.2.1",
     "prettier": "^2.8.8",
     "turbo": "^1.9.9"
-
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.22.0"
