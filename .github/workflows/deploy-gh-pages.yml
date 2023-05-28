@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: "feature/gh-pages"
+    branches: "develop"
 
 env:
   PUBLIC_SERVER_URL: "https://lands-unknown.herokuapp.com"
