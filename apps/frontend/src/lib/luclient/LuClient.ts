@@ -11,6 +11,7 @@ import { InventoryUpdatedMessageParser } from "$lib/luclient/core/connection/mes
 import { ClientInventory } from "$lib/luclient/core/inventory/ClientInventory";
 import { InitCharacterMessageParser } from "$lib/luclient/core/connection/messages/InitCharacterMessageParser";
 import { IgnoreParser } from "$lib/luclient/core/connection/messages/IgnoreParser";
+import { ClientWorldMap } from "$lib/luclient/core/worldmap/ClientWorldMap";
 
 export class LuClient {
   socket: SocketClient;
@@ -27,12 +28,13 @@ export class LuClient {
   skills: ClientSkills;
   activityQueue: ClientActivityQueue;
   inventory: ClientInventory;
+  worldMap: ClientWorldMap;
 
   constructor(gameData: GameData, socket: SocketClient) {
     this.skills = new ClientSkills(gameData.skillDetailMap, gameData.skillExpLevels);
     this.activityQueue = new ClientActivityQueue(gameData.actionDetailMap, gameData.activityDetailMap);
     this.inventory = new ClientInventory(gameData.itemDetailMap);
-
+    this.worldMap = new ClientWorldMap(gameData.locationDetailMap, gameData.roadDetailMap);
     this.socket = socket;
 
     this.socket.onMessage.subscribe((message) => {
