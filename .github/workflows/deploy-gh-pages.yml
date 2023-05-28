@@ -29,14 +29,13 @@ jobs:
           BASE_PATH: "/lands-unknown"
         run: |
           npm run build
-          ls
           touch apps/frontend/build/.nojekyll
 
       - name: Upload Artifacts
         uses: actions/upload-pages-artifact@v1
         with:
           # this should match the `pages` option in your adapter-static options
-          path: "build/"
+          path: "apps/frontend/build/"
 
   deploy:
     needs: build_site
