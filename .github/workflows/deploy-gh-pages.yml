@@ -29,6 +29,7 @@ jobs:
           BASE_PATH: "/lands-unknown"
         run: |
           npm run build
+          ls
           touch apps/frontend/build/.nojekyll
 
       - name: Upload Artifacts
