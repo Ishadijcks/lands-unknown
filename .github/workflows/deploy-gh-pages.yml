@@ -4,6 +4,10 @@ on:
   push:
     branches: 'feature/gh-pages'
 
+env:
+  PUBLIC_SERVER_URL: 'https://lands-unknown.herokuapp.com'
+  PUBLIC_WEBSOCKET_URL: 'ws://lands-unknown.herokuapp.com'
+
 jobs:
   build_site:
     runs-on: ubuntu-latest
