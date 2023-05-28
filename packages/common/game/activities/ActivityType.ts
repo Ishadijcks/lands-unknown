@@ -1,6 +1,5 @@
 export enum ActivityType {
-  Forest = "/activity_type/forest",
-  Sea = "/activity_type/sea",
-  Lake = "/activity_type/lake",
-  Mountain = "/activity_type/mountain",
+  Facility = "activity_type/facility",
+  Travel = "activity_type/travel",
+  Randomized = "activity_type/randomized",
 }

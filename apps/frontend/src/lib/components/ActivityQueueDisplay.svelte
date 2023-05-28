@@ -11,7 +11,7 @@
     <ActivityDisplay
       description={activityQueue.currentActivity.description}
       repetitions={activityQueue.currentActivity.repetitions}
-      type={activityQueue.currentActivity.type}
+      theme={activityQueue.currentActivity.theme}
     >
       {#if activityQueue.currentAction}
         <ActionDisplay
@@ -25,7 +25,7 @@
     <ActivityDisplay
       description={activityQueue.activityDetailMap[activity.hrid].name}
       repetitions={activity.repetitions}
-      type={activityQueue.activityDetailMap[activity.hrid].type}
+      theme={activityQueue.activityDetailMap[activity.hrid].theme}
     />
   {/each}
 </div>

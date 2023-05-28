@@ -1,21 +1,21 @@
 <script lang="ts">
-  import { ActivityType } from "common/game/activities/ActivityType";
+  import { ActivityTheme } from "common/game/activities/ActivityTheme";
 
   export let description: string;
   export let repetitions: number;
 
-  export let type: ActivityType;
+  export let theme: ActivityTheme;
 
   // TODO(@Isha): Move to content
   $: style = () => {
-    switch (type) {
-      case ActivityType.Forest:
+    switch (theme) {
+      case ActivityTheme.Forest:
         return "variant-filled-success";
-      case ActivityType.Sea:
+      case ActivityTheme.Sea:
         return "variant-filled-surface";
-      case ActivityType.Lake:
+      case ActivityTheme.Lake:
         return "variant-filled-surface";
-      case ActivityType.Mountain:
+      case ActivityTheme.Mountain:
         return "variant-ghost";
     }
   };

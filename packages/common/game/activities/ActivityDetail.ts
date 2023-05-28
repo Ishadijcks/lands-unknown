@@ -1,12 +1,13 @@
 import { z } from "zod";
 import { ActivityHrid } from "common/game/activities/ActivityHrid";
 import { ActionHrid } from "common/game/actions/ActionHrid";
+import { ActivityTheme } from "common/game/activities/ActivityTheme";
 import { ActivityType } from "common/game/activities/ActivityType";
 
 const ActivityDetailSchema = z.object({
   hrid: z.nativeEnum(ActivityHrid),
   name: z.string(),
-  // TODO(@Isha): Add different types of activities (linear, random)
+  type: z.nativeEnum(ActivityType),
 
   actions: z.array(
     z.object({
@@ -15,7 +16,7 @@ const ActivityDetailSchema = z.object({
     })
   ),
 
-  type: z.nativeEnum(ActivityType),
+  theme: z.nativeEnum(ActivityTheme),
 });
 
 export type ActivityDetail = z.infer<typeof ActivityDetailSchema>;
