@@ -2,10 +2,14 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "env": ["PUBLIC_SERVER_URL", "PUBLIC_WEBSOCKET_URL"]
     },
     "lint": {},
-    "dev": {},
-    "start": {}
+    "dev": {
+      "env": ["PUBLIC_SERVER_URL", "PUBLIC_WEBSOCKET_URL"]
+    },
+    "start": {},
+    "gh-pages": {}
   }
 }

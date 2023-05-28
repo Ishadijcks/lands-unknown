@@ -37,6 +37,10 @@ export class SocketClient {
       this._onError.dispatch(`Could not connect to server`);
     };
 
+    this._socket.onclose = () => {
+      this._onError.dispatch(`Server disconnect`);
+    };
+
     this._socket.onmessage = (e) => {
       const data = JSON.parse(e.data) as BaseMessage;
       this._onMessage.dispatch(data);
