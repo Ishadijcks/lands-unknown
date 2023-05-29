@@ -18,6 +18,7 @@ import { CharacterInventory } from "backend/character/inventory/CharacterInvento
 import { CharacterSaveData } from "backend/character/CharacterSaveData";
 import { InitCharacterMessage } from "common/connection/messages/InitCharacterMessage";
 import { ConnectionClosedMessage } from "common/connection/messages/ConnectionClosedMessage";
+import { CharacterWorldMap } from "backend/character/worldmap/CharacterWorldMap";
 
 export class Character {
   userId: string;
@@ -28,6 +29,7 @@ export class Character {
   skills: CharacterSkills = new CharacterSkills();
   activityQueue: CharacterActivityQueue = new CharacterActivityQueue();
   inventory: CharacterInventory = new CharacterInventory();
+  worldMap: CharacterWorldMap = new CharacterWorldMap();
 
   private readonly _features: CharacterFeatures;
   private readonly _game: Game;
@@ -42,6 +44,7 @@ export class Character {
       skills: this.skills,
       activityQueue: this.activityQueue,
       inventory: this.inventory,
+      worldMap: this.worldMap,
     };
 
     this.inject();
@@ -100,7 +103,7 @@ export class Character {
         ? {
             description: currentActivity.detail.name,
             repetitions: currentActivity.repetitions,
-            type: currentActivity.detail.type,
+            theme: currentActivity.detail.theme,
           }
         : null,
     };

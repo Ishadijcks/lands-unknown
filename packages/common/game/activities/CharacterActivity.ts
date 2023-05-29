@@ -1,7 +1,7 @@
-import type { ActivityType } from "common/game/activities/ActivityType";
+import type { ActivityTheme } from "common/game/activities/ActivityTheme";
 
 export interface CharacterActivity {
   description: string;
   repetitions: number;
-  type: ActivityType;
+  theme: ActivityTheme;
 }

@@ -4,26 +4,9 @@
   import InventoryDisplay from "$lib/components/InventoryDisplay.svelte";
   import { AppShell } from "@skeletonlabs/skeleton";
   import { LuClient } from "$lib/luclient/LuClient.js";
-  import { ActivityHrid } from "common/game/activities/ActivityHrid.js";
-  import { RequestType } from "common/connection/requests/RequestType.js";
+  import WorldMapDisplay from "$lib/components/WorldMapDisplay.svelte";
 
   export let luClient: LuClient;
-
-  const sendActivity = (hrid: ActivityHrid) => {
-    luClient.socket.sendScheduleActivityRequest({
-      type: RequestType.ScheduleActivity,
-      repetitions: 3,
-      activityHrid: hrid,
-    });
-  };
-
-  const sendForest = () => {
-    sendActivity(ActivityHrid.ExploreForest);
-  };
-
-  const sendFish = () => {
-    sendActivity(ActivityHrid.Fish);
-  };
 </script>
 
 <AppShell>
@@ -48,9 +31,7 @@
     </div>
   </svelte:fragment>
   <div class="card h-full p-4">
-    World Map goes here
-    <button class="btn variant-filled-success" on:click={sendForest}>Forest</button>
-    <button class="btn variant-filled-surface" on:click={sendFish}>Fish</button>
+    <WorldMapDisplay worldMap={luClient.worldMap} />
   </div>
 
   <svelte:fragment slot="pageFooter">

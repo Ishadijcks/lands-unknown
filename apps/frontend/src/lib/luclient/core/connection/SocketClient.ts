@@ -5,6 +5,9 @@ import type { ConnectionClosedMessage } from "common/connection/messages/Connect
 import { MessageType } from "common/connection/messages/MessageType";
 
 import { PUBLIC_WEBSOCKET_URL } from "$env/static/public";
+import { RequestType } from "common/connection/requests/RequestType";
+import type { LocationHrid } from "common/game/worldmap/LocationHrid";
+import type { BaseRequest } from "common/connection/requests/BaseRequest";
 
 export class SocketClient {
   private _socket;
@@ -54,8 +57,19 @@ export class SocketClient {
     };
   }
 
-  public sendScheduleActivityRequest(request: ScheduleActivityRequest) {
+  private _send(request: BaseRequest): void {
     const data = JSON.stringify(request);
+    console.log("Sending", data);
     this._socket.send(data);
+  }
+
+  public sendScheduleActivityRequest(location: LocationHrid, index: number, repetitions: number) {
+    const request: ScheduleActivityRequest = {
+      type: RequestType.ScheduleActivity,
+      repetitions,
+      location,
+      index,
+    };
+    this._send(request);
   }
 }

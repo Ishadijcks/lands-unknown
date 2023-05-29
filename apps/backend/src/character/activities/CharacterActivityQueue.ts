@@ -4,6 +4,7 @@ import { Action } from "common/game/actions/Action";
 import { Activity } from "common/game/activities/Activity";
 import { ScheduledActivity } from "common/game/activities/ScheduledActivity";
 import { ActionDetail } from "common/game/actions/ActionDetail";
+import { ActivityDetail } from "common/game/activities/ActivityDetail";
 
 export class CharacterActivityQueue extends CharacterFeature {
   private _queue: ScheduledActivity[] = [];
@@ -34,8 +35,8 @@ export class CharacterActivityQueue extends CharacterFeature {
       this.completeAction(this._currentAction.detail);
 
       this._currentAction = null;
-      if (this._currentActivity?.isFinished) {
-        this._currentActivity = null;
+      if (this._currentActivity?.isFinished()) {
+        this._clearCurrentActivity();
       }
     }
 
@@ -51,7 +52,12 @@ export class CharacterActivityQueue extends CharacterFeature {
         return;
       }
       const nextActivityDetail = this._game.activityQueue.activityDetailMap[scheduledActivity.hrid];
-      this._currentActivity = new Activity(nextActivityDetail, scheduledActivity.repetitions);
+      this._setCurrentActivity(nextActivityDetail, scheduledActivity.repetitions);
+    }
+
+    if (!this._currentActivity) {
+      console.warn("Current Activity is null");
+      return;
     }
 
     const nextActionHrid = this._currentActivity.getNext();
@@ -76,14 +82,21 @@ export class CharacterActivityQueue extends CharacterFeature {
     this._character.sendActivityQueueUpdated(this._queue, this._currentAction, this._currentActivity);
   }
 
-  scheduleActivity(hrid: ActivityHrid, repetitions: number = 1) {
-    if (!this._currentActivity) {
-      this._currentActivity = new Activity(this._game.activityQueue.activityDetailMap[hrid], repetitions);
-    } else {
-      this._queue.push({ hrid, repetitions });
+  private _clearCurrentActivity(): void {
+    this._currentActivity = null;
+  }
+
+  private _setCurrentActivity(detail: ActivityDetail, repetitions: number) {
+    if (this._currentActivity) {
+      console.warn("Tried to set current activity but it is already", this._currentActivity);
     }
+    this._currentActivity = this._game.activityQueue.getActivityFromDetail(detail, repetitions);
 
     this.sendActivityQueueMessage();
+  }
+
+  scheduleActivity(hrid: ActivityHrid, repetitions: number = 1) {
+    this._queue.push({ hrid, repetitions });
   }
 
   // TODO(@Isha): Implement

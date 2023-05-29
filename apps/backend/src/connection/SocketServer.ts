@@ -26,6 +26,7 @@ export class SocketServer {
 
   private _requestParsers: Record<RequestType, RequestParser> = {
     [RequestType.ScheduleActivity]: new ScheduleActivityRequestParser(),
+    // [RequestType.ScheduleTravel]: new Sch(),
   };
 
   constructor(game: Game, port: number | string) {
@@ -188,7 +189,7 @@ export class SocketServer {
 
     // Perform the request
     const data = (result as any).data;
-    parser.apply(data, character);
+    parser.apply(data, this._game, character);
     console.debug(`[${character.userName}] Request`, JSON.stringify(data));
   }
 
