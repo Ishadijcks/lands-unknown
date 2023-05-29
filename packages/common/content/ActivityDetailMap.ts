@@ -18,11 +18,8 @@ export const activityDetailMap: Record<ActivityHrid, ActivityDetail> = {
   [ActivityHrid.Fish]: {
     name: "Fishing Spot",
     hrid: ActivityHrid.Fish,
-    type: ActivityType.Randomized,
-    actions: [
-      { hrid: ActionHrid.CatchShrimp, weight: 10 },
-      { hrid: ActionHrid.CatchPearl, weight: 1 },
-    ],
+    type: ActivityType.Linear,
+    actions: [ActionHrid.CatchShrimp, ActionHrid.CatchPearl],
     theme: ActivityTheme.Sea,
   },
 };

@@ -29,7 +29,7 @@ export const actionDetailMap: Record<ActionHrid, ActionDetail> = {
     name: "Catch Pearl",
     hrid: ActionHrid.CatchPearl,
     outputItems: [{ hrid: ItemHrid.Pearl, amount: 1 }],
-    baseDuration: 10,
+    baseDuration: 3,
     experienceRewards: [{ skillHrid: SkillHrid.Fishing, value: 8 }],
   },
 };
