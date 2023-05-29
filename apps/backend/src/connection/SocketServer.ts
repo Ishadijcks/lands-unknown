@@ -188,7 +188,7 @@ export class SocketServer {
 
     // Perform the request
     const data = (result as any).data;
-    parser.apply(data, character);
+    parser.apply(data, this._game, character);
     console.debug(`[${character.userName}] Request`, JSON.stringify(data));
   }
 

@@ -5,13 +5,18 @@ import {
   ScheduleActivityRequest,
   ScheduleActivityRequestSchema,
 } from "common/connection/requests/ScheduleActivityRequest";
+import { Game } from "common/Game";
 
 export class ScheduleActivityRequestParser extends RequestParser {
   type = RequestType.ScheduleActivity;
 
   schema = ScheduleActivityRequestSchema;
 
-  apply(request: ScheduleActivityRequest, character: Character) {
-    character.activityQueue.scheduleActivity(request.activityHrid, request.repetitions);
+  apply(request: ScheduleActivityRequest, game: Game, character: Character) {
+    const locationDetail = game.worldMap.locationDetailMap[request.location];
+    const activityId = locationDetail?.activities[request.index];
+    if (activityId) {
+      character.activityQueue.scheduleActivity(activityId, request.repetitions);
+    }
   }
 }

@@ -9,6 +9,7 @@
   import GameDisplay from "$lib/components/GameDisplay.svelte";
   import FullScreenMessage from "$lib/components/atoms/FullScreenMessage.svelte";
   import RefreshButton from "$lib/components/atoms/RefreshButton.svelte";
+  import { luClientStore } from "$lib/luclient/luClientStore";
 
   let closedReason: string | null = null;
 
@@ -22,6 +23,7 @@
   if ($tokenStorage?.token) {
     const socket = new SocketClient($tokenStorage.token);
     luClient = new LuClient(gameData, socket);
+    luClientStore.set(luClient);
 
     luClient.socket.onDisconnect.subscribe((message: ConnectionClosedMessage) => {
       gameStateStore.set(GameState.DISCONNECTED);

@@ -100,7 +100,7 @@ export class Character {
         ? {
             description: currentActivity.detail.name,
             repetitions: currentActivity.repetitions,
-            type: currentActivity.detail.type,
+            theme: currentActivity.detail.theme,
           }
         : null,
     };
