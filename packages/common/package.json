@@ -2,11 +2,16 @@
   "name": "common",
   "version": "0.0.0",
   "description": "Common game logic used by both the backend and the frontend",
+  "scripts": {
+    "content": "tsx scripts/content-load.ts"
+  },
   "devDependencies": {
-    "typescript": "5.0.4"
+    "typescript": "5.0.4",
+    "glob": "^10.2.7",
+    "zod-to-json-schema": "^3.21.1"
   },
   "dependencies": {
+    "content": "*",
     "zod": "^3.21.4"
-  },
-  "scripts": {}
+  }
 }

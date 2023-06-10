@@ -1,0 +1,56 @@
+
+> common@0.0.0 content
+> tsx scripts/content-load.ts
+
+Loading content from /Users/isha/Documents/Development/lands-unknown/packages/content
+Reading 1 files
+/Users/isha/Documents/Development/lands-unknown/packages/content/data/skills/woodcutting/woodcutting.skill.yaml skill
+Loaded 1 skills
+{
+  '/skills/woodcutting': {
+    name: 'Woodcutting',
+    hrid: '/skills/woodcutting',
+    icon: 'woodcutting',
+    sortIndex: 1
+  }
+}
+Loaded 2 items
+{
+  '/items/log': {
+    hrid: '/items/log',
+    name: 'Wooden Log',
+    icon: 'log-regular',
+    description: 'A wooden Log'
+  },
+  '/items/leaf': {
+    hrid: '/items/leaf',
+    name: 'Leaf',
+    icon: 'leaf-regular',
+    description: 'Can be used to brew teas'
+  }
+}
+Loaded 2 actions
+{
+  '/actions/woodcutting/wood': {
+    name: 'Chop Wood',
+    hrid: '/actions/woodcutting/wood',
+    baseDuration: 10,
+    experienceRewards: [ [Object] ]
+  },
+  '/actions/woodcutting/lead': {
+    name: 'Gather leaf',
+    hrid: '/actions/woodcutting/lead',
+    baseDuration: 10,
+    experienceRewards: [ [Object] ]
+  }
+}
+Loaded 1 activities
+{
+  '/activity/forest': {
+    name: 'Explore Forest',
+    hrid: '/activity/forest',
+    type: '/activity_type/randomized',
+    actions: [ [Object] ],
+    theme: '/activity_theme/forest'
+  }
+}

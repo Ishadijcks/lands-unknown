@@ -1,0 +1,40 @@
+skill:
+  name: Woodcutting
+  hrid: /skills/woodcutting
+  icon: woodcutting
+  sortIndex: 1
+
+items:
+  - hrid: /items/log
+    name: Wooden Log
+    icon: log-regular
+    description: A wooden Log
+
+  - hrid: /items/leaf
+    name: Leaf
+    icon: leaf-regular
+    description: Can be used to brew teas
+
+actions:
+  - name: Chop Wood
+    hrid: /actions/woodcutting/wood
+    baseDuration: 10
+    experienceRewards:
+      - skillHrid: /skills/woodcutting
+        value: 10
+
+  - name: Gather leaf
+    hrid: /actions/woodcutting/lead
+    baseDuration: 10
+    experienceRewards:
+      - skillHrid: /skills/woodcutting
+        value: 10
+
+activities:
+  - name: "Explore Forest"
+    hrid: /activity/forest
+    type: /activity_type/randomized
+    actions:
+      - hrid: /actions/woodcutting/wood
+        weight: 10
+    theme: /activity_theme/forest

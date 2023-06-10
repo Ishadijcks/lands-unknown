@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { ItemHrid } from "common/game/items/ItemHrid";
+import { ItemHridSchema } from "common/content/ItemHrid";
 
 export const ItemAmountSchema = z.object({
-  hrid: z.nativeEnum(ItemHrid),
+  hrid: ItemHridSchema,
   amount: z.number().min(1).int(),
 });
 

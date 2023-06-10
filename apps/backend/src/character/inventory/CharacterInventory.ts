@@ -1,5 +1,5 @@
 import { CharacterFeature } from "backend/character/CharacterFeature";
-import { ItemHrid } from "common/game/items/ItemHrid";
+import type { ItemHrid } from "common/content/ItemHrid";
 import { CharacterItem } from "common/game/items/CharacterItem";
 import { ItemAmount } from "common/game/items/ItemAmount";
 import { CharacterInventorySaveData } from "backend/character/inventory/CharacterInventorySaveData";

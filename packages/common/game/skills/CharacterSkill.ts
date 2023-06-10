@@ -1,4 +1,4 @@
-import type { SkillHrid } from "common/game/skills/SkillHrid";
+import type { SkillHrid } from "common/content/SkillHrid";
 
 export interface CharacterSkill {
   experience: number;

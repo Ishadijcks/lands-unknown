@@ -1,4 +1,4 @@
-import { ItemHrid } from "common/game/items/ItemHrid";
+import { ItemHrid } from "common/content/ItemHrid";
 import { ItemDetail } from "common/game/items/ItemDetail";
 
 export class Inventory {

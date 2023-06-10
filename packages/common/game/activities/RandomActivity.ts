@@ -1,5 +1,5 @@
 import { RandomActivityDetail } from "common/game/activities/ActivityDetail";
-import { ActionHrid } from "common/game/actions/ActionHrid";
+import { ActionHrid } from "common/content/ActionHrid";
 import { Activity } from "common/game/activities/Activity";
 
 export class RandomActivity implements Activity {

@@ -1,11 +1,11 @@
 import { z } from "zod";
 import { FacilityTypeHrid } from "common/game/worldmap/FacilityTypeHrid";
-import { ActionHrid } from "common/game/actions/ActionHrid";
+import { ActionHridSchema } from "common/content/ActionHrid";
 
 const FacilityTypeDetailSchema = z.object({
   hrid: z.nativeEnum(FacilityTypeHrid),
   name: z.string(),
-  actions: z.array(z.nativeEnum(ActionHrid)),
+  actions: z.array(ActionHridSchema),
 });
 
 export type FacilityTypeDetail = z.infer<typeof FacilityTypeDetailSchema>;

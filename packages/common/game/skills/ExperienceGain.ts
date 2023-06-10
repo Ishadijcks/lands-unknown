@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { SkillHrid } from "common/game/skills/SkillHrid";
+import { SkillHridSchema } from "common/content/SkillHrid";
 
 export const ExperienceGainSchema = z.object({
-  skillHrid: z.nativeEnum(SkillHrid),
+  skillHrid: SkillHridSchema,
   value: z.number().min(0),
 });
 

@@ -10,12 +10,13 @@
     "apps/*"
   ],
   "scripts": {
-    "dev": "dotenv -- turbo dev",
+    "dev": "dotenv -- turbo dev --force",
     "start": "dotenv -- turbo start",
     "lint": "prettier --write .",
     "lint:check": "prettier --check .",
     "build": "dotenv -- turbo build",
-    "deploy": "dotenv -- turbo run gh-pages --force"
+    "deploy": "dotenv -- turbo run gh-pages --force",
+    "content": "turbo run content"
   },
   "devDependencies": {
     "dotenv-cli": "^7.2.1",

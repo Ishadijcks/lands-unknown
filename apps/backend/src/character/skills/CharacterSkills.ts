@@ -1,9 +1,10 @@
-import { SkillHrid } from "common/game/skills/SkillHrid";
+import { SkillHrid } from "common/content/SkillHrid";
 import { CharacterSkill } from "common/game/skills/CharacterSkill";
 import { CharacterFeature } from "backend/character/CharacterFeature";
 import { Character } from "backend/character/Character";
 import { Game } from "common/Game";
 import { CharacterSkillsSaveData } from "backend/character/skills/CharacterSkillsSaveData";
+import { SkillDetail } from "common/game/skills/SkillDetail";
 
 export class CharacterSkills extends CharacterFeature {
   private _skills: Record<SkillHrid, CharacterSkill> = {} as unknown as Record<SkillHrid, CharacterSkill>;
@@ -14,7 +15,7 @@ export class CharacterSkills extends CharacterFeature {
 
   public inject(character: Character, game: Game) {
     super.inject(character, game);
-    this._game.skills.skillList.forEach((skillDetail) => {
+    this._game.skills.skillList.forEach((skillDetail: SkillDetail) => {
       this._skills[skillDetail.hrid] = {
         level: 1,
         skillHrid: skillDetail.hrid,
