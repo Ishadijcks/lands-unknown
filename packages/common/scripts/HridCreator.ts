@@ -15,6 +15,6 @@ export const ENUMNAME = [BODY] as const;
 
   public write(): void {
     const content = this.lines.join("\n");
-    fs.writeFileSync(`./content/hrids.ts`, content);
+    fs.writeFileSync(`./content/generated/hrids.ts`, content);
   }
 }

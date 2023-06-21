@@ -102,7 +102,7 @@ export class ContentFlattener {
         entryMap[entry.hrid] = entry;
       });
 
-      fs.writeFileSync(`./content/${key}.json`, JSON.stringify(entryMap));
+      fs.writeFileSync(`./content/generated/${key}.json`, JSON.stringify(entryMap));
     });
   }
 }

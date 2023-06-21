@@ -1,1 +1,0 @@
-{"/actions/woodcutting/wood":{"name":"Chop Wood","hrid":"/actions/woodcutting/wood","baseDuration":10,"experienceRewards":[{"skillHrid":"/skills/woodcutting","value":10}]},"/actions/woodcutting/leaf":{"name":"Gather leaf","hrid":"/actions/woodcutting/leaf","baseDuration":10,"experienceRewards":[{"skillHrid":"/skills/woodcutting","value":10}]}}

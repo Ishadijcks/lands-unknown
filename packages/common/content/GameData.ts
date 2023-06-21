@@ -1,7 +1,7 @@
-import items from "common/content/items.json";
-import actions from "common/content/actions.json";
-import activities from "common/content/activities.json";
-import skills from "common/content/skills.json";
+import items from "common/content/generated/items.json";
+import actions from "common/content/generated/actions.json";
+import activities from "common/content/generated/activities.json";
+import skills from "common/content/generated/skills.json";
 import { skillExpLevels } from "common/content/SkillExpLevels";
 import { ItemHrid } from "common/game/items/ItemHrid";
 import { ItemDetail } from "common/game/items/ItemDetail";

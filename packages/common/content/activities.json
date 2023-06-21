@@ -1,1 +1,0 @@
-{"/activity/forest":{"name":"Explore Forest","hrid":"/activity/forest","type":"/activity_type/randomized","actions":[{"hrid":"/actions/woodcutting/wood","weight":10}],"theme":"/activity_theme/forest"}}
