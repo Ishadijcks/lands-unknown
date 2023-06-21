@@ -16,6 +16,7 @@
     "gh-pages": "npm run build && touch build/.nojekyll && npx gh-pages -d build -t true"
   },
   "dependencies": {
+    "common": "*",
     "strongly-typed-events": "^3.0.9",
     "zod": "^3.21.4"
   },
