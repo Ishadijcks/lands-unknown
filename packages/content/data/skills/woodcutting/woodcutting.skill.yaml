@@ -1,11 +1,16 @@
 skill:
   name: Woodcutting
   hrid: /skills/woodcutting
-  icon: woodcutting
+  icon: log-regular
   sortIndex: 1
 
 items:
   - hrid: /items/log
+    name: Wooden Log
+    icon: log-regular
+    description: A wooden Log
+
+  - hrid: /items/log2
     name: Wooden Log
     icon: log-regular
     description: A wooden Log
@@ -24,7 +29,7 @@ actions:
         value: 10
 
   - name: Gather leaf
-    hrid: /actions/woodcutting/lead
+    hrid: /actions/woodcutting/leaf
     baseDuration: 10
     experienceRewards:
       - skillHrid: /skills/woodcutting

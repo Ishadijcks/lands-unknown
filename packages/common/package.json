@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "Common game logic used by both the backend and the frontend",
   "scripts": {
-    "content": "tsx scripts/content-load.ts"
+    "content": "tsx scripts/content-load.ts && tsx scripts/content-validate.ts"
   },
   "devDependencies": {
     "typescript": "5.0.4",

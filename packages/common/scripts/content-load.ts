@@ -1,9 +1,10 @@
-import { ContentFlattener } from "common/scripts/parse-content";
-import { EnumCreator } from "common/scripts/create-enums";
+import { ContentFlattener } from "common/scripts/ContentFlattener";
+import { EnumCreator } from "common/scripts/EnumCreator";
 
 // First we load all yaml files to json
 const flattener = new ContentFlattener();
 flattener.parseAllYamlFiles();
+flattener.validateUniqueHrids();
 flattener.writeToFiles();
 
 const content = flattener.content;
@@ -15,6 +16,4 @@ enumCreator.writeEnum("SkillHrid", content.skills);
 enumCreator.writeEnum("ActionHrid", content.actions);
 enumCreator.writeEnum("ActivityHrid", content.activities);
 
-// Such that we can validate all content with Zod
-
-// And generate JSON schemas to improve the developer experience
+// See content-validate.ts for the next steps

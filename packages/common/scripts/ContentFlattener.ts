@@ -5,6 +5,7 @@ import { SkillDefinitionParser } from "common/parsers/skill/SkillDefinitionSchem
 import { ContentType } from "common/parsers/ContentType";
 import { BaseContentParser } from "common/parsers/BaseContentParser";
 import { GameContent } from "common/parsers/GameContent";
+import * as process from "process";
 
 export class ContentFlattener {
   content: Required<GameContent> = {
@@ -21,6 +22,24 @@ export class ContentFlattener {
     this.content.activities.push(...(content.activities ?? []));
   }
 
+  public validateUniqueHrids(): void {
+    const areAllUnique = (items: any[]) => {
+      const hrids = items.map((item) => item.hrid);
+      const duplicates = hrids.filter((item, index, array) => array.indexOf(item) !== index);
+
+      if (duplicates.length > 0) {
+        const message = duplicates.join(", ");
+        throw new Error(`Duplicate ids encountered: '${message}'`);
+      }
+    };
+
+    Object.keys(this.content).forEach((key) => {
+      // @ts-ignore
+      const entries = this.content[key];
+      areAllUnique(entries);
+    });
+  }
+
   contentParsers: Record<ContentType, BaseContentParser> = {
     [ContentType.Skill]: new SkillDefinitionParser(),
   };
@@ -28,16 +47,14 @@ export class ContentFlattener {
   private getAllYamlFiles(): { contentType: ContentType; fileName: string; data: any }[] {
     // TODO(@Isha): Fix resolution path
     const contentPath = require.resolve("content").replace("/index.ts", "");
-    console.log("Loading content from", contentPath);
 
     const filePaths = glob.sync(`${contentPath}/**/*.yaml`, {});
-    console.log(`Reading ${filePaths.length} files`);
+    console.log(`Reading ${filePaths.length} files from`, contentPath);
     return filePaths.map((filePath) => {
       // TODO(@Isha): Cleanup
       const contentType = filePath.replace(".yaml", "").split(".").pop() as ContentType;
       const fileName = filePath.split("/").pop() as string;
 
-      console.log(filePath, contentType);
       return {
         contentType: contentType,
         fileName: fileName,
@@ -46,7 +63,7 @@ export class ContentFlattener {
     });
   }
 
-  public parseAllYamlFiles(): void {
+  public parseAllYamlFiles(validate: boolean = false): void {
     const files = this.getAllYamlFiles();
     files.forEach((yaml) => {
       const parser = this.contentParsers[yaml.contentType];
@@ -54,14 +71,17 @@ export class ContentFlattener {
         throw new Error(`Unrecognized contentType '${yaml.contentType}' in file '${yaml.fileName}'`);
       }
 
-      // const zodResult = parser.schema.safeParse(data);
-      // if (!zodResult.success) {
-      //   console.log(zodResult.error);
-      //   throw new Error(`Could not load file '${fileName}'`);
-      // }
-
       try {
         const newContent = parser.apply(yaml.data);
+
+        if (validate) {
+          const zodResult = parser.schema.safeParse(yaml.data);
+          if (!zodResult.success) {
+            console.error(zodResult.error);
+            console.error(`Could not load file '${yaml.fileName}'`);
+            process.exit(1);
+          }
+        }
 
         this.addContent(newContent);
       } catch (e) {
@@ -81,8 +101,6 @@ export class ContentFlattener {
       entries.forEach((entry: any) => {
         entryMap[entry.hrid] = entry;
       });
-
-      console.log(entryMap);
 
       fs.writeFileSync(`./content/${key}.json`, JSON.stringify(entryMap));
     });
