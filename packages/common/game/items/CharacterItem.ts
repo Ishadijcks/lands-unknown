@@ -1,4 +1,4 @@
-import { ItemHrid } from "common/game/items/ItemHrid";
+import type { ItemHrid } from "common/game/items/ItemHrid";
 
 export interface CharacterItem {
   amount: number;

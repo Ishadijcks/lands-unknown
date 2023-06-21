@@ -1,6 +1,5 @@
-export enum ActionHrid {
-  GatherWood = "/actions/woodcutting/wood",
-  GatherLeaf = "/actions/woodcutting/lead",
-  CatchShrimp = "/actions/fishing/shrimp",
-  CatchPearl = "/actions/fishing/pearl",
-}
+import { z } from "zod";
+import { actionHrids } from "common/content/generated/hrids";
+
+export const ActionHridSchema = z.enum(actionHrids);
+export type ActionHrid = z.infer<typeof ActionHridSchema>;

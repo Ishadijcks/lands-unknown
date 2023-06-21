@@ -1,11 +1,12 @@
-import { SkillHrid } from "common/game/skills/SkillHrid";
+import { SkillHridSchema } from "common/game/skills/SkillHrid";
 import { z } from "zod";
 
-const SkillDetailSchema = z.object({
-  hrid: z.nativeEnum(SkillHrid),
+export const SkillDetailSchema = z.object({
+  hrid: SkillHridSchema,
   name: z.string(),
   icon: z.string(),
   sortIndex: z.number().min(0).int(),
 });
 
 export type SkillDetail = z.infer<typeof SkillDetailSchema>;
+export type SkillDetailInput = z.input<typeof SkillDetailSchema>;

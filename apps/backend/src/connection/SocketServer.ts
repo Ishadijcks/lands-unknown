@@ -26,7 +26,8 @@ export class SocketServer {
 
   private _requestParsers: Record<RequestType, RequestParser> = {
     [RequestType.ScheduleActivity]: new ScheduleActivityRequestParser(),
-    // [RequestType.ScheduleTravel]: new Sch(),
+    // TODO(@Isha): Add parser here
+    [RequestType.ScheduleTravel]: undefined as unknown as RequestParser,
   };
 
   constructor(game: Game, port: number | string) {

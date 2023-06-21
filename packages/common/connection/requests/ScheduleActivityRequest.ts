@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { RequestType } from "common/connection/requests/RequestType";
 import { BaseRequestSchema } from "common/connection/requests/BaseRequest";
-import { ActivityHrid } from "common/game/activities/ActivityHrid";
 import { LocationHrid } from "common/game/worldmap/LocationHrid";
 
 export const ScheduleActivityRequestSchema = BaseRequestSchema.extend({
