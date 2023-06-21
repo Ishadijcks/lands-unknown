@@ -1,5 +1,5 @@
 import { ActivityDetail } from "common/game/activities/ActivityDetail";
-import { ActionHrid } from "common/content/ActionHrid";
+import { ActionHrid } from "common/game/actions/ActionHrid";
 
 export interface Activity {
   detail: ActivityDetail;

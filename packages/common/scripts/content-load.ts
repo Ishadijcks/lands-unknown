@@ -1,5 +1,5 @@
 import { ContentFlattener } from "common/scripts/ContentFlattener";
-import { EnumCreator } from "common/scripts/EnumCreator";
+import { HridCreator } from "common/scripts/HridCreator";
 
 // First we load all yaml files to json
 const flattener = new ContentFlattener();
@@ -10,10 +10,10 @@ flattener.writeToFiles();
 const content = flattener.content;
 
 // Then we can generate enum files per content types
-const enumCreator = new EnumCreator();
-enumCreator.writeEnum("ItemHrid", content.items);
-enumCreator.writeEnum("SkillHrid", content.skills);
-enumCreator.writeEnum("ActionHrid", content.actions);
-enumCreator.writeEnum("ActivityHrid", content.activities);
-
+const enumCreator = new HridCreator();
+enumCreator.addHrids("itemHrids", content.items);
+enumCreator.addHrids("skillHrids", content.skills);
+enumCreator.addHrids("actionHrids", content.actions);
+enumCreator.addHrids("activityHrids", content.activities);
+enumCreator.write();
 // See content-validate.ts for the next steps

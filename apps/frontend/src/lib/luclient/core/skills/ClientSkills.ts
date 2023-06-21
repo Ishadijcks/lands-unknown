@@ -1,4 +1,4 @@
-import type { SkillHrid } from "common/content/SkillHrid";
+import type { SkillHrid } from "common/game/skills/SkillHrid";
 import type { CharacterSkill } from "common/game/skills/CharacterSkill";
 import { SimpleEventDispatcher } from "strongly-typed-events";
 import type { SkillDetail } from "common/game/skills/SkillDetail";

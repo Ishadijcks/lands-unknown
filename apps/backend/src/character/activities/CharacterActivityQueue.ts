@@ -1,5 +1,5 @@
 import { CharacterFeature } from "backend/character/CharacterFeature";
-import { ActivityHrid } from "common/content/ActivityHrid";
+import { ActivityHrid } from "common/game/activities/ActivityHrid";
 import { Action } from "common/game/actions/Action";
 import { Activity } from "common/game/activities/Activity";
 import { ScheduledActivity } from "common/game/activities/ScheduledActivity";

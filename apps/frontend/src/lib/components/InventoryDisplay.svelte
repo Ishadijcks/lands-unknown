@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { ClientInventory } from "$lib/luclient/core/inventory/ClientInventory";
   import ItemDisplay from "$lib/components/ItemDisplay.svelte";
-  import type { ItemHrid } from "common/content/ItemHrid";
+  import type { ItemHrid } from "common/game/items/ItemHrid";
 
   export let inventory: ClientInventory;
 

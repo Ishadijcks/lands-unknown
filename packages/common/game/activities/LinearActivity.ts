@@ -1,6 +1,6 @@
 import { Activity } from "common/game/activities/Activity";
 import { LinearActivityDetail } from "common/game/activities/ActivityDetail";
-import { ActionHrid } from "common/content/ActionHrid";
+import { ActionHrid } from "common/game/actions/ActionHrid";
 
 export class LinearActivity implements Activity {
   detail: LinearActivityDetail;

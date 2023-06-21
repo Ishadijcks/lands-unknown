@@ -1,7 +1,7 @@
 import { ActivityQueue } from "common/game/activities/ActivityQueue";
-import type { ActionHrid } from "common/content/ActionHrid";
+import type { ActionHrid } from "common/game/actions/ActionHrid";
 import type { ActionDetail } from "common/game/actions/ActionDetail";
-import type { ActivityHrid } from "common/content/ActivityHrid";
+import type { ActivityHrid } from "common/game/activities/ActivityHrid";
 import type { ActivityDetail } from "common/game/activities/ActivityDetail";
 import type { CharacterAction } from "common/game/actions/CharacterAction";
 import type { CharacterActivity } from "common/game/activities/CharacterActivity";

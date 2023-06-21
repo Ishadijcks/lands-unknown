@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ItemHridSchema } from "common/content/ItemHrid";
+import { ItemHridSchema } from "common/game/items/ItemHrid";
 
 export const ItemDetailSchema = z.object({
   hrid: ItemHridSchema,

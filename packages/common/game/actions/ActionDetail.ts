@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { ItemAmountSchema } from "common/game/items/ItemAmount";
 import { ExperienceGainSchema } from "common/game/skills/ExperienceGain";
-import { ActionHridSchema } from "common/content/ActionHrid";
+import { ActionHridSchema } from "common/game/actions/ActionHrid";
 
 export const ActionDetailSchema = z.object({
   hrid: ActionHridSchema,

@@ -1,4 +1,4 @@
-import type { SkillHrid } from "common/content/SkillHrid";
+import type { SkillHrid } from "common/game/skills/SkillHrid";
 import type { SkillDetail } from "common/game/skills/SkillDetail";
 
 export class Skills {

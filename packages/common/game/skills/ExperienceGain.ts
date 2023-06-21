@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { SkillHridSchema } from "common/content/SkillHrid";
+import { SkillHridSchema } from "common/game/skills/SkillHrid";
 
 export const ExperienceGainSchema = z.object({
   skillHrid: SkillHridSchema,
