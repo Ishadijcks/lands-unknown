@@ -4,12 +4,12 @@ export class HridCreator {
   lines: string[] = ["// This file is generated from HridCreator.ts, please do not edit it directly"];
 
   template: string = `
-export const ENUMNAME = [BODY] as const;
+export const TYPE = [CONTENT] as const;
 `;
 
-  public addHrids(enumName: string, entries: any[]) {
-    const body = entries.map((entry) => `"${entry.hrid}"`).join(",");
-    const enumText = this.template.replaceAll("ENUMNAME", enumName).replace("BODY", body);
+  public addHrids(type: string, entries: any[]) {
+    const content = entries.map((entry) => `"${entry.hrid}"`).join(",");
+    const enumText = this.template.replaceAll("TYPE", type).replace("CONTENT", content);
     this.lines.push(enumText);
   }
 

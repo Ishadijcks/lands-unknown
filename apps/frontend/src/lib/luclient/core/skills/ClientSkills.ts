@@ -40,7 +40,6 @@ export class ClientSkills extends Skills {
   }
 
   public updateCharacterSkills(skills: CharacterSkill[], notify = true): void {
-    console.log(skills);
     skills.forEach((info) => {
       const xpChanged = info.experience - this._characterSkills[info.skillHrid].experience;
       const lvlChanged = info.level - this._characterSkills[info.skillHrid].level;

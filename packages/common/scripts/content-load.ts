@@ -9,11 +9,12 @@ flattener.writeToFiles();
 
 const content = flattener.content;
 
-// Then we can generate enum files per content types
-const enumCreator = new HridCreator();
-enumCreator.addHrids("itemHrids", content.items);
-enumCreator.addHrids("skillHrids", content.skills);
-enumCreator.addHrids("actionHrids", content.actions);
-enumCreator.addHrids("activityHrids", content.activities);
-enumCreator.write();
+// Then we can generate hrid lists per content type;
+const hridCreator = new HridCreator();
+hridCreator.addHrids("itemHrids", content.items);
+hridCreator.addHrids("skillHrids", content.skills);
+hridCreator.addHrids("actionHrids", content.actions);
+hridCreator.addHrids("activityHrids", content.activities);
+hridCreator.write();
+
 // See content-validate.ts for the next steps
