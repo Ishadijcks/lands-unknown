@@ -11,5 +11,7 @@
   title={item.name}
 >
   <Icon icon={item.icon} />
-  <span class="absolute right-0 bottom-0">{amount}</span>
+  {#if amount > 0}
+    <span class="absolute right-0 bottom-0">{amount}</span>
+  {/if}
 </div>

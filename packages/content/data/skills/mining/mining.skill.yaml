@@ -1,0 +1,30 @@
+skill:
+  name: Mining
+  hrid: /skills/mining
+  icon: mining
+  sortIndex: 3
+
+items:
+  - hrid: /items/ore
+    name: Ore
+    icon: ore
+    description: Ore
+
+  - hrid: /items/ore-gold
+    name: Gold Ore
+    icon: ore-gold
+    description: Shiny
+
+  - hrid: /items/ore-fire
+    name: Fire Ore
+    icon: ore-fire
+    description: Hot
+
+  - hrid: /items/ore-blue
+    name: Blue Ore
+    icon: ore-blue
+    description: Cool
+  - hrid: /items/ore-green
+    name: Green Ore
+    icon: ore-green
+    description: Green

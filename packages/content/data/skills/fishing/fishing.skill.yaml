@@ -1,0 +1,43 @@
+skill:
+  name: Fishing
+  hrid: /skills/fishing
+  icon: fish
+  sortIndex: 2
+
+items:
+  - hrid: /items/fish
+    name: Fish
+    icon: fish
+    description: Very fresh
+
+  - hrid: /items/fish-orange
+    name: Orange Fish
+    icon: fish-orange
+    description: A fish, but orange
+
+  - hrid: /items/pearl
+    name: Pearl
+    icon: gem-pearl
+    description: Shiny!
+
+  - hrid: /items/sapphire
+    name: Sapphire
+    icon: gem-sapphire
+    description: Blue and shiny!
+
+actions:
+  - name: Catch Fish
+    hrid: /actions/fishing/catch-fish
+    baseDuration: 10
+    experienceRewards:
+      - skillHrid: /skills/fishing
+        value: 10
+
+activities:
+  - name: Explore Ocean
+    hrid: /activity/ocean
+    type: /activity_type/randomized
+    actions:
+      - hrid: /actions/fishing/catch-fish
+        weight: 10
+    theme: /activity_theme/sea

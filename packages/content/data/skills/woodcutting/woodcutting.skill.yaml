@@ -10,10 +10,20 @@ items:
     icon: log-regular
     description: A wooden Log
 
-  - hrid: /items/log2
-    name: Wooden Log
-    icon: log-regular
-    description: A wooden Log
+  - hrid: /items/log-green
+    name: Green Log
+    icon: log-green
+    description: A wooden Log, but green
+
+  - hrid: /items/log-orange
+    name: Orange Log
+    icon: log-orange
+    description: A wooden Log, but orange
+
+  - hrid: /items/log-haunted
+    name: Haunted Log
+    icon: log-haunted
+    description: A wooden Log, but haunted
 
   - hrid: /items/leaf
     name: Leaf
