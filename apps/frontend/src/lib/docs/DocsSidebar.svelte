@@ -50,7 +50,7 @@
     },
   };
 
-  $: currentRailCategory = Object.keys(navigationLinks).find(key => $page.url.pathname.includes(key));
+  $: currentRailCategory = Object.keys(navigationLinks).find((key) => $page.url.pathname.includes(key));
 
   $: submenu = navigationLinks[currentRailCategory ?? "/items"] ?? [];
 </script>
@@ -61,11 +61,7 @@
   <AppRail border="border-r border-surface-500/30">
     {#each Object.values(navigationLinks) as category}
       <a href="/docs{category.link}">
-        <AppRailTile
-          bind:group={currentRailCategory}
-          name={category.title}
-          value={category.link}
-        >
+        <AppRailTile bind:group={currentRailCategory} name={category.title} value={category.link}>
           <svelte:fragment slot="lead">
             <div class="flex flex-row justify-center">
               <Icon icon={category.icon} />
