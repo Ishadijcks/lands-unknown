@@ -10,7 +10,7 @@
 
   <!-- Sidebar (Left) -->
   <svelte:fragment slot="sidebarLeft">
-    <DocsSidebar class="hidden lg:grid w-[360px] overflow-hidden" />
+    <DocsSidebar class="lg:grid w-[360px] overflow-hidden" />
   </svelte:fragment>
 
   <!-- Page Content -->

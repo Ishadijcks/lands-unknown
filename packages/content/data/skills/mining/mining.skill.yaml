@@ -1,8 +1,8 @@
-skill:
-  name: Mining
-  hrid: /skills/mining
-  icon: mining
-  sortIndex: 3
+skills:
+  - name: Mining
+    hrid: /skills/mining
+    icon: mining
+    sortIndex: 3
 
 items:
   - hrid: /items/ore

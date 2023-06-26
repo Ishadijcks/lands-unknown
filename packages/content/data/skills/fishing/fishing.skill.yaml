@@ -1,8 +1,8 @@
-skill:
-  name: Fishing
-  hrid: /skills/fishing
-  icon: fish
-  sortIndex: 2
+skills:
+  - name: Fishing
+    hrid: /skills/fishing
+    icon: fish
+    sortIndex: 2
 
 items:
   - hrid: /items/fish
@@ -28,6 +28,7 @@ items:
 actions:
   - name: Catch Fish
     hrid: /actions/fishing/catch-fish
+    icon: fish
     baseDuration: 10
     experienceRewards:
       - skillHrid: /skills/fishing

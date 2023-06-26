@@ -1,8 +1,8 @@
-skill:
-  name: Woodcutting
-  hrid: /skills/woodcutting
-  icon: log-regular
-  sortIndex: 1
+skills:
+  - name: Woodcutting
+    hrid: /skills/woodcutting
+    icon: log-regular
+    sortIndex: 1
 
 items:
   - hrid: /items/log
@@ -33,6 +33,7 @@ items:
 actions:
   - name: Chop Wood
     hrid: /actions/woodcutting/wood
+    icon: log-regular
     baseDuration: 10
     experienceRewards:
       - skillHrid: /skills/woodcutting
@@ -42,6 +43,7 @@ actions:
 
   - name: Gather leaf
     hrid: /actions/woodcutting/leaf
+    icon: leaf-regular
     baseDuration: 10
     experienceRewards:
       - skillHrid: /skills/woodcutting

@@ -8,7 +8,7 @@ import { GameContent } from "common/parsers/GameContent";
 
 export const SkillDefinitionSchema = z
   .object({
-    skill: SkillDetailSchema,
+    skills: z.array(SkillDetailSchema).optional(),
     items: z.array(ItemDetailSchema).optional(),
     actions: z.array(ActionDetailSchema).optional(),
     activities: z.array(ActivityDetailSchema).optional(),
@@ -23,7 +23,7 @@ export class SkillDefinitionParser extends BaseContentParser {
 
   apply(data: SkillDefinition): GameContent {
     return {
-      skills: [data.skill],
+      skills: data.skills ?? [],
       items: data.items ?? [],
       actions: data.actions ?? [],
       activities: data.activities ?? [],

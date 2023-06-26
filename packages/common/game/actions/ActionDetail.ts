@@ -7,6 +7,7 @@ export const ActionDetailSchema = z
   .object({
     hrid: ActionHridSchema,
     name: z.string(),
+    icon: z.string(),
     baseDuration: z.number().min(0.1),
 
     inputItems: ItemAmountSchema.array().default([]),

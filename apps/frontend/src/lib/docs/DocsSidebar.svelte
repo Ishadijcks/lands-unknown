@@ -34,7 +34,7 @@
       link: "/actions",
       title: "Actions",
       list: processList(actions),
-      icon: "question-mark",
+      icon: "lightning",
     },
     "/activities": {
       link: "/activities",
@@ -46,11 +46,11 @@
       link: "/skills",
       title: "Skills",
       list: processList(skills),
-      icon: "question-mark",
+      icon: "skills",
     },
   };
 
-  let currentRailCategory: keyof typeof navigationLinks | undefined = undefined;
+  $: currentRailCategory = Object.keys(navigationLinks).find(key => $page.url.pathname.includes(key));
 
   $: submenu = navigationLinks[currentRailCategory ?? "/items"] ?? [];
 </script>
@@ -60,15 +60,21 @@
 >
   <AppRail border="border-r border-surface-500/30">
     {#each Object.values(navigationLinks) as category}
-      <AppRailTile bind:group={currentRailCategory} name={category.title} value={category.link} title="Items">
-        <svelte:fragment slot="lead">
-          <div class="flex flex-row justify-center">
-            <Icon icon={category.icon} />
-          </div>
-        </svelte:fragment>
+      <a href="/docs{category.link}">
+        <AppRailTile
+          bind:group={currentRailCategory}
+          name={category.title}
+          value={category.link}
+        >
+          <svelte:fragment slot="lead">
+            <div class="flex flex-row justify-center">
+              <Icon icon={category.icon} />
+            </div>
+          </svelte:fragment>
 
-        <span>{category.title}</span>
-      </AppRailTile>
+          <span>{category.title}</span>
+        </AppRailTile>
+      </a>
     {/each}
   </AppRail>
 

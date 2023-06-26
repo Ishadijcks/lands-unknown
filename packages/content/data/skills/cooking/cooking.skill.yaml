@@ -1,0 +1,25 @@
+skills:
+  - name: Cooking
+    hrid: /skills/cooking
+    icon: cauldron
+    sortIndex: 4
+
+items:
+  - hrid: /items/fish-cooked
+    name: Cooked Fish
+    icon: fish-orange
+    description: Yum!
+
+actions:
+  - name: Cook Fish
+    hrid: /actions/cooking/cook-fish
+    icon: cauldron
+    baseDuration: 10
+    inputItems:
+      - hrid: /items/fish
+    outputItems:
+      - hrid: /items/fish-cooked
+    experienceRewards:
+      - skillHrid: /skills/cooking
+        value: 10
+
