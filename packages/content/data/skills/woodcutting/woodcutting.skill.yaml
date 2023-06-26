@@ -37,6 +37,8 @@ actions:
     experienceRewards:
       - skillHrid: /skills/woodcutting
         value: 10
+    outputItems:
+      - hrid: /items/log
 
   - name: Gather leaf
     hrid: /actions/woodcutting/leaf
@@ -44,6 +46,8 @@ actions:
     experienceRewards:
       - skillHrid: /skills/woodcutting
         value: 10
+    outputItems:
+      - hrid: /items/leaf
 
 activities:
   - name: "Explore Forest"

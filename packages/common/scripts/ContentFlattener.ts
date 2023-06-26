@@ -81,10 +81,10 @@ export class ContentFlattener {
             console.error(`Could not load file '${yaml.fileName}'`);
             process.exit(1);
           }
+          this.addContent(zodResult.data);
+        } else {
+          this.addContent(newContent);
         }
-
-        console.log(newContent.actions?.map((action) => action.outputItems));
-        this.addContent(newContent);
       } catch (e) {
         console.error(e);
         throw new Error(`Could not parse file ${yaml.fileName}, is it valid yaml?`);

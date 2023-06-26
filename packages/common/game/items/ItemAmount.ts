@@ -4,7 +4,7 @@ import { ItemHridSchema } from "common/game/items/ItemHrid";
 export const ItemAmountSchema = z
   .object({
     hrid: ItemHridSchema,
-    amount: z.number().min(1).int().default(10),
+    amount: z.number().min(1).int().default(1),
   })
   .strict();
 

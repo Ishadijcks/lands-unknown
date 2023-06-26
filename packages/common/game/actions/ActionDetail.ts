@@ -9,8 +9,8 @@ export const ActionDetailSchema = z
     name: z.string(),
     baseDuration: z.number().min(0.1),
 
-    inputItems: ItemAmountSchema.array().optional(),
-    outputItems: ItemAmountSchema.array().optional(),
+    inputItems: ItemAmountSchema.array().default([]),
+    outputItems: ItemAmountSchema.array().default([]),
 
     experienceRewards: z.array(ExperienceGainSchema),
   })
