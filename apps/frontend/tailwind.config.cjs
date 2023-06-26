@@ -6,7 +6,8 @@ module.exports = {
     require("path").join(require.resolve("@skeletonlabs/skeleton"), "../**/*.{html,js,svelte,ts}"),
   ],
   safelist: [
-    { pattern: /w-(8|12)/ }
+    { pattern: /w-(8|12)/ },
+    { pattern: /h-(8|12)/ },
   ],
   theme: {
     extend: {},

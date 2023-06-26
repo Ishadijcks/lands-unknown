@@ -48,6 +48,18 @@
       list: processList(skills),
       icon: "skills",
     },
+    "/locations": {
+      link: "/locations",
+      title: "Locations",
+      list: [],
+      icon: "house",
+    },
+    "/quests": {
+      link: "/quests",
+      title: "Quests",
+      list: [],
+      icon: "compass",
+    },
   };
 
   $: currentRailCategory = Object.keys(navigationLinks).find((key) => $page.url.pathname.includes(key));
