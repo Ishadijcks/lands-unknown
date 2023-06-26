@@ -83,6 +83,7 @@ export class ContentFlattener {
           }
         }
 
+        console.log(newContent.actions?.map((action) => action.outputItems));
         this.addContent(newContent);
       } catch (e) {
         console.error(e);
