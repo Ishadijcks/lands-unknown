@@ -1,6 +1,6 @@
 <script lang="ts">
   import { gameData } from "common/content/GameData";
-  import type {ActivityDetail} from "common/game/activities/ActivityDetail";
+  import type { ActivityDetail } from "common/game/activities/ActivityDetail";
 
   const activities: ActivityDetail[] = Object.values(gameData.activityDetailMap);
 </script>

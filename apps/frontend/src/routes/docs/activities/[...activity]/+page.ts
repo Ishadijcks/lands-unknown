@@ -1,7 +1,7 @@
 import { error } from "@sveltejs/kit";
 import type { PageLoad } from "./$types";
 import { gameData } from "common/content/GameData";
-import type {ActivityHrid} from "common/game/activities/ActivityHrid";
+import type { ActivityHrid } from "common/game/activities/ActivityHrid";
 
 export const load = (({ params }) => {
   const hrid = ("/activities/" + params.activity) as ActivityHrid;

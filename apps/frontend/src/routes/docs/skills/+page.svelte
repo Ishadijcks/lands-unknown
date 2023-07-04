@@ -13,9 +13,8 @@
     {#each skills as skill}
       <a href="/docs{skill.hrid}">
         <div class="w-24 h-24 border-primary border-2 p-4 flex flex-col items-center justify-center">
-          <Icon icon="{skill.icon}"> </Icon>
+          <Icon icon={skill.icon} />
           <span class="text-xs">{skill.name}</span>
-
         </div>
       </a>
     {/each}
