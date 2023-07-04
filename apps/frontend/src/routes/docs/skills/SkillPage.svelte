@@ -1,10 +1,8 @@
 <script lang="ts">
-  import type { PageData } from "./$types";
   import Icon from "$lib/components/atoms/Icon.svelte";
+  import type { SkillDetail } from "common/game/skills/SkillDetail";
 
-  export let data: PageData;
-
-  $: skill = data.detail;
+  export let skill: SkillDetail;
 </script>
 
 <div class="card variant-filled-primary w-48 h-72 p-4">

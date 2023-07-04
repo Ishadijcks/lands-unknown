@@ -85,24 +85,4 @@
       </a>
     {/each}
   </AppRail>
-
-  <section class="p-4 pb-20 space-y-4 overflow-y-auto">
-    <!-- Title -->
-    <a href="/docs{submenu.link}">
-      <p class="font-bold pl-4 text-2xl">{submenu.title}</p>
-    </a>
-    <!-- Nav List -->
-    <nav class="list-nav">
-      <ul>
-        {#each submenu.list as { href, label, icon }}
-          <li on:keypress on:click={drawerStore.close}>
-            <a {href} class={listboxItemActive(href)} data-sveltekit-preload-data="hover">
-              <span class="flex-auto">{label}</span>
-              <Icon {icon} />
-            </a>
-          </li>
-        {/each}
-      </ul>
-    </nav>
-  </section>
 </div>

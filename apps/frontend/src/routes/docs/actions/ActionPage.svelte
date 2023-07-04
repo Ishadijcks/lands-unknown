@@ -1,18 +1,16 @@
 <script lang="ts">
-  import type { PageData } from "./$types";
+  import { gameData } from "common/content/GameData.js";
   import ItemDisplay from "$lib/components/ItemDisplay.svelte";
-  import { gameData } from "common/content/GameData";
   import Icon from "$lib/components/atoms/Icon.svelte";
+  import type { ActionDetail } from "common/game/actions/ActionDetail";
 
-  export let data: PageData;
-
-  $: action = data.detail;
+  export let action: ActionDetail;
 </script>
 
 <div class="card variant-filled-primary w-48 h-72 p-4">
   <div class="flex flex-col items-center space-y-2">
-    <span>{data.detail.name}</span>
-    <span>{data.detail.hrid}</span>
+    <span>{action.name}</span>
+    <span>{action.hrid}</span>
 
     <div class="flex flex-row items-center">
       {#each action.inputItems as input}
