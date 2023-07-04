@@ -8,6 +8,6 @@ export const ScheduleActivityRequestSchema = BaseRequestSchema.extend({
   location: z.nativeEnum(LocationHrid),
   index: z.number().min(0).int(),
   repetitions: z.number().min(0).int(),
-});
+}).strict();
 
 export type ScheduleActivityRequest = z.infer<typeof ScheduleActivityRequestSchema>;

@@ -4,21 +4,23 @@ import { ActionHridSchema } from "common/game/actions/ActionHrid";
 import { ActivityTheme } from "common/game/activities/ActivityTheme";
 import { ActivityType } from "common/game/activities/ActivityType";
 
-const BaseActivityDetailSchema = z.object({
-  hrid: ActivityHridSchema,
-  name: z.string(),
-  type: z.nativeEnum(ActivityType),
-  theme: z.nativeEnum(ActivityTheme),
-});
+const BaseActivityDetailSchema = z
+  .object({
+    hrid: ActivityHridSchema,
+    name: z.string(),
+    type: z.nativeEnum(ActivityType),
+    theme: z.nativeEnum(ActivityTheme),
+  })
+  .strict();
 
 const TravelActivityDetailSchema = BaseActivityDetailSchema.extend({
   type: z.literal(ActivityType.Travel),
-});
+}).strict();
 
 const LinearActivityDetailSchema = BaseActivityDetailSchema.extend({
   type: z.literal(ActivityType.Linear),
   actions: z.array(ActionHridSchema),
-});
+}).strict();
 
 const RandomActivityDetailSchema = BaseActivityDetailSchema.extend({
   type: z.literal(ActivityType.Randomized),
@@ -29,7 +31,7 @@ const RandomActivityDetailSchema = BaseActivityDetailSchema.extend({
       weight: z.number().min(0),
     })
   ),
-});
+}).strict();
 
 export const ActivityDetailSchema = z.discriminatedUnion("type", [
   TravelActivityDetailSchema,

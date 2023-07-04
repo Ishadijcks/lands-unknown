@@ -4,7 +4,7 @@
   "description": "Common game logic used by both the backend and the frontend",
   "scripts": {
     "build": "npm run content",
-    "init-generated": "mkdir ./content/generated && touch ./content/generated/hrids.ts",
+    "init-generated": "mkdir -p ./content/generated && touch ./content/generated/hrids.ts",
     "content": "npm run init-generated && tsx scripts/content-load.ts && tsx scripts/content-validate.ts"
   },
   "devDependencies": {

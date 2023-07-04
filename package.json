@@ -16,7 +16,7 @@
     "lint:check": "prettier --check .",
     "build": "dotenv -- turbo build",
     "deploy": "dotenv -- turbo run gh-pages --force",
-    "content": "turbo run content"
+    "content": "turbo run content --force"
   },
   "devDependencies": {
     "dotenv-cli": "^7.2.1",

@@ -1,11 +1,10 @@
 import { ContentFlattener } from "common/scripts/ContentFlattener";
 import { HridCreator } from "common/scripts/HridCreator";
 
-// First we load all yaml files to json
+// First we load all yaml files to see if they are valid
 const flattener = new ContentFlattener();
 flattener.parseAllYamlFiles();
 flattener.validateUniqueHrids();
-flattener.writeToFiles();
 
 const content = flattener.content;
 

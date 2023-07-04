@@ -41,6 +41,10 @@ export class ClientSkills extends Skills {
 
   public updateCharacterSkills(skills: CharacterSkill[], notify = true): void {
     skills.forEach((info) => {
+      if (!this._characterSkills[info.skillHrid]) {
+        console.error(`Could not process information for skill ${info.skillHrid}`);
+        return;
+      }
       const xpChanged = info.experience - this._characterSkills[info.skillHrid].experience;
       const lvlChanged = info.level - this._characterSkills[info.skillHrid].level;
       this._characterSkills[info.skillHrid] = info;

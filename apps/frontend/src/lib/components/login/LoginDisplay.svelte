@@ -3,7 +3,6 @@
   import SignUpForm from "$lib/components/login/SignUpForm.svelte";
   import LoginForm from "$lib/components/login/LoginForm.svelte";
   import { tokenStorage } from "$lib/TokenStorage";
-  import { base } from "$app/paths";
 
   let tabSet = 0;
 
@@ -19,7 +18,7 @@
         <span class="h3 text-secondary-100">{userName}</span>
       </div>
 
-      <a href="{base}/play">
+      <a href="/play">
         <button class="btn variant-filled-primary"> Play! </button>
       </a>
     </div>
