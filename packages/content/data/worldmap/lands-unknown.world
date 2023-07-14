@@ -1,7 +1,7 @@
 {
     "maps": [
         {
-            "fileName": "./maps/tutorial/demo.json",
+            "fileName": "./maps/tutorial/tutorial.json",
             "height": 320,
             "width": 480,
             "x": 0,
