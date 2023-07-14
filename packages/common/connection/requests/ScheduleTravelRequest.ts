@@ -6,6 +6,6 @@ import { LocationHrid } from "common/game/worldmap/LocationHrid";
 export const ScheduleTravelRequestSchema = BaseRequestSchema.extend({
   type: z.literal(RequestType.ScheduleTravel),
   location: z.nativeEnum(LocationHrid),
-});
+}).strict();
 
 export type ScheduleTravelRequest = z.infer<typeof ScheduleTravelRequestSchema>;
