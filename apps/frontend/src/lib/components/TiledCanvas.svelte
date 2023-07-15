@@ -11,16 +11,22 @@
   import { TileSets } from "content/data/worldmap/tilesets";
   import { Images } from "content/data/worldmap/tilesets";
 
+  const loadImage = (key, src) =>
+    new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
+    }).then((img) => {
+      renderedImages[key] = img;
+    });
   const renderedImages = {};
   onMount(() => {
-    Object.entries(Images).forEach(([key, image]) => {
-        const tmp = new Image();
-        tmp.src = image;
-        renderedImages[key] = tmp;
-      }
-    );
+    const promises = Object.entries(Images).map(([key, image]) => {
+      return loadImage(key, image);
+    });
 
-    setTimeout(() => {
+    Promise.all(promises).then((data) => {
       const renderer = new TiledCanvasRender(
         backgroundCanvas,
         playerCanvas,
@@ -30,7 +36,7 @@
       );
       renderer.loadWorldMap("tutorial");
       renderer.render();
-    }, 2000);
+    });
   });
 </script>
 

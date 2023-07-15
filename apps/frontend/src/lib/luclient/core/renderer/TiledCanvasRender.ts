@@ -73,7 +73,11 @@ export class TiledCanvasRender {
     if (!result) {
       throw new Error(`Could not find tileset for gid ${id}`);
     }
-    return this._tileSets[result[0]];
+    const tileset = this._tileSets[result[0]];
+    if (!tileset) {
+      throw new Error(`Could not find tileset ${result}. Did you reexport it from tilesets/index.ts?`);
+    }
+    return tileset;
   }
 
   private renderTileLayer(layer: TileLayer) {
