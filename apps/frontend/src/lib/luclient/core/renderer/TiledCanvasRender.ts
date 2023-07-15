@@ -14,8 +14,8 @@ export class TiledCanvasRender {
   public foregroundCanvas: HTMLCanvasElement;
 
   private _tiledMap!: TiledMap;
-  private _tileSets: TileSet[];
-  private _tileSetImages: any[];
+  private _tileSets: Record<string, TileSet>;
+  private _tileSetImages: Record<string, HTMLImageElement>;
   private _tileHeight = 16;
   private _tileWidth = 16;
 
@@ -25,14 +25,14 @@ export class TiledCanvasRender {
     backgroundCanvas: HTMLCanvasElement,
     playerCanvas: HTMLCanvasElement,
     foregroundCanvas: HTMLCanvasElement,
-    images: any[],
-    tileSets: TileSet[]
+    tilesetImages: Record<string, HTMLImageElement>,
+    tileSets: Record<string, TileSet>
   ) {
     this.backgroundCanvas = backgroundCanvas;
     this.playerCanvas = playerCanvas;
     this.foregroundCanvas = foregroundCanvas;
 
-    this._tileSetImages = images;
+    this._tileSetImages = tilesetImages;
     this._tileSets = tileSets;
   }
 
@@ -41,8 +41,10 @@ export class TiledCanvasRender {
     this._firstGids = {};
 
     this._tiledMap.tilesets.forEach((tileSet) => {
-      this._firstGids[tileSet.source.split("/").pop().replace(".json", "")] = tileSet.firstgid;
+      const name: string = this._getFileName(tileSet.source);
+      this._firstGids[name] = tileSet.firstgid;
     });
+
     this._tileHeight = this._tiledMap.tileheight;
     this._tileWidth = this._tiledMap.tilewidth;
 
@@ -63,18 +65,15 @@ export class TiledCanvasRender {
   }
 
   private getTileSetFromGid(id: number) {
-    let highestFound = -1;
-    let highestIndex = -1;
-
-    for (let i = 0; i < this._tiledMap.tilesets.length; i++) {
-      if (id >= this._tiledMap.tilesets[i].firstgid) {
-        if (this._tiledMap.tilesets[i].firstgid >= highestFound) {
-          highestFound = this._tiledMap.tilesets[i].firstgid;
-          highestIndex = i;
-        }
-      }
+    const result = Object.entries(this._firstGids)
+      // Sort descending
+      .sort((a, b) => b[1] - a[1])
+      // And find the first one that is lower or equal
+      .find(([_, firstGid]) => firstGid <= id);
+    if (!result) {
+      throw new Error(`Could not find tileset for gid ${id}`);
     }
-    return this._tileSets[highestIndex];
+    return this._tileSets[result[0]];
   }
 
   private renderTileLayer(layer: TileLayer) {
@@ -88,20 +87,17 @@ export class TiledCanvasRender {
 
       const tileSet = this.getTileSetFromGid(data[i]);
 
-      const firstgid = this._firstGids[tileSet.name.toLowerCase()];
-      console.log(this._firstGids, firstgid);
-      const [sourceX, sourceY] = this.indexToXY(data[i] - firstgid, tileSet.columns);
+      const firstGid = this._firstGids[tileSet.name];
+
+      const [sourceX, sourceY] = this.indexToXY(data[i] - firstGid, tileSet.columns);
       const spacing = tileSet.spacing;
       const sx = sourceX * (this._tileWidth + spacing);
       const sy = sourceY * (this._tileHeight + spacing);
       const dx = destinationX * this._tileWidth;
       const dy = destinationY * this._tileHeight;
 
-      const img =
-        this._tileSetImages[
-          this._tileSets.findIndex((targetTileSet) => targetTileSet.name.toLowerCase() === tileSet.name.toLowerCase())
-        ];
-      console.log(tileSet.name, img);
+      const img = this._tileSetImages[tileSet.name];
+
       this.backgroundCanvas
         .getContext("2d")
         ?.drawImage(img, sx, sy, this._tileWidth, this._tileHeight, dx, dy, this._tileWidth, this._tileHeight);
@@ -122,5 +118,9 @@ export class TiledCanvasRender {
 
   render() {
     this._tiledMap.layers.forEach((layer) => this.renderLayer(layer));
+  }
+
+  private _getFileName(path: string): string {
+    return path.split("/").pop()?.split(".")[0] as string;
   }
 }

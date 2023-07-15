@@ -11,15 +11,14 @@
   import { TileSets } from "content/data/worldmap/tilesets";
   import { Images } from "content/data/worldmap/tilesets";
 
-  //
-  // console.log(grassImage);
-  let renderedImages;
+  const renderedImages = {};
   onMount(() => {
-    renderedImages = Images.map((image) => {
-      const tmp = new Image();
-      tmp.src = image;
-      return tmp;
-    });
+    Object.entries(Images).forEach(([key, image]) => {
+        const tmp = new Image();
+        tmp.src = image;
+        renderedImages[key] = tmp;
+      }
+    );
 
     setTimeout(() => {
       const renderer = new TiledCanvasRender(
