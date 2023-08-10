@@ -1,26 +1,26 @@
 <script lang="ts">
   import { TiledCanvasRender } from "$lib/luclient/core/renderer/TiledCanvasRender";
   import { onMount } from "svelte";
-
-  export let mapId: string;
-
-  let backgroundCanvas;
-  let playerCanvas;
-  let foregroundCanvas;
-
   import { TileSets } from "content/data/worldmap/tilesets";
   import { Images } from "content/data/worldmap/tilesets";
 
-  const loadImage = (key, src) =>
+  export let mapId: string;
+
+  let backgroundCanvas: HTMLCanvasElement;
+  let playerCanvas: HTMLCanvasElement;
+  let foregroundCanvas: HTMLCanvasElement;
+
+
+  const loadImage = (key: string, src: any) =>
     new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => resolve(img);
       img.onerror = reject;
       img.src = src;
     }).then((img) => {
-      renderedImages[key] = img;
+      renderedImages[key] = img as HTMLImageElement;
     });
-  const renderedImages = {};
+  const renderedImages: Record<string, HTMLImageElement> = {};
   onMount(() => {
     const promises = Object.entries(Images).map(([key, image]) => {
       return loadImage(key, image);
@@ -34,15 +34,14 @@
         renderedImages,
         TileSets
       );
-      renderer.loadWorldMap("tutorial");
+      renderer.loadWorldMap(mapId);
       renderer.render();
     });
   });
 </script>
 
-<span>{mapId}</span>
 <div class="relative">
-  <canvas bind:this={backgroundCanvas} class="absolute pixelated border-2" />
-  <canvas bind:this={playerCanvas} class="pixelated absolute border-2" />
-  <canvas bind:this={foregroundCanvas} class="absolute pixelated border-2" />
+  <canvas bind:this={backgroundCanvas} class="absolute pixelated" />
+  <canvas bind:this={playerCanvas} class="pixelated absolute" />
+  <canvas bind:this={foregroundCanvas} class="absolute pixelated" />
 </div>

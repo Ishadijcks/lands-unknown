@@ -3,7 +3,7 @@ import house from "./house.json";
 import fence from "./fence.json";
 import scenery from "./scenery.json";
 
-export const TileSets = {
+export const TileSets: Record<string, TileSet> = {
   grass: grass,
   fence: fence,
   scenery: scenery,
@@ -14,6 +14,7 @@ import { default as grassImg } from "./grass.png";
 import { default as fenceImg } from "./fence.png";
 import { default as houseImg } from "./house.png";
 import { default as sceneryImg } from "./scenery.png";
+import {TileSet} from "common/game/worldmap/tiled/TileSet";
 
 type TileSetExportType = typeof TileSets;
 

@@ -1,6 +1,6 @@
 export interface TileSet {
   columns: number;
-  editorsettings: {
+  editorsettings?: {
     export: {
       format: string;
       target: string;
@@ -15,12 +15,11 @@ export interface TileSet {
   tilecount: number;
   tiledversion: string;
   tileheight: number;
-  tiles: [
+  tiles?:
     {
       id: number;
       probability: number;
-    }
-  ];
+    }[];
   tilewidth: number;
   type: string;
   version: string;

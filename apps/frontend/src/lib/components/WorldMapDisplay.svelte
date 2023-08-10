@@ -11,8 +11,8 @@
   };
 </script>
 
-<div class="flex flex-row space-x-2">
-  <div class="flex flex-col">
+<div class="flex flex-col">
+  <div class="flex flex-row absolute z-10 px-1">
     <span>Current location</span>
     <span>{worldMap.characterLocation}</span>
   </div>

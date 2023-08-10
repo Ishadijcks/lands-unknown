@@ -30,7 +30,7 @@
       <InventoryDisplay inventory={luClient.inventory} />
     </div>
   </svelte:fragment>
-  <div class="card h-full p-4">
+  <div class="card h-full">
     <WorldMapDisplay worldMap={luClient.worldMap} />
   </div>
 
