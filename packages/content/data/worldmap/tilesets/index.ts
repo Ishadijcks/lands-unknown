@@ -14,7 +14,7 @@ import { default as grassImg } from "./grass.png";
 import { default as fenceImg } from "./fence.png";
 import { default as houseImg } from "./house.png";
 import { default as sceneryImg } from "./scenery.png";
-import {TileSet} from "common/game/worldmap/tiled/TileSet";
+import { TileSet } from "common/game/worldmap/tiled/TileSet";
 
 type TileSetExportType = typeof TileSets;
 

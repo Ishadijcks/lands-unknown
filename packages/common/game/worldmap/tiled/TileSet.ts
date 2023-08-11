@@ -15,11 +15,10 @@ export interface TileSet {
   tilecount: number;
   tiledversion: string;
   tileheight: number;
-  tiles?:
-    {
-      id: number;
-      probability: number;
-    }[];
+  tiles?: {
+    id: number;
+    probability: number;
+  }[];
   tilewidth: number;
   type: string;
   version: string;

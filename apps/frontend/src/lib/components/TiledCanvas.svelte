@@ -10,7 +10,6 @@
   let playerCanvas: HTMLCanvasElement;
   let foregroundCanvas: HTMLCanvasElement;
 
-
   const loadImage = (key: string, src: any) =>
     new Promise((resolve, reject) => {
       const img = new Image();

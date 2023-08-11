@@ -233,6 +233,24 @@
           "width": 0,
           "x": 328,
           "y": 168
+        },
+        {
+          "height": 96,
+          "id": 8,
+          "name": "",
+          "properties": [
+            {
+              "name": "hrid",
+              "type": "string",
+              "value": "/location/pigs"
+            }
+          ],
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "width": 80,
+          "x": 112,
+          "y": 16
         }
       ],
       "opacity": 1,
@@ -243,10 +261,10 @@
     }
   ],
   "nextlayerid": 6,
-  "nextobjectid": 7,
+  "nextobjectid": 9,
   "orientation": "orthogonal",
   "renderorder": "right-down",
-  "tiledversion": "1.10.1",
+  "tiledversion": "1.10.2",
   "tileheight": 16,
   "tilesets": [
     {

@@ -4,6 +4,8 @@ import type { TileSet } from "common/game/worldmap/tiled/TileSet";
 import type { TileLayer } from "common/game/worldmap/tiled/TileLayer";
 import type { TiledLayer } from "common/game/worldmap/tiled/TiledLayer";
 import { LayerType } from "common/game/worldmap/tiled/LayerType";
+import type { ObjectGroup } from "common/game/worldmap/tiled/ObjectGroup";
+import type { ClickBox } from "common/game/worldmap/tiled/ClickBox";
 
 /**
  * Extremely limited support to render Tiled maps
@@ -13,13 +15,19 @@ export class TiledCanvasRender {
   public playerCanvas: HTMLCanvasElement;
   public foregroundCanvas: HTMLCanvasElement;
 
+  public isHoveringOverClickBox = false;
+
   private _tiledMap!: TiledMap;
   private _tileSets: Record<string, TileSet>;
   private _tileSetImages: Record<string, HTMLImageElement>;
   private _tileHeight = 16;
   private _tileWidth = 16;
+  private _currentScale = 1;
+  private _clickBoxes: ClickBox[] = [];
 
   private _firstGids: Record<string, number> = {};
+
+  private _ctx: CanvasRenderingContext2D;
 
   constructor(
     backgroundCanvas: HTMLCanvasElement,
@@ -29,6 +37,7 @@ export class TiledCanvasRender {
     tileSets: Record<string, TileSet>
   ) {
     this.backgroundCanvas = backgroundCanvas;
+    this._ctx = this.backgroundCanvas.getContext("2d") as CanvasRenderingContext2D;
     this.playerCanvas = playerCanvas;
     this.foregroundCanvas = foregroundCanvas;
 
@@ -102,9 +111,28 @@ export class TiledCanvasRender {
 
       const img = this._tileSetImages[tileSet.name];
 
-      this.backgroundCanvas
-        .getContext("2d")
-        ?.drawImage(img, sx, sy, this._tileWidth, this._tileHeight, dx, dy, this._tileWidth, this._tileHeight);
+      this._ctx.drawImage(img, sx, sy, this._tileWidth, this._tileHeight, dx, dy, this._tileWidth, this._tileHeight);
+    }
+  }
+
+  private renderObjectGroup(layer: ObjectGroup) {
+    for (let i = 0; i < layer.objects.length; i++) {
+      const object = layer.objects[i];
+
+      if (object.text) {
+        this._ctx.font = `${object.text.pixelsize}px ${object.text.fontfamily}`;
+        this._ctx.textAlign = "center";
+        this._ctx.textBaseline = "middle";
+        this._ctx.fillStyle = object.text.color ?? "black";
+        this._ctx.fillText(object.text.text, object.x + object.width / 2, object.y + object.height / 2);
+      }
+      if (object.properties) {
+        this._ctx.beginPath();
+        this._ctx.strokeStyle = "black";
+        this._ctx.rect(object.x, object.y, object.width, object.height);
+        this._ctx.stroke();
+        this._clickBoxes.push(object);
+      }
     }
   }
 
@@ -114,14 +142,50 @@ export class TiledCanvasRender {
         this.renderTileLayer(layer as TileLayer);
         break;
       case LayerType.ObjectGroup:
-        // this.renderObjectGroup(layer as ObjectGroup);
-        console.warn("Not doing object groups");
+        this.renderObjectGroup(layer as ObjectGroup);
         break;
     }
   }
 
+  getCursorPosition(event: MouseEvent) {
+    const rect = this.foregroundCanvas.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / this._currentScale;
+    const y = (event.clientY - rect.top) / this._currentScale;
+    return [x, y];
+  }
+
+  isPointInRectangle(px: number, py: number, rx: number, ry: number, rw: number, rh: number): boolean {
+    if (px < rx || px > rx + rw) {
+      return false;
+    }
+    if (py < ry || py > ry + rh) {
+      return false;
+    }
+    return true;
+  }
+
   render() {
     this._tiledMap.layers.forEach((layer) => this.renderLayer(layer));
+
+    this.foregroundCanvas.onmousemove = (event: MouseEvent) => {
+      const [mouseX, mouseY] = this.getCursorPosition(event);
+
+      this.isHoveringOverClickBox = this._clickBoxes.some((clickBox) => {
+        return this.isPointInRectangle(mouseX, mouseY, clickBox.x, clickBox.y, clickBox.width, clickBox.height);
+      });
+    };
+
+    this.foregroundCanvas.onpointerdown = (event: MouseEvent) => {
+      // get the mouse position
+      const [mouseX, mouseY] = this.getCursorPosition(event);
+      // iterate each shape in the shapes array
+      this._clickBoxes.forEach((clickBox) => {
+        if (this.isPointInRectangle(mouseX, mouseY, clickBox.x, clickBox.y, clickBox.width, clickBox.height)) {
+          console.log("clickbox clicked", clickBox);
+          // this.onClickBoxClicked(clickBox);
+        }
+      });
+    };
   }
 
   private _getFileName(path: string): string {
