@@ -1,12 +1,12 @@
 import { CharacterFeature } from "backend/character/CharacterFeature";
-import { LocationHrid } from "common/game/worldmap/LocationHrid";
+import { LocationHrid, LocationHridSchema } from "common/game/worldmap/LocationHrid";
 
 export class CharacterWorldMap extends CharacterFeature {
   private _characterLocation: LocationHrid;
 
   constructor() {
     super("world-map");
-    this._characterLocation = LocationHrid.Town;
+    this._characterLocation = LocationHridSchema.enum["/tutorial/pigs"];
   }
 
   // TODO(@Isha): Implement

@@ -14,6 +14,7 @@ hridCreator.addHrids("itemHrids", content.items);
 hridCreator.addHrids("skillHrids", content.skills);
 hridCreator.addHrids("actionHrids", content.actions);
 hridCreator.addHrids("activityHrids", content.activities);
+hridCreator.addHrids("locationHrids", content.locations);
 hridCreator.write();
 
 // See content-validate.ts for the next steps

@@ -6,6 +6,7 @@ import { ContentType } from "common/parsers/ContentType";
 import { BaseContentParser } from "common/parsers/BaseContentParser";
 import { GameContent } from "common/parsers/GameContent";
 import * as process from "process";
+import { WorldMapDefinitionParser } from "common/parsers/worldmap/WorldmapDefinitionSchema";
 
 export class ContentFlattener {
   content: Required<GameContent> = {
@@ -13,6 +14,7 @@ export class ContentFlattener {
     items: [],
     actions: [],
     activities: [],
+    locations: [],
   };
 
   private addContent(content: GameContent): void {
@@ -20,6 +22,7 @@ export class ContentFlattener {
     this.content.items.push(...(content.items ?? []));
     this.content.actions.push(...(content.actions ?? []));
     this.content.activities.push(...(content.activities ?? []));
+    this.content.locations.push(...(content.locations ?? []));
   }
 
   public validateUniqueHrids(): void {
@@ -42,6 +45,7 @@ export class ContentFlattener {
 
   contentParsers: Record<ContentType, BaseContentParser> = {
     [ContentType.Skill]: new SkillDefinitionParser(),
+    [ContentType.WorldMap]: new WorldMapDefinitionParser(),
   };
 
   private getAllYamlFiles(): { contentType: ContentType; fileName: string; data: any }[] {

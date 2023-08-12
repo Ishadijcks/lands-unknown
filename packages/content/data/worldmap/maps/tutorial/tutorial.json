@@ -205,7 +205,7 @@
             {
               "name": "hrid",
               "type": "string",
-              "value": "/demo/pigs"
+              "value": "/tutorial/pigs"
             }
           ],
           "rotation": 0,
@@ -242,7 +242,7 @@
             {
               "name": "hrid",
               "type": "string",
-              "value": "/location/pigs"
+              "value": "/tutorial/pigs"
             }
           ],
           "rotation": 0,
