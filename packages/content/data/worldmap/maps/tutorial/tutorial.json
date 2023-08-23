@@ -181,12 +181,12 @@
             {
               "name": "from",
               "type": "string",
-              "value": "/demo/house"
+              "value": "/tutorial/house"
             },
             {
               "name": "to",
               "type": "string",
-              "value": "/demo/pigs"
+              "value": "/tutorial/pigs"
             }
           ],
           "rotation": 0,
@@ -224,7 +224,7 @@
             {
               "name": "hrid",
               "type": "string",
-              "value": "/demo/house"
+              "value": "/tutorial/house"
             }
           ],
           "rotation": 0,
@@ -251,6 +251,24 @@
           "width": 80,
           "x": 112,
           "y": 16
+        },
+        {
+          "height": 96,
+          "id": 9,
+          "name": "",
+          "properties": [
+            {
+              "name": "hrid",
+              "type": "string",
+              "value": "/tutorial/house"
+            }
+          ],
+          "rotation": 0,
+          "type": "",
+          "visible": true,
+          "width": 80,
+          "x": 276,
+          "y": 124
         }
       ],
       "opacity": 1,
@@ -261,7 +279,7 @@
     }
   ],
   "nextlayerid": 6,
-  "nextobjectid": 9,
+  "nextobjectid": 10,
   "orientation": "orthogonal",
   "renderorder": "right-down",
   "tiledversion": "1.10.2",

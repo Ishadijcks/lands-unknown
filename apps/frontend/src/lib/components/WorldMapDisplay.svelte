@@ -9,6 +9,10 @@
   const scheduleActivity = (location: LocationHrid, index: number) => {
     $luClientStore.socket.sendScheduleActivityRequest(location, index, 10);
   };
+
+  const scheduleTravel = (location: LocationHrid) => {
+    $luClientStore.socket.sendScheduleTravelRequest(location);
+  };
 </script>
 
 <div class="flex flex-col">
@@ -16,13 +20,13 @@
     <span>Current location</span>
     <span>{worldMap.characterLocation}</span>
   </div>
-  <TiledCanvas mapId="tutorial" />
+  <TiledCanvas mapId="tutorial" on:travel={(e) => {scheduleTravel(e.detail.location)}} />
   <div class="flex flex-col space-y-2">
     {#each worldMap.locations as location}
       <div class="flex flex-col card p-4 variant-filled-primary items-center">
         <span>{location.name}</span>
         <div class="flex flex-row">
-          {#each location.activities as activity, i}
+          {#each location.activities ?? [] as activity, i}
             <button
               class="btn variant-filled"
               on:click={() => {
@@ -31,8 +35,8 @@
             >
           {/each}
         </div>
-        <span>Facilities: {location.facilities.join(", ")}</span>
-        <span>Npcs: {location.npcs.join(", ")}</span>
+        <span>Facilities: {location.facilities?.join(", ")}</span>
+        <span>Npcs: {location.npcs?.join(", ")}</span>
       </div>
     {/each}
   </div>

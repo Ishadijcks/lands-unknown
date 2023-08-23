@@ -1,3 +1,6 @@
 locations:
   - hrid: /tutorial/pigs
     name: Pigs
+  - hrid: /tutorial/house
+    name: House
+

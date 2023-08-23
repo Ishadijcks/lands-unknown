@@ -8,6 +8,7 @@ import { PUBLIC_WEBSOCKET_URL } from "$env/static/public";
 import { RequestType } from "common/connection/requests/RequestType";
 import type { LocationHrid } from "common/game/worldmap/LocationHrid";
 import type { BaseRequest } from "common/connection/requests/BaseRequest";
+import type { ScheduleTravelRequest } from "common/connection/requests/ScheduleTravelRequest";
 
 export class SocketClient {
   private _socket;
@@ -63,12 +64,20 @@ export class SocketClient {
     this._socket.send(data);
   }
 
-  public sendScheduleActivityRequest(location: LocationHrid, index: number, repetitions: number) {
+  public sendScheduleActivityRequest(location: LocationHrid, index: number, repetitions: number): void {
     const request: ScheduleActivityRequest = {
       type: RequestType.ScheduleActivity,
       repetitions,
       location,
       index,
+    };
+    this._send(request);
+  }
+
+  public sendScheduleTravelRequest(location: LocationHrid): void {
+    const request: ScheduleTravelRequest = {
+      type: RequestType.ScheduleTravel,
+      location,
     };
     this._send(request);
   }

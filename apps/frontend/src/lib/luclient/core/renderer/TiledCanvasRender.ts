@@ -6,6 +6,7 @@ import type { TiledLayer } from "common/game/worldmap/tiled/TiledLayer";
 import { LayerType } from "common/game/worldmap/tiled/LayerType";
 import type { ObjectGroup } from "common/game/worldmap/tiled/ObjectGroup";
 import type { ClickBox } from "common/game/worldmap/tiled/ClickBox";
+import type { LocationHrid } from "common/game/worldmap/LocationHrid";
 
 /**
  * Extremely limited support to render Tiled maps
@@ -16,6 +17,8 @@ export class TiledCanvasRender {
   public foregroundCanvas: HTMLCanvasElement;
 
   public isHoveringOverClickBox = false;
+
+  public onLocationClicked?: (location: LocationHrid) => void;
 
   private _tiledMap!: TiledMap;
   private _tileSets: Record<string, TileSet>;
@@ -131,7 +134,15 @@ export class TiledCanvasRender {
         this._ctx.strokeStyle = "black";
         this._ctx.rect(object.x, object.y, object.width, object.height);
         this._ctx.stroke();
-        this._clickBoxes.push(object);
+
+        const hrid = object.properties.find((property) => property.name === "hrid")?.value;
+        if (!hrid) {
+          console.error("Object is a clickbox but does not have the hrid property", object);
+        }
+        this._clickBoxes.push({
+          ...object,
+          hrid,
+        });
       }
     }
   }
@@ -181,8 +192,7 @@ export class TiledCanvasRender {
       // iterate each shape in the shapes array
       this._clickBoxes.forEach((clickBox) => {
         if (this.isPointInRectangle(mouseX, mouseY, clickBox.x, clickBox.y, clickBox.width, clickBox.height)) {
-          console.log("clickbox clicked", clickBox);
-          // this.onClickBoxClicked(clickBox);
+          this.onLocationClicked?.(clickBox.hrid);
         }
       });
     };

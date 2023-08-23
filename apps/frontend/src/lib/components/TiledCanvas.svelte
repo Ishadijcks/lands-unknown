@@ -3,6 +3,10 @@
   import { onMount } from "svelte";
   import { TileSets } from "content/data/worldmap/tilesets";
   import { Images } from "content/data/worldmap/tilesets";
+  import { createEventDispatcher } from "svelte";
+  import type { LocationHrid } from "common/game/worldmap/LocationHrid";
+
+  const dispatch = createEventDispatcher();
 
   export let mapId: string;
 
@@ -33,10 +37,17 @@
         renderedImages,
         TileSets
       );
+      renderer.onLocationClicked = onLocationClicked;
       renderer.loadWorldMap(mapId);
       renderer.render();
     });
   });
+
+  const onLocationClicked = (location: LocationHrid) => {
+    dispatch("travel", {
+      location: location,
+    });
+  };
 </script>
 
 <div class="relative">

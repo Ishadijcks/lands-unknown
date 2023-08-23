@@ -14,6 +14,7 @@ import { PrismaSupabaseClient } from "backend/persistance/PrismaSupabaseClient";
 import { SignUpSchema } from "backend/persistance/SignUp";
 import { LogInSchema } from "backend/persistance/LogIn";
 import { CharacterManager } from "backend/persistance/CharacterManager";
+import { ScheduleTravelRequestParser } from "backend/connection/requests/ScheduleTravelRequestParser";
 
 export class SocketServer {
   private readonly TICK_DURATION = 1;
@@ -26,8 +27,7 @@ export class SocketServer {
 
   private _requestParsers: Record<RequestType, RequestParser> = {
     [RequestType.ScheduleActivity]: new ScheduleActivityRequestParser(),
-    // TODO(@Isha): Add parser here
-    [RequestType.ScheduleTravel]: undefined as unknown as RequestParser,
+    [RequestType.ScheduleTravel]: new ScheduleTravelRequestParser(),
   };
 
   constructor(game: Game, port: number | string) {

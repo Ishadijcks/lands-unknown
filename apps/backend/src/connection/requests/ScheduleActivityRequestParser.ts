@@ -14,7 +14,7 @@ export class ScheduleActivityRequestParser extends RequestParser {
 
   apply(request: ScheduleActivityRequest, game: Game, character: Character) {
     const locationDetail = game.worldMap.locationDetailMap[request.location];
-    const activityId = locationDetail?.activities[request.index];
+    const activityId = locationDetail?.activities?.[request.index];
     if (!activityId) {
       console.warn("Invalid request", request);
       return;
