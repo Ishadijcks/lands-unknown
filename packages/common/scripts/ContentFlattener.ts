@@ -15,6 +15,7 @@ export class ContentFlattener {
     actions: [],
     activities: [],
     locations: [],
+    roads: [],
   };
 
   private addContent(content: GameContent): void {
@@ -23,6 +24,7 @@ export class ContentFlattener {
     this.content.actions.push(...(content.actions ?? []));
     this.content.activities.push(...(content.activities ?? []));
     this.content.locations.push(...(content.locations ?? []));
+    this.content.roads.push(...(content.roads ?? []));
   }
 
   public validateUniqueHrids(): void {

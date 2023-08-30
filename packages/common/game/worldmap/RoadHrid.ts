@@ -1,5 +1,5 @@
-export enum RoadHrid {
-  Road1 = "/roads/1",
-  Road2 = "/roads/2",
-  Road3 = "/roads/3",
-}
+import { z } from "zod";
+import { roadHrids } from "common/content/generated/hrids";
+
+export const RoadHridSchema = z.enum(roadHrids);
+export type RoadHrid = z.infer<typeof RoadHridSchema>;

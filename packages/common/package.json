@@ -8,12 +8,13 @@
     "content": "npm run init-generated && tsx scripts/content-load.ts && tsx scripts/content-validate.ts"
   },
   "devDependencies": {
-    "typescript": "5.0.4",
     "glob": "^10.2.7",
+    "typescript": "5.0.4",
     "zod-to-json-schema": "^3.21.1"
   },
   "dependencies": {
     "content": "*",
+    "yaml": "^2.3.2",
     "zod": "^3.21.4"
   }
 }

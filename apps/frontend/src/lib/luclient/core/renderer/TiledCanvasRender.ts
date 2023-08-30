@@ -1,4 +1,4 @@
-import { WorldMapRepository } from "$lib/luclient/core/renderer/WorldMapRepository";
+import { TiledMapRepository } from "common/game/worldmap/TiledMapRepository";
 import type { TiledMap } from "common/game/worldmap/tiled/TiledMap";
 import type { TileSet } from "common/game/worldmap/tiled/TileSet";
 import type { TileLayer } from "common/game/worldmap/tiled/TileLayer";
@@ -49,7 +49,7 @@ export class TiledCanvasRender {
   }
 
   loadWorldMap(id: string) {
-    this._tiledMap = WorldMapRepository.getWorldMap(id);
+    this._tiledMap = TiledMapRepository.getTiledMap(id);
     this._firstGids = {};
 
     this._tiledMap.tilesets.forEach((tileSet) => {

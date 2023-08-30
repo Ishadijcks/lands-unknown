@@ -20,7 +20,12 @@
     <span>Current location</span>
     <span>{worldMap.characterLocation}</span>
   </div>
-  <TiledCanvas mapId="tutorial" on:travel={(e) => {scheduleTravel(e.detail.location)}} />
+  <TiledCanvas
+    mapId="tutorial"
+    on:travel={(e) => {
+      scheduleTravel(e.detail.location);
+    }}
+  />
   <div class="flex flex-col space-y-2">
     {#each worldMap.locations as location}
       <div class="flex flex-col card p-4 variant-filled-primary items-center">

@@ -1,7 +1,10 @@
 import items from "common/content/generated/items.json";
 import actions from "common/content/generated/actions.json";
 import activities from "common/content/generated/activities.json";
+import locations from "common/content/generated/locations.json";
 import skills from "common/content/generated/skills.json";
+import roads from "common/content/generated/roads.json";
+
 import { skillExpLevels } from "common/content/SkillExpLevels";
 import { ItemHrid } from "common/game/items/ItemHrid";
 import { ItemDetail } from "common/game/items/ItemDetail";
@@ -24,10 +27,10 @@ export const gameData = {
   skillExpLevels: skillExpLevels,
 
   npcDetailMap: {},
-  roadDetailMap: {} as Record<RoadHrid, RoadDetail>,
+  roadDetailMap: roads as Record<RoadHrid, RoadDetail>,
   facilityTypeDetailMap: {},
   facilityDetailMap: {},
-  locationDetailMap: {} as Record<LocationHrid, LocationDetail>,
+  locationDetailMap: locations as Record<LocationHrid, LocationDetail>,
 };
 
 export type GameData = typeof gameData;

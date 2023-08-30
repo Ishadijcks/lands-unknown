@@ -2,10 +2,12 @@ import { z } from "zod";
 import { BaseContentParser } from "common/parsers/BaseContentParser";
 import { GameContent } from "common/parsers/GameContent";
 import { LocationDetailSchema } from "common/game/worldmap/LocationDetail";
+import { RoadDetailSchema } from "common/game/worldmap/RoadDetail";
 
 export const WorldMapDefinitionSchema = z
   .object({
-    locations: z.array(LocationDetailSchema),
+    locations: z.array(LocationDetailSchema).optional(),
+    roads: z.array(RoadDetailSchema).optional(),
   })
   .strict();
 
@@ -18,6 +20,7 @@ export class WorldMapDefinitionParser extends BaseContentParser {
   apply(data: WorldMapDefinition): GameContent {
     return {
       locations: data.locations,
+      roads: data.roads,
     };
   }
 }

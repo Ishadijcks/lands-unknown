@@ -97,7 +97,7 @@
     {
       "draworder": "topdown",
       "id": 5,
-      "name": "Paths",
+      "name": "Roads",
       "objects": [
         {
           "height": 0,
@@ -181,12 +181,12 @@
             {
               "name": "from",
               "type": "string",
-              "value": "/tutorial/house"
+              "value": "tutorial/house"
             },
             {
               "name": "to",
               "type": "string",
-              "value": "/tutorial/pigs"
+              "value": "tutorial/pigs"
             }
           ],
           "rotation": 0,
@@ -205,7 +205,7 @@
             {
               "name": "hrid",
               "type": "string",
-              "value": "/tutorial/pigs"
+              "value": "tutorial/pigs"
             }
           ],
           "rotation": 0,
@@ -224,7 +224,7 @@
             {
               "name": "hrid",
               "type": "string",
-              "value": "/tutorial/house"
+              "value": "tutorial/house"
             }
           ],
           "rotation": 0,
@@ -242,7 +242,7 @@
             {
               "name": "hrid",
               "type": "string",
-              "value": "/tutorial/pigs"
+              "value": "tutorial/pigs"
             }
           ],
           "rotation": 0,
@@ -260,7 +260,7 @@
             {
               "name": "hrid",
               "type": "string",
-              "value": "/tutorial/house"
+              "value": "tutorial/house"
             }
           ],
           "rotation": 0,

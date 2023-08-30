@@ -12,9 +12,7 @@ export class ScheduleTravelRequestParser extends RequestParser {
 
   apply(request: ScheduleTravelRequest, game: Game, character: Character) {
     console.log(request);
-    character.activityQueue.scheduleTravel([
-      RoadHrid.Road1, RoadHrid.Road2
-    ])
+    character.activityQueue.scheduleTravel([RoadHrid.Road1, RoadHrid.Road2]);
     // character.activityQueue.scheduleActivity(activityId, request.repetitions);
   }
 }
