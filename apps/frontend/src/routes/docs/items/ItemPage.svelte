@@ -10,7 +10,6 @@
     <span>{item.name}</span>
     <ItemDisplay {item} />
     <span>{item.description}</span>
-    <span>{item.hrid}</span>
     <span>{item.icon}</span>
   </div>
 </div>

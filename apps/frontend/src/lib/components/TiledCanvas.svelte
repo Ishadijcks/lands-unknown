@@ -45,7 +45,7 @@
 
   const onLocationClicked = (location: LocationHrid) => {
     dispatch("locationClicked", {
-      location: location
+      location: location,
     });
   };
 </script>

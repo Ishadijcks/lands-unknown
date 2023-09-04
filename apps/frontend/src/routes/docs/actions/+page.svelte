@@ -2,12 +2,11 @@
   import { gameData } from "common/content/GameData";
   import type { ActionDetail } from "common/game/actions/ActionDetail";
   import EntitySidebar from "$lib/components/EntitySidebar.svelte";
-  import ItemPage from "../items/ItemPage.svelte";
   import ActionPage from "./ActionPage.svelte";
 
-  const actions: ActionDetail[] = Object.values(gameData.actionDetailMap);
+  const actions: ActionDetail[] = Object.values(gameData.actionDetailMap).filter((action) => action.icon != "road");
 
-  let selectedAction = null;
+  let selectedAction: ActionDetail | null = null;
 
   const selectItem = (action: ActionDetail) => {
     selectedAction = action;
@@ -25,13 +24,7 @@
   <br />
   <div class="flex flex-row flex-wrap gap-1 justify-center">
     {#each actions as action}
-      <a href="/docs{action.hrid}">
-        <span>{JSON.stringify(action)}</span>
-      </a>
+      <ActionPage {action} />
     {/each}
   </div>
-  <br />
-  {#if selectedAction}
-    <ActionPage action={selectedAction} />
-  {/if}
 </div>

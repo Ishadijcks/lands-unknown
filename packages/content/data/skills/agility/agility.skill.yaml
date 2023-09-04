@@ -7,5 +7,6 @@ skills:
 activities:
   - name: Travel
     hrid: /activity/travel
+    icon: lightning
     type: /activity_type/travel
     theme: /activity_theme/sea

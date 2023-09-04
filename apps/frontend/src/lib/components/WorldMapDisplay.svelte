@@ -30,7 +30,7 @@
   />
   <div class="h-full z-10 flex flex-col justify-end w-96">
     {#if selectedLocation}
-      <LocationDisplay location="{selectedLocation}"></LocationDisplay>
+      <LocationDisplay location={selectedLocation} />
     {/if}
   </div>
 </div>

@@ -1,17 +1,20 @@
 locations:
   - hrid: /tutorial/house
     name: House
+    icon: house
     activities:
       - /activity/forest
 
   - hrid: /tutorial/forest
     name: Forest
+    icon: forest
     activities:
       - /activity/forest
 
-
   - hrid: /tutorial/pigs
     name: Pigs
+    icon: house
 
   - hrid: /tutorial/crossroads
     name: Crossroads
+    icon: road-sign

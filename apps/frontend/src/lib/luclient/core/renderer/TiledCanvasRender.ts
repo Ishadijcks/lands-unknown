@@ -56,7 +56,6 @@ export class TiledCanvasRender {
     this._tileHeight = this._tiledMap.tileheight;
     this._tileWidth = this._tiledMap.tilewidth;
 
-
     this.backgroundCanvas.width = this._tiledMap.width * this._tileWidth;
     this.backgroundCanvas.height = this._tiledMap.height * this._tileHeight;
   }
@@ -119,8 +118,11 @@ export class TiledCanvasRender {
         this._ctx.textBaseline = "middle";
         this._ctx.fillStyle = object.text.color ?? "black";
         this._ctx.fillText(object.text.text, object.x + object.width / 2, object.y + object.height / 2);
-      }
-      if (object.properties) {
+      } else if (object.point) {
+        // Ignore points
+      } else if (object.polyline) {
+        // Ignore roads
+      } else if (object.properties) {
         this._ctx.beginPath();
         this._ctx.strokeStyle = "black";
         this._ctx.rect(object.x, object.y, object.width, object.height);
@@ -132,7 +134,7 @@ export class TiledCanvasRender {
         }
         this._clickBoxes.push({
           ...object,
-          hrid
+          hrid,
         });
       }
     }

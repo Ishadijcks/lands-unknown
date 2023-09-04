@@ -24,8 +24,8 @@ flattener.validateUniqueHrids();
 
 const content = flattener.content;
 
-allLocations.forEach(locationHrid => {
-  const location = content.locations.find(location => location.hrid === locationHrid);
+allLocations.forEach((locationHrid) => {
+  const location = content.locations.find((location) => location.hrid === locationHrid);
   if (!location) {
     throw new Error(`The Tiled map defines hrid ${locationHrid}, but it is not defined in a worldmap.yaml`);
   }

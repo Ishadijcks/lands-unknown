@@ -9,6 +9,7 @@ const BaseActivityDetailSchema = z
   .object({
     hrid: ActivityHridSchema,
     name: z.string(),
+    icon: z.string(),
     type: z.nativeEnum(ActivityType),
     theme: z.nativeEnum(ActivityTheme),
   })

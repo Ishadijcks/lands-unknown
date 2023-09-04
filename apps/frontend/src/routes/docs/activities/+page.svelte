@@ -1,12 +1,12 @@
 <script lang="ts">
   import { gameData } from "common/content/GameData";
   import type { ActivityDetail } from "common/game/activities/ActivityDetail";
-  import ItemPage from "../items/ItemPage.svelte";
   import EntitySidebar from "$lib/components/EntitySidebar.svelte";
+  import ActivityPage from "./ActivityPage.svelte";
 
   const activities: ActivityDetail[] = Object.values(gameData.activityDetailMap);
 
-  let selectedActivity = null;
+  let selectedActivity: ActivityDetail | null = null;
 
   const selectActivity = (activity: ActivityDetail) => {
     selectedActivity = activity;
@@ -24,13 +24,7 @@
   <br />
   <div class="flex flex-row flex-wrap gap-1 justify-center">
     {#each activities as activity}
-      <a href="/docs{activity.hrid}">
-        <span>{JSON.stringify(activity)}</span>
-      </a>
+      <ActivityPage {activity} />
     {/each}
   </div>
-
-  {#if selectedActivity}
-    <ItemPage item={selectedActivity} />
-  {/if}
 </div>

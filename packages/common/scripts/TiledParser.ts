@@ -24,7 +24,7 @@ export class TiledParser {
       return {
         hrid: ("/action" + road.hrid) as ActionHrid,
         name: `Travel to ${road.to}`,
-        icon: "travel",
+        icon: "road",
         destination: road.to,
         baseDuration: baseDuration,
         experienceRewards: [{ value: baseDuration, skillHrid: "/skills/agility" }],

@@ -3,7 +3,6 @@ import { RequestType } from "common/connection/requests/RequestType";
 import { Character } from "backend/character/Character";
 import { Game } from "common/Game";
 import { ScheduleTravelRequest, ScheduleTravelRequestSchema } from "common/connection/requests/ScheduleTravelRequest";
-import { RoadHridSchema } from "common/game/worldmap/RoadHrid";
 
 export class ScheduleTravelRequestParser extends RequestParser {
   type = RequestType.ScheduleTravel;
@@ -11,9 +10,7 @@ export class ScheduleTravelRequestParser extends RequestParser {
   schema = ScheduleTravelRequestSchema;
 
   apply(request: ScheduleTravelRequest, game: Game, character: Character) {
-    character.activityQueue.scheduleTravel([
-      RoadHridSchema.enum["/road/tutorial/house/to/tutorial/pigs"],
-      RoadHridSchema.enum["/road/tutorial/pigs/to/tutorial/house"],
-    ]);
+    // TODO(@Isha): Validate the requested path
+    character.activityQueue.scheduleTravel(request.roads);
   }
 }

@@ -5,8 +5,8 @@
 
   const dispatch = createEventDispatcher();
 
-  export let selectedEntity: { name: string; icon: string };
-  export let entities: { name: string; icon: string }[];
+  export let selectedEntity: { name: string; hrid: string; icon: string };
+  export let entities: { name: string; hrid: string; icon: string }[];
 </script>
 
 <section class="w-64 mr-4 space-y-4 overflow-y-auto">
@@ -19,7 +19,10 @@
             : ''}"
           on:click={() => dispatch("select", { entity })}
         >
-          <span class="flex-auto">{entity.name}</span>
+          <div class="flex flex-col flex-auto">
+            <span>{entity.name}</span>
+            <span class="text-xs">{entity.hrid}</span>
+          </div>
           <Icon icon={entity.icon} />
         </li>
       {/each}

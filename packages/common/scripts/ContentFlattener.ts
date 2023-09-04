@@ -15,7 +15,7 @@ export class ContentFlattener {
     actions: [],
     activities: [],
     locations: [],
-    roads: []
+    roads: [],
   };
 
   private addContent(content: GameContent): void {
@@ -23,7 +23,7 @@ export class ContentFlattener {
     this.content.items.push(...(content.items ?? []));
     this.content.actions.push(...(content.actions ?? []));
     this.content.activities.push(...(content.activities ?? []));
-    this.content.locations.push(...(content.locations ?? []))
+    this.content.locations.push(...(content.locations ?? []));
     this.content.roads.push(...(content.roads ?? []));
   }
 
@@ -47,7 +47,7 @@ export class ContentFlattener {
 
   contentParsers: Record<ContentType, BaseContentParser> = {
     [ContentType.Skill]: new SkillDefinitionParser(),
-    [ContentType.WorldMap]: new WorldMapDefinitionParser()
+    [ContentType.WorldMap]: new WorldMapDefinitionParser(),
   };
 
   private getAllYamlFiles(): { contentType: ContentType; fileName: string; data: any }[] {
@@ -64,7 +64,7 @@ export class ContentFlattener {
       return {
         contentType: contentType,
         fileName: fileName,
-        data: parse(fs.readFileSync(filePath, "utf8"))
+        data: parse(fs.readFileSync(filePath, "utf8")),
       };
     });
   }

@@ -8,7 +8,7 @@ export const LocationDetailSchema = z
   .object({
     hrid: LocationHridSchema,
     name: z.string(),
-
+    icon: z.string(),
     npcs: z.array(z.nativeEnum(NpcHrid)).default([]),
     facilities: z.array(z.nativeEnum(FacilityHrid)).default([]),
     activities: z.array(ActivityHridSchema).default([]),

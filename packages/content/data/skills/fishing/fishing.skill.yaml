@@ -37,6 +37,7 @@ actions:
 activities:
   - name: Explore Ocean
     hrid: /activity/ocean
+    icon: fish
     type: /activity_type/randomized
     actions:
       - hrid: /actions/fishing/catch-fish

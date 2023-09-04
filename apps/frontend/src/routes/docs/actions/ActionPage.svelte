@@ -7,10 +7,9 @@
   export let action: ActionDetail;
 </script>
 
-<div class="card variant-filled-primary w-48 h-72 p-4">
+<div class="card variant-filled-primary w-48 p-4">
   <div class="flex flex-col items-center space-y-2">
     <span>{action.name}</span>
-    <span>{action.hrid}</span>
 
     <div class="flex flex-row items-center">
       {#each action.inputItems as input}

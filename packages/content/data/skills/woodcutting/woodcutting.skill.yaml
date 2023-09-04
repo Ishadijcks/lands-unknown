@@ -54,6 +54,7 @@ actions:
 activities:
   - name: "Explore Forest"
     hrid: /activity/forest
+    icon: log-regular
     type: /activity_type/randomized
     actions:
       - hrid: /actions/woodcutting/wood
