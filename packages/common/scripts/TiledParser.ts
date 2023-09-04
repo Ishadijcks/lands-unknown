@@ -3,7 +3,6 @@ import { TiledMap } from "common/game/worldmap/tiled/TiledMap";
 import { ObjectGroup } from "common/game/worldmap/tiled/ObjectGroup";
 import { RoadHrid } from "common/game/worldmap/RoadHrid";
 import { WorldPosition } from "common/game/worldmap/tiled/WorldPosition";
-import { LocationDetail } from "common/game/worldmap/LocationDetail";
 import { ActionDetailInput } from "common/game/actions/ActionDetail";
 import { ActionHrid } from "common/game/actions/ActionHrid";
 
@@ -14,7 +13,11 @@ export class TiledParser {
     this._tiledMaps = tiledMaps;
   }
 
-  public parse(): { roads: RoadDetail[]; locations: LocationDetail[]; actions: ActionDetailInput[] } {
+  /**
+   * This method parses the roads and creates actions out of them
+   * It also provides a list of location hrids it found, which should exist
+   */
+  public parse(): { roads: RoadDetail[]; locations: string[]; actions: ActionDetailInput[] } {
     const roads = this.parseRoads();
     const roadActions: ActionDetailInput[] = roads.map((road) => {
       const baseDuration = road.speedFactor * road.path.length;
@@ -34,7 +37,7 @@ export class TiledParser {
     };
   }
 
-  private parseLocations(): LocationDetail[] {
+  private parseLocations(): string[] {
     return this._tiledMaps.flatMap((map) => {
       const locationLayer = map.layers.find((layer) => layer.name === "Roads") as ObjectGroup;
       if (!locationLayer) {
@@ -43,13 +46,7 @@ export class TiledParser {
       return locationLayer.objects
         .filter((object) => object.point)
         .map((object) => {
-          const hrid = object?.properties?.find((p) => p.name === "hrid")?.value;
-          const name = object?.properties?.find((p) => p.name === "name")?.value;
-          const locationDetail: LocationDetail = {
-            hrid,
-            name,
-          };
-          return locationDetail;
+          return object?.properties?.find((p) => p.name === "hrid")?.value;
         });
     });
   }
@@ -68,14 +65,14 @@ export class TiledParser {
           const speedFactor = object?.properties?.find((p) => p.name === "speedFactor")?.value ?? 1;
           const path: WorldPosition[] = object?.polyline as WorldPosition[];
           const roadDetail: RoadDetail = {
-            hrid: `/road/${from}-${to}` as RoadHrid,
+            hrid: `/road${from}/to${to}` as RoadHrid,
             from: from,
             to: to,
             path: path,
             speedFactor: speedFactor,
           };
           const roadDetailReverse: RoadDetail = {
-            hrid: `/road/${to}-${from}` as RoadHrid,
+            hrid: `/road${to}/to${from}` as RoadHrid,
             from: to,
             to: from,
             path: [...path].reverse(),

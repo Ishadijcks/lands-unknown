@@ -16,7 +16,7 @@ export class ClientWorldMap extends WorldMap {
 
   constructor(locationDetailMap: Record<LocationHrid, LocationDetail>, roadDetailMap: Record<RoadHrid, RoadDetail>) {
     super(locationDetailMap, roadDetailMap);
-    this._characterLocation = LocationHridSchema.enum["tutorial/pigs"];
+    this._characterLocation = LocationHridSchema.enum["/tutorial/pigs"];
   }
 
   public updateCharacterLocation(location: LocationHrid, notify = true): void {

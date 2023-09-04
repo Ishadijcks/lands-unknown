@@ -12,8 +12,8 @@ export class ScheduleTravelRequestParser extends RequestParser {
 
   apply(request: ScheduleTravelRequest, game: Game, character: Character) {
     character.activityQueue.scheduleTravel([
-      RoadHridSchema.enum["/road/tutorial/house-tutorial/pigs"],
-      RoadHridSchema.enum["/road/tutorial/pigs-tutorial/house"],
+      RoadHridSchema.enum["/road/tutorial/house/to/tutorial/pigs"],
+      RoadHridSchema.enum["/road/tutorial/pigs/to/tutorial/house"],
     ]);
   }
 }

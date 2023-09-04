@@ -4,14 +4,16 @@ import { TiledParser } from "common/scripts/TiledParser";
 import { TiledMapRepository } from "common/game/worldmap/TiledMapRepository";
 import { stringify } from "yaml";
 import fs from "fs";
-import { TiledMap } from "common/game/worldmap/tiled/TiledMap";
 
 // Load all information from tiled maps and write to yamls
 const contentPath = require.resolve("content").replace("/index.ts", "");
+
+const allLocations: string[] = [];
 TiledMapRepository.getAll().forEach(({ name, tiledMap }) => {
   const tiledParser = new TiledParser([tiledMap]);
   const details = tiledParser.parse();
-  const yaml = stringify(details, { aliasDuplicateObjects: false });
+  allLocations.push(...details.locations);
+  const yaml = stringify({ roads: details.roads, actions: details.actions }, { aliasDuplicateObjects: false });
   fs.writeFileSync(`${contentPath}/generated/${name}.worldmap.yaml`, yaml);
 });
 
@@ -21,6 +23,13 @@ flattener.parseAllYamlFiles();
 flattener.validateUniqueHrids();
 
 const content = flattener.content;
+
+allLocations.forEach(locationHrid => {
+  const location = content.locations.find(location => location.hrid === locationHrid);
+  if (!location) {
+    throw new Error(`The Tiled map defines hrid ${locationHrid}, but it is not defined in a worldmap.yaml`);
+  }
+});
 
 // Then we can generate hrid lists per content type;
 const hridCreator = new HridCreator();

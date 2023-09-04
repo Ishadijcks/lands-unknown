@@ -44,14 +44,10 @@
   });
 
   const onLocationClicked = (location: LocationHrid) => {
-    dispatch("travel", {
-      location: location,
+    dispatch("locationClicked", {
+      location: location
     });
   };
 </script>
 
-<div class="relative">
-  <canvas bind:this={backgroundCanvas} class="absolute pixelated" />
-  <canvas bind:this={playerCanvas} class="pixelated absolute" />
-  <canvas bind:this={foregroundCanvas} class="absolute pixelated" />
-</div>
+<canvas bind:this={backgroundCanvas} class="pixelated" />

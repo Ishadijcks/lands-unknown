@@ -1,48 +1,36 @@
 <script lang="ts">
   import type { ClientWorldMap } from "$lib/luclient/core/worldmap/ClientWorldMap";
-  import { luClientStore } from "$lib/luclient/luClientStore";
   import type { LocationHrid } from "common/game/worldmap/LocationHrid";
   import TiledCanvas from "$lib/components/TiledCanvas.svelte";
+  import { gameData } from "common/content/GameData";
+  import type { LocationDetail } from "common/game/worldmap/LocationDetail";
+  import LocationDisplay from "$lib/components/LocationDisplay.svelte";
 
   export let worldMap: ClientWorldMap;
 
-  const scheduleActivity = (location: LocationHrid, index: number) => {
-    $luClientStore.socket.sendScheduleActivityRequest(location, index, 10);
-  };
+  let selectedLocation: LocationDetail | null = null;
 
-  const scheduleTravel = (location: LocationHrid) => {
-    $luClientStore.socket.sendScheduleTravelRequest(location);
+  const showLocationDisplay = (location: LocationHrid) => {
+    if (!location) {
+      selectedLocation = null;
+      return;
+    }
+    selectedLocation = gameData.locationDetailMap[location];
   };
 </script>
 
-<div class="flex flex-col">
-  <div class="flex flex-row absolute z-10 px-1">
-    <span>Current location</span>
-    <span>{worldMap.characterLocation}</span>
-  </div>
+<div class="flex flex-row">
+  <span class="absolute">Current location: {worldMap.characterLocation}</span>
+
   <TiledCanvas
     mapId="tutorial"
-    on:travel={(e) => {
-      scheduleTravel(e.detail.location);
+    on:locationClicked={(e) => {
+      showLocationDisplay(e.detail.location);
     }}
   />
-  <div class="flex flex-col space-y-2">
-    {#each worldMap.locations as location}
-      <div class="flex flex-col card p-4 variant-filled-primary items-center">
-        <span>{location.name}</span>
-        <div class="flex flex-row">
-          {#each location.activities ?? [] as activity, i}
-            <button
-              class="btn variant-filled"
-              on:click={() => {
-                scheduleActivity(location.hrid, i);
-              }}>{activity}</button
-            >
-          {/each}
-        </div>
-        <span>Facilities: {location.facilities?.join(", ")}</span>
-        <span>Npcs: {location.npcs?.join(", ")}</span>
-      </div>
-    {/each}
+  <div class="h-full z-10 flex flex-col justify-end w-96">
+    {#if selectedLocation}
+      <LocationDisplay location="{selectedLocation}"></LocationDisplay>
+    {/if}
   </div>
 </div>

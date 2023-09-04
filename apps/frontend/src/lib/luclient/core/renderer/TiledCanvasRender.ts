@@ -13,8 +13,6 @@ import type { LocationHrid } from "common/game/worldmap/LocationHrid";
  */
 export class TiledCanvasRender {
   public backgroundCanvas: HTMLCanvasElement;
-  public playerCanvas: HTMLCanvasElement;
-  public foregroundCanvas: HTMLCanvasElement;
 
   public isHoveringOverClickBox = false;
 
@@ -41,8 +39,6 @@ export class TiledCanvasRender {
   ) {
     this.backgroundCanvas = backgroundCanvas;
     this._ctx = this.backgroundCanvas.getContext("2d") as CanvasRenderingContext2D;
-    this.playerCanvas = playerCanvas;
-    this.foregroundCanvas = foregroundCanvas;
 
     this._tileSetImages = tilesetImages;
     this._tileSets = tileSets;
@@ -60,14 +56,9 @@ export class TiledCanvasRender {
     this._tileHeight = this._tiledMap.tileheight;
     this._tileWidth = this._tiledMap.tilewidth;
 
-    this.canvases.forEach((canvas) => {
-      canvas.width = this._tiledMap.width * this._tileWidth;
-      canvas.height = this._tiledMap.height * this._tileHeight;
-    });
-  }
 
-  public get canvases(): HTMLCanvasElement[] {
-    return [this.backgroundCanvas, this.playerCanvas, this.foregroundCanvas];
+    this.backgroundCanvas.width = this._tiledMap.width * this._tileWidth;
+    this.backgroundCanvas.height = this._tiledMap.height * this._tileHeight;
   }
 
   indexToXY(index: number, width: number) {
@@ -141,7 +132,7 @@ export class TiledCanvasRender {
         }
         this._clickBoxes.push({
           ...object,
-          hrid,
+          hrid
         });
       }
     }
@@ -159,7 +150,7 @@ export class TiledCanvasRender {
   }
 
   getCursorPosition(event: MouseEvent) {
-    const rect = this.foregroundCanvas.getBoundingClientRect();
+    const rect = this.backgroundCanvas.getBoundingClientRect();
     const x = (event.clientX - rect.left) / this._currentScale;
     const y = (event.clientY - rect.top) / this._currentScale;
     return [x, y];
@@ -178,7 +169,7 @@ export class TiledCanvasRender {
   render() {
     this._tiledMap.layers.forEach((layer) => this.renderLayer(layer));
 
-    this.foregroundCanvas.onmousemove = (event: MouseEvent) => {
+    this.backgroundCanvas.onmousemove = (event: MouseEvent) => {
       const [mouseX, mouseY] = this.getCursorPosition(event);
 
       this.isHoveringOverClickBox = this._clickBoxes.some((clickBox) => {
@@ -186,7 +177,7 @@ export class TiledCanvasRender {
       });
     };
 
-    this.foregroundCanvas.onpointerdown = (event: MouseEvent) => {
+    this.backgroundCanvas.onpointerdown = (event: MouseEvent) => {
       // get the mouse position
       const [mouseX, mouseY] = this.getCursorPosition(event);
       // iterate each shape in the shapes array

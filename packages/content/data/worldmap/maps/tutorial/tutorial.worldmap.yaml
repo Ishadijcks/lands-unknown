@@ -1,0 +1,17 @@
+locations:
+  - hrid: /tutorial/house
+    name: House
+    activities:
+      - /activity/forest
+
+  - hrid: /tutorial/forest
+    name: Forest
+    activities:
+      - /activity/forest
+
+
+  - hrid: /tutorial/pigs
+    name: Pigs
+
+  - hrid: /tutorial/crossroads
+    name: Crossroads
