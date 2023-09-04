@@ -6,6 +6,7 @@ import { ActivityType } from "common/game/activities/ActivityType";
 import { RandomActivity } from "common/game/activities/RandomActivity";
 import { LinearActivity } from "common/game/activities/LinearActivity";
 import { Activity } from "common/game/activities/Activity";
+import { TravelActivity } from "common/game/activities/TravelActivity";
 
 export class ActivityQueue {
   private readonly _actionDetailMap: Record<ActionHrid, ActionDetail>;
@@ -25,8 +26,10 @@ export class ActivityQueue {
         return new RandomActivity(detail, repetitions);
       case ActivityType.Linear:
         return new LinearActivity(detail, repetitions);
+      case ActivityType.Travel:
+        return new TravelActivity(detail);
       default:
-        return null;
+        throw new Error("Could not create activity from detail" + JSON.stringify(detail));
     }
   }
 

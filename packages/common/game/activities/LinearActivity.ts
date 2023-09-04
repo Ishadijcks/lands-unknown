@@ -14,7 +14,6 @@ export class LinearActivity implements Activity {
   }
 
   private _resetSequence(): void {
-    console.log("resetting sequence");
     this._index = 0;
     this.repetitions--;
   }
@@ -25,7 +24,6 @@ export class LinearActivity implements Activity {
     }
     const nextAction = this.detail.actions[this._index];
     this._index++;
-    console.log(nextAction);
     return nextAction;
   }
 

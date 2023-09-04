@@ -1,0 +1,11 @@
+skills:
+  - name: Agility
+    hrid: /skills/agility
+    icon: lightning
+    sortIndex: 5
+
+activities:
+  - name: Travel
+    hrid: /activity/travel
+    type: /activity_type/travel
+    theme: /activity_theme/sea

@@ -12,6 +12,7 @@ import { ClientInventory } from "$lib/luclient/core/inventory/ClientInventory";
 import { InitCharacterMessageParser } from "$lib/luclient/core/connection/messages/InitCharacterMessageParser";
 import { IgnoreParser } from "$lib/luclient/core/connection/messages/IgnoreParser";
 import { ClientWorldMap } from "$lib/luclient/core/worldmap/ClientWorldMap";
+import { LocationUpdatedMessageParser } from "$lib/luclient/core/connection/messages/LocationsUpdatedMessageParser";
 
 export class LuClient {
   socket: SocketClient;
@@ -19,6 +20,7 @@ export class LuClient {
   messageParsers: Record<MessageType, MessageParser> = {
     [MessageType.InitCharacter]: new InitCharacterMessageParser(),
     [MessageType.SkillsUpdated]: new SkillsUpdatedMessageParser(),
+    [MessageType.LocationUpdated]: new LocationUpdatedMessageParser(),
     [MessageType.ActivityQueueUpdated]: new ActivityQueueUpdatedMessageParser(),
     [MessageType.InventoryUpdated]: new InventoryUpdatedMessageParser(),
     [MessageType.ConnectionClosed]: new IgnoreParser(),

@@ -3,6 +3,7 @@ import { ActivityHridSchema } from "common/game/activities/ActivityHrid";
 import { ActionHridSchema } from "common/game/actions/ActionHrid";
 import { ActivityTheme } from "common/game/activities/ActivityTheme";
 import { ActivityType } from "common/game/activities/ActivityType";
+import { RoadHridSchema } from "common/game/worldmap/RoadHrid";
 
 const BaseActivityDetailSchema = z
   .object({
@@ -15,6 +16,7 @@ const BaseActivityDetailSchema = z
 
 const TravelActivityDetailSchema = BaseActivityDetailSchema.extend({
   type: z.literal(ActivityType.Travel),
+  roads: z.array(RoadHridSchema).default([]),
 }).strict();
 
 const LinearActivityDetailSchema = BaseActivityDetailSchema.extend({

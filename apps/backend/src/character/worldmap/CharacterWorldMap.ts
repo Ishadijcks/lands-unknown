@@ -6,7 +6,12 @@ export class CharacterWorldMap extends CharacterFeature {
 
   constructor() {
     super("world-map");
-    this._characterLocation = LocationHridSchema.enum["/tutorial/pigs"];
+    this._characterLocation = LocationHridSchema.enum["tutorial/pigs"];
+  }
+
+  public updateLocation(location: LocationHrid) {
+    this._characterLocation = location;
+    this._character.sendLocationUpdated(location);
   }
 
   // TODO(@Isha): Implement

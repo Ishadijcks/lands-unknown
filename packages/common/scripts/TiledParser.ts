@@ -4,6 +4,8 @@ import { ObjectGroup } from "common/game/worldmap/tiled/ObjectGroup";
 import { RoadHrid } from "common/game/worldmap/RoadHrid";
 import { WorldPosition } from "common/game/worldmap/tiled/WorldPosition";
 import { LocationDetail } from "common/game/worldmap/LocationDetail";
+import { ActionDetailInput } from "common/game/actions/ActionDetail";
+import { ActionHrid } from "common/game/actions/ActionHrid";
 
 export class TiledParser {
   private _tiledMaps: TiledMap[];
@@ -12,10 +14,23 @@ export class TiledParser {
     this._tiledMaps = tiledMaps;
   }
 
-  public parse(): { roads: RoadDetail[]; locations: LocationDetail[] } {
+  public parse(): { roads: RoadDetail[]; locations: LocationDetail[]; actions: ActionDetailInput[] } {
+    const roads = this.parseRoads();
+    const roadActions: ActionDetailInput[] = roads.map((road) => {
+      const baseDuration = road.speedFactor * road.path.length;
+      return {
+        hrid: ("/action" + road.hrid) as ActionHrid,
+        name: `Travel to ${road.to}`,
+        icon: "travel",
+        destination: road.to,
+        baseDuration: baseDuration,
+        experienceRewards: [{ value: baseDuration, skillHrid: "/skills/agility" }],
+      };
+    });
     return {
       locations: this.parseLocations(),
-      roads: this.parseRoads(),
+      roads: roads,
+      actions: roadActions,
     };
   }
 

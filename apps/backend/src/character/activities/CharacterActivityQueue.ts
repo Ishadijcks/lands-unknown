@@ -4,7 +4,9 @@ import { Action } from "common/game/actions/Action";
 import { Activity } from "common/game/activities/Activity";
 import { ScheduledActivity } from "common/game/activities/ScheduledActivity";
 import { ActionDetail } from "common/game/actions/ActionDetail";
-import { ActivityDetail } from "common/game/activities/ActivityDetail";
+import { RoadHrid } from "common/game/worldmap/RoadHrid";
+import { ScheduledTravelActivity } from "common/game/activities/ScheduledTravelActivity";
+import { ActivityType } from "common/game/activities/ActivityType";
 
 export class CharacterActivityQueue extends CharacterFeature {
   private _queue: ScheduledActivity[] = [];
@@ -51,8 +53,7 @@ export class CharacterActivityQueue extends CharacterFeature {
         console.warn("Unshifted undefined scheduledActivity", this._queue, scheduledActivity);
         return;
       }
-      const nextActivityDetail = this._game.activityQueue.activityDetailMap[scheduledActivity.hrid];
-      this._setCurrentActivity(nextActivityDetail, scheduledActivity.repetitions);
+      this._setCurrentActivity(scheduledActivity);
     }
 
     if (!this._currentActivity) {
@@ -76,6 +77,10 @@ export class CharacterActivityQueue extends CharacterFeature {
     if (detail.outputItems != undefined) {
       this._character.inventory.gainItemAmounts(detail.outputItems);
     }
+
+    if (detail.destination) {
+      this._character.worldMap.updateLocation(detail.destination);
+    }
   }
 
   private sendActivityQueueMessage(): void {
@@ -86,17 +91,33 @@ export class CharacterActivityQueue extends CharacterFeature {
     this._currentActivity = null;
   }
 
-  private _setCurrentActivity(detail: ActivityDetail, repetitions: number) {
+  private _setCurrentActivity(scheduledActivity: ScheduledActivity) {
+    let detail = this._game.activityQueue.activityDetailMap[scheduledActivity.hrid];
+    if (detail.type === ActivityType.Travel) {
+      detail = {
+        ...detail,
+        roads: (scheduledActivity as ScheduledTravelActivity).roads,
+      };
+    }
     if (this._currentActivity) {
       console.warn("Tried to set current activity but it is already", this._currentActivity);
     }
-    this._currentActivity = this._game.activityQueue.getActivityFromDetail(detail, repetitions);
+    this._currentActivity = this._game.activityQueue.getActivityFromDetail(detail, scheduledActivity.repetitions);
 
     this.sendActivityQueueMessage();
   }
 
   scheduleActivity(hrid: ActivityHrid, repetitions: number = 1) {
     this._queue.push({ hrid, repetitions });
+  }
+
+  scheduleTravel(roads: RoadHrid[]) {
+    const activity: ScheduledTravelActivity = {
+      hrid: "/activity/travel",
+      repetitions: 0,
+      roads,
+    };
+    this._queue.push(activity);
   }
 
   // TODO(@Isha): Implement

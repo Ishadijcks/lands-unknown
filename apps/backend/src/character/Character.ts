@@ -19,6 +19,8 @@ import { CharacterSaveData } from "backend/character/CharacterSaveData";
 import { InitCharacterMessage } from "common/connection/messages/InitCharacterMessage";
 import { ConnectionClosedMessage } from "common/connection/messages/ConnectionClosedMessage";
 import { CharacterWorldMap } from "backend/character/worldmap/CharacterWorldMap";
+import { LocationUpdatedMessage } from "common/connection/messages/LocationUpdatedMessage";
+import { LocationHrid } from "common/game/worldmap/LocationHrid";
 
 export class Character {
   userId: string;
@@ -144,6 +146,14 @@ export class Character {
     const message: ConnectionClosedMessage = {
       type: MessageType.ConnectionClosed,
       reason,
+    };
+    this._send(message);
+  }
+
+  sendLocationUpdated(location: LocationHrid) {
+    const message: LocationUpdatedMessage = {
+      type: MessageType.LocationUpdated,
+      location,
     };
     this._send(message);
   }
